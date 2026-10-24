@@ -1,5 +1,5 @@
 /**
- * Admin.gs - Layanan Panel Admin Resmi
+ * AdminService.gs - Layanan Panel Admin Resmi
  * Penanganan hak akses, dasbor, CRUD pendaftaran, ekspor data, pengaturan sistem, dan riwayat
  */
 
@@ -608,7 +608,7 @@ function getAdminSettings() {
     success: true,
     settings: {
       mode: settings.mode || 'otomatis',
-      tutup_pada: settings.tutup_pada || '2027-01-16T23:59:59+07:00',
+      tutup_pada: normalizeDateToISO(settings.tutup_pada || '2027-01-16T23:59:59+07:00'),
       judul: settings.judul || 'Lomba Mewarnai Kreatif TKM & RA Se-Kecamatan Wuluhan',
       tanggal_pelaksanaan: settings.tanggal_pelaksanaan || 'Sabtu, 23 Januari 2027',
       jam: settings.jam || '07.00 WIB sampai selesai',
@@ -664,8 +664,13 @@ function saveAdminSettings(payload) {
       var key = keysToSave[k];
       if (payload[key] !== undefined) {
         var val = sanitizeFormulaInjection(payload[key]);
+        if (key === 'tutup_pada') {
+          val = normalizeDateToISO(val);
+        }
         if (keyRowMap[key]) {
-          setSheet.getRange(keyRowMap[key], 2).setValue(val);
+          var cell = setSheet.getRange(keyRowMap[key], 2);
+          cell.setNumberFormat('@');
+          cell.setValue(val);
         } else {
           setSheet.appendRow([key, val]);
         }
@@ -808,5 +813,172 @@ function listAdminHistory(page, pageSize) {
     totalCount: totalCount,
     page: p,
     totalPages: totalPages
+  };
+}
+
+/**
+ * Reset seluruh data pendaftaran ujicoba dan kembalikan penomoran kode ke 0 (MWR-001)
+ * Hanya dapat dijalankan oleh Admin terautentikasi
+ */
+function resetAllRegistrationsData() {
+  var adminUser = assertAdmin();
+  
+  return withScriptLock(30, function() {
+    var ss = getAppSpreadsheet();
+    var regSheet = ss.getSheetByName('Pendaftaran');
+    var pesSheet = ss.getSheetByName('Peserta');
+    var props = PropertiesService.getScriptProperties();
+    
+    var deletedRegCount = 0;
+    var deletedPesCount = 0;
+    
+    // 1. Bersihkan sheet Pendaftaran (baris 2 ke bawah, header tetap aman)
+    if (regSheet && regSheet.getLastRow() > 1) {
+      deletedRegCount = regSheet.getLastRow() - 1;
+      regSheet.deleteRows(2, deletedRegCount);
+    }
+    
+    // 2. Bersihkan sheet Peserta (baris 2 ke bawah, header tetap aman)
+    if (pesSheet && pesSheet.getLastRow() > 1) {
+      deletedPesCount = pesSheet.getLastRow() - 1;
+      pesSheet.deleteRows(2, deletedPesCount);
+    }
+    
+    // 3. Reset counter penomoran kode pendaftaran kembali ke 0
+    props.setProperty('COUNTER', '0');
+    
+    // 4. Bersihkan Cache Script
+    var cache = CacheService.getScriptCache();
+    cache.remove('public_participants');
+    cache.remove('public_config');
+    
+    // 5. Catat audit log di sheet Riwayat
+    logHistory(ss, adminUser, 'RESET_DATA', 'ALL', {
+      keterangan: 'Reset seluruh data pendaftaran ujicoba. Penomoran kode direset kembali ke 0.',
+      pendaftaran_dihapus: deletedRegCount,
+      peserta_dihapus: deletedPesCount
+    }, { counter_sekarang: 0 });
+    
+    return {
+      success: true,
+      message: 'Berhasil me-reset data! Seluruh pendaftaran (' + deletedRegCount + ' lembaga) telah dibersihkan dan nomor urut kode pendaftaran kembali ke 0. Pendaftaran berikutnya akan dimulai dari MWR-001.'
+    };
+  });
+}
+
+/**
+ * Ambil data terstruktur untuk Daftar Hadir (Presensi)
+ */
+function getAdminAttendanceData(filterDesa) {
+  assertAdmin();
+  var ss = getAppSpreadsheet();
+  var regSheet = ss.getSheetByName('Pendaftaran');
+  var pesSheet = ss.getSheetByName('Peserta');
+  
+  var fDesa = (filterDesa && filterDesa !== 'all') ? String(filterDesa).trim() : 'SEMUA';
+  
+  if (!regSheet || regSheet.getLastRow() <= 1) {
+    return { success: true, list: [], totalSantri: 0, filterDesa: fDesa };
+  }
+  
+  var regRows = regSheet.getDataRange().getValues();
+  var headers = regRows[0];
+  var idxKode = headers.indexOf('kode');
+  var idxJenis = headers.indexOf('jenis');
+  var idxLembaga = headers.indexOf('lembaga');
+  var idxDesa = headers.indexOf('desa');
+  var idxKoordinator = headers.indexOf('koordinator');
+  var idxWa = headers.indexOf('wa');
+  var idxJumlah = headers.indexOf('jumlah');
+  
+  // Mapping anak dari sheet Peserta
+  var childMap = {};
+  if (pesSheet && pesSheet.getLastRow() > 1) {
+    var pesRows = pesSheet.getDataRange().getValues();
+    for (var j = 1; j < pesRows.length; j++) {
+      var pKode = String(pesRows[j][0]).trim();
+      var noAnak = pesRows[j][1];
+      var namaAnak = String(pesRows[j][2]).trim();
+      if (!childMap[pKode]) childMap[pKode] = [];
+      childMap[pKode].push({
+        no: noAnak,
+        nama: namaAnak
+      });
+    }
+  }
+  
+  var list = [];
+  var totalSantri = 0;
+  
+  for (var i = 1; i < regRows.length; i++) {
+    var k = String(regRows[i][idxKode]).trim();
+    if (!k) continue;
+    var d = String(regRows[i][idxDesa]).trim();
+    if (fDesa !== 'SEMUA' && d !== fDesa) {
+      continue;
+    }
+    
+    var kids = childMap[k] || [];
+    var jml = kids.length || parseInt(regRows[i][idxJumlah], 10) || 0;
+    totalSantri += jml;
+    
+    list.push({
+      kode: k,
+      jenis: String(regRows[i][idxJenis] || '').trim(),
+      lembaga: String(regRows[i][idxLembaga] || '').trim(),
+      desa: d,
+      koordinator: String(regRows[i][idxKoordinator] || '').trim(),
+      wa: String(regRows[i][idxWa] || '').trim(),
+      jumlah: jml,
+      peserta: kids
+    });
+  }
+  
+  // Urutkan berdasarkan kode pendaftaran (MWR-001, MWR-002, ...)
+  list.sort(function(a, b) {
+    return a.kode.localeCompare(b.kode, undefined, { numeric: true });
+  });
+  
+  return {
+    success: true,
+    list: list,
+    totalSantri: totalSantri,
+    filterDesa: fDesa
+  };
+}
+
+/**
+ * Generate PDF Daftar Hadir (Opsi A atau Opsi B) dan kembalikan Base64
+ */
+function getAttendancePdf(type, filterDesa) {
+  assertAdmin();
+  var ss = getAppSpreadsheet();
+  var settings = getSettingsFromSheet(ss);
+  var fDesa = (filterDesa && filterDesa !== 'all') ? String(filterDesa).trim() : 'SEMUA';
+  var dataRes = getAdminAttendanceData(fDesa);
+  
+  if (!dataRes.list || dataRes.list.length === 0) {
+    throw new Error('Tidak ada data pendaftaran yang ditemukan' + (fDesa !== 'SEMUA' ? ' untuk wilayah Desa ' + fDesa : '') + '.');
+  }
+  
+  var nowStr = Utilities.formatDate(new Date(), TIMEZONE, "yyyyMMdd_HHmm");
+  var filename = '';
+  var base64Pdf = '';
+  
+  if (type === 'A') {
+    filename = 'Daftar_Hadir_Koordinator_' + (fDesa !== 'SEMUA' ? fDesa.replace(/\s+/g, '_') + '_' : '') + nowStr + '.pdf';
+    base64Pdf = generateAttendancePdfABase64(settings, dataRes.list, fDesa, filename);
+  } else {
+    filename = 'Daftar_Hadir_Peserta_' + (fDesa !== 'SEMUA' ? fDesa.replace(/\s+/g, '_') + '_' : '') + nowStr + '.pdf';
+    base64Pdf = generateAttendancePdfBBase64(settings, dataRes.list, fDesa, filename);
+  }
+  
+  return {
+    success: true,
+    type: type,
+    filename: filename,
+    base64: base64Pdf,
+    totalLembaga: dataRes.list.length,
+    totalSantri: dataRes.totalSantri
   };
 }

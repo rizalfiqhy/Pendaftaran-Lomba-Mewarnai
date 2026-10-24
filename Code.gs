@@ -12,7 +12,7 @@ function doGet(e) {
   var page = (e && e.parameter && e.parameter.page) ? String(e.parameter.page).toLowerCase() : '';
   
   if (page === 'admin') {
-    return HtmlService.createTemplateFromFile('Admin')
+    return HtmlService.createTemplateFromFile('AdminPage')
       .evaluate()
       .setTitle('Panel Admin - Lomba Mewarnai Kreatif 1448 H')
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
@@ -98,7 +98,7 @@ function getPublicConfig() {
   
   var now = new Date();
   var mode = settings.mode || 'otomatis';
-  var tutupPadaStr = settings.tutup_pada || '2027-01-16T23:59:59+07:00';
+  var tutupPadaStr = normalizeDateToISO(settings.tutup_pada || '2027-01-16T23:59:59+07:00');
   var tutupDate = new Date(tutupPadaStr);
   
   var status = 'open';

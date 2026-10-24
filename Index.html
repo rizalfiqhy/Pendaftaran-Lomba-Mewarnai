@@ -432,7 +432,7 @@
                 <label for="input-wa" class="text-[12.5px] font-bold text-tinta">
                   Nomor WhatsApp Koordinator
                 </label>
-                <input type="tel" id="input-wa" inputmode="tel" placeholder="CONTOH: 0812 3456 7890" class="w-full h-12 px-3.5 rounded-xl border border-garis bg-kertas text-[15px] font-bold text-tinta focus:outline-none focus:border-hijau-pondok">
+                <input type="tel" id="input-wa" inputmode="tel" oninput="this.value = this.value.replace(/[^\d\s\-\+\(\)]/g, '')" placeholder="CONTOH: 0812 3456 7890" class="w-full h-12 px-3.5 rounded-xl border border-garis bg-kertas text-[15px] font-bold text-tinta focus:outline-none focus:border-hijau-pondok">
                 <p class="text-[11px] text-gray-500 leading-tight">
                   Dipakai panitia bila perlu menghubungi lembaga terkait perlombaan. <strong>Nomor WhatsApp ini tidak akan pernah ditampilkan untuk umum.</strong>
                 </p>
@@ -838,12 +838,20 @@
       countdownTimerInterval: null
     };
 
-    // Inisialisasi saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', function() {
+    // Inisialisasi saat halaman dimuat (tahan uji iframe Google Apps Script)
+    function bootPublicApp() {
       initRequestId();
       loadDraftFromStorage();
+      // Langsung nyalakan hitung mundur default agar kotak timer tidak pernah menampilkan '--'
+      startCountdownTimer('2027-01-16T23:59:59+07:00');
       fetchPublicConfig();
-    });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bootPublicApp);
+    } else {
+      bootPublicApp();
+    }
 
     // Inisialisasi request_id acak untuk idempotensi pengiriman
     function initRequestId() {
@@ -876,8 +884,12 @@
       }
 
       // Jika pendaftaran ditutup dan user klik tab form, arahkan ke layar closed
-      if (screenName === 'form' && appState.config && appState.config.status !== 'open') {
-        screenName = 'closed';
+      if (screenName === 'form') {
+        if (appState.config && appState.config.status !== 'open') {
+          screenName = 'closed';
+        } else if (!appState.formData.lembaga && (!appState.formData.nama_anak || appState.formData.nama_anak.length <= 1)) {
+          goToStep(1);
+        }
       }
 
       var targetScreen = document.getElementById('screen-' + screenName);
@@ -892,6 +904,44 @@
       }
     }
 
+    // Helper format tanggal ke bahasa Indonesia
+    function formatIndonesianDateLabel(val) {
+      if (!val) return '16 Januari 2027 pukul 23.59 WIB';
+      var d = null;
+      if (typeof val === 'string') {
+        var match = val.match(/^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})/);
+        if (match) {
+          d = new Date(parseInt(match[1]), parseInt(match[2]) - 1, parseInt(match[3]), parseInt(match[4]), parseInt(match[5]));
+        }
+      }
+      if (!d || isNaN(d.getTime())) d = new Date(val);
+      if (isNaN(d.getTime())) return '16 Januari 2027 pukul 23.59 WIB';
+      var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+      var hh = ('0' + d.getHours()).slice(-2);
+      var mm = ('0' + d.getMinutes()).slice(-2);
+      return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear() + ' pukul ' + hh + '.' + mm + ' WIB';
+    }
+
+    function parseTargetTime(deadlineStr) {
+      if (!deadlineStr) return new Date('2027-01-16T23:59:59+07:00').getTime();
+      if (deadlineStr instanceof Date) return deadlineStr.getTime();
+      if (typeof deadlineStr === 'number') return deadlineStr;
+      if (typeof deadlineStr === 'string') {
+        var str = deadlineStr.trim();
+        var t = new Date(str).getTime();
+        if (!isNaN(t)) return t;
+        if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(str)) {
+          t = new Date(str + ':59+07:00').getTime();
+          if (!isNaN(t)) return t;
+        }
+        if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}/.test(str)) {
+          t = new Date(str.replace(' ', 'T') + '+07:00').getTime();
+          if (!isNaN(t)) return t;
+        }
+      }
+      return new Date('2027-01-16T23:59:59+07:00').getTime();
+    }
+
     // Ambil Pengaturan Publik dari Server
     function fetchPublicConfig() {
       if (typeof google !== 'undefined' && google.script && google.script.run) {
@@ -899,6 +949,7 @@
           .withSuccessHandler(onPublicConfigLoaded)
           .withFailureHandler(function(err) {
             console.error('Gagal memuat config:', err);
+            startCountdownTimer('2027-01-16T23:59:59+07:00');
           })
           .getPublicConfig();
       } else {
@@ -932,8 +983,14 @@
     function onPublicConfigLoaded(cfg) {
       appState.config = cfg;
       
+      // Update label tanggal penutupan di kartu countdown
+      var lblTutup = document.getElementById('lbl-tutup-pada');
+      if (lblTutup && cfg.tutup_pada) {
+        lblTutup.textContent = formatIndonesianDateLabel(cfg.tutup_pada);
+      }
+
       // Hitung selisih jam server dan jam HP
-      var serverNow = new Date(cfg.server_time).getTime();
+      var serverNow = parseTargetTime(cfg.server_time || new Date().toISOString());
       var clientNow = Date.now();
       appState.serverTimeDeltaMs = serverNow - clientNow;
 
@@ -1022,26 +1079,39 @@
         tabPeserta.style.display = 'none';
       }
 
-      // Jalankan Countdown Timer
+      // Jalankan Countdown Timer dengan target waktu dari server
       startCountdownTimer(cfg.tutup_pada);
     }
 
     // Countdown Timer Realtime
     function startCountdownTimer(deadlineStr) {
-      if (appState.countdownTimerInterval) clearInterval(appState.countdownTimerInterval);
+      if (appState.countdownTimerInterval) {
+        clearInterval(appState.countdownTimerInterval);
+        appState.countdownTimerInterval = null;
+      }
       
-      var targetTime = new Date(deadlineStr).getTime();
+      var targetTime = parseTargetTime(deadlineStr);
 
       function updateClock() {
-        var now = Date.now() + appState.serverTimeDeltaMs;
+        var now = Date.now() + (appState.serverTimeDeltaMs || 0);
         var diff = targetTime - now;
 
+        var elDays = document.getElementById('timer-days');
+        var elHours = document.getElementById('timer-hours');
+        var elMins = document.getElementById('timer-mins');
+        var elSecs = document.getElementById('timer-secs');
+
+        if (!elDays || !elHours || !elMins || !elSecs) return;
+
         if (diff <= 0) {
-          document.getElementById('timer-days').textContent = '00';
-          document.getElementById('timer-hours').textContent = '00';
-          document.getElementById('timer-mins').textContent = '00';
-          document.getElementById('timer-secs').textContent = '00';
-          clearInterval(appState.countdownTimerInterval);
+          elDays.textContent = '00';
+          elHours.textContent = '00';
+          elMins.textContent = '00';
+          elSecs.textContent = '00';
+          if (appState.countdownTimerInterval) {
+            clearInterval(appState.countdownTimerInterval);
+            appState.countdownTimerInterval = null;
+          }
           return;
         }
 
@@ -1050,10 +1120,10 @@
         var m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         var s = Math.floor((diff % (1000 * 60)) / 1000);
 
-        document.getElementById('timer-days').textContent = (d < 10 ? '0' : '') + d;
-        document.getElementById('timer-hours').textContent = (h < 10 ? '0' : '') + h;
-        document.getElementById('timer-mins').textContent = (m < 10 ? '0' : '') + m;
-        document.getElementById('timer-secs').textContent = (s < 10 ? '0' : '') + s;
+        elDays.textContent = (d < 10 ? '0' : '') + d;
+        elHours.textContent = (h < 10 ? '0' : '') + h;
+        elMins.textContent = (m < 10 ? '0' : '') + m;
+        elSecs.textContent = (s < 10 ? '0' : '') + s;
       }
 
       updateClock();
@@ -1406,18 +1476,24 @@
         koorInput.classList.remove('border-merah-koreksi');
       }
 
-      // Validasi nomor WhatsApp
-      if (wa.startsWith('+62')) wa = '0' + wa.substring(3);
-      else if (wa.startsWith('62')) wa = '0' + wa.substring(2);
+      // Validasi nomor WhatsApp (Otomatis handle 08..., 62..., +62..., maupun 8...)
+      var rawDigits = wa.replace(/\D/g, '');
+      if (rawDigits.startsWith('62')) {
+        rawDigits = '0' + rawDigits.substring(2);
+      } else if (rawDigits.startsWith('8')) {
+        rawDigits = '0' + rawDigits;
+      }
 
-      if (!/^08\d{8,12}$/.test(wa)) {
-        errWa.textContent = 'Nomor WhatsApp tidak valid. Contoh: 0812 3456 7890';
+      if (!/^08\d{8,12}$/.test(rawDigits)) {
+        errWa.textContent = 'Nomor WhatsApp tidak valid. Masukkan nomor aktif (contoh: 0812 3456 7890).';
         errWa.classList.remove('hidden');
         waInput.classList.add('border-merah-koreksi');
         isValid = false;
       } else {
         errWa.classList.add('hidden');
         waInput.classList.remove('border-merah-koreksi');
+        waInput.value = rawDigits; // Rapikan tampilan input pendaftar
+        wa = rawDigits;
       }
 
       if (isValid) {
@@ -1506,16 +1582,67 @@
       }
     }
 
+    // Reset seluruh isian formulir dan state ke kondisi kosong awal
+    function resetRegistrationForm() {
+      appState.formData = {
+        jenis: 'TKM',
+        lembaga: '',
+        desa: '',
+        jumlah: 1,
+        nama_anak: [''],
+        koordinator: '',
+        wa: '',
+        request_id: ''
+      };
+      initRequestId();
+      clearDraftStorage();
+
+      var inpLembaga = document.getElementById('input-lembaga');
+      if (inpLembaga) inpLembaga.value = '';
+      var selDesa = document.getElementById('select-desa');
+      if (selDesa) selDesa.value = '';
+      var inpKoord = document.getElementById('input-koordinator');
+      if (inpKoord) inpKoord.value = '';
+      var inpWa = document.getElementById('input-wa');
+      if (inpWa) inpWa.value = '';
+      var inpJumlah = document.getElementById('input-jumlah-peserta');
+      if (inpJumlah) inpJumlah.value = 1;
+
+      // Hapus pesan error validasi jika ada
+      var errMsgs = document.querySelectorAll('.err-msg');
+      errMsgs.forEach(function(el) {
+        el.textContent = '';
+        el.classList.add('hidden');
+      });
+
+      setInstitutionType('TKM');
+      updateParticipantRows(1);
+      goToStep(1);
+    }
+
     // Penanganan Pengiriman Berhasil
     function onSubmitSuccess(res) {
-      clearDraftStorage();
-      appState.lastRegisteredSummary = res;
+      // Simpan data summary untuk tampilan layar sukses dan unduh PDF
+      appState.lastRegisteredSummary = {
+        kode: res.kode,
+        request_id: res.request_id || appState.formData.request_id,
+        summary: {
+          lembaga: (res.summary && res.summary.lembaga) ? res.summary.lembaga : appState.formData.lembaga,
+          desa: (res.summary && res.summary.desa) ? res.summary.desa : appState.formData.desa,
+          jumlah: (res.summary && res.summary.jumlah) ? res.summary.jumlah : appState.formData.nama_anak.length,
+          waktu_daftar: (res.summary && res.summary.waktu_daftar) ? res.summary.waktu_daftar : 'Hari ini',
+          jenis: appState.formData.jenis || 'TKM'
+        }
+      };
 
       document.getElementById('success-code-display').textContent = res.kode;
-      document.getElementById('success-lembaga').textContent = appState.formData.jenis + ' ' + (res.summary.lembaga || appState.formData.lembaga);
-      document.getElementById('success-desa').textContent = res.summary.desa || appState.formData.desa;
-      document.getElementById('success-jumlah').textContent = (res.summary.jumlah || appState.formData.nama_anak.length) + ' Anak';
-      document.getElementById('success-waktu').textContent = res.summary.waktu_daftar || 'Hari ini';
+      document.getElementById('success-lembaga').textContent = appState.lastRegisteredSummary.summary.jenis + ' ' + appState.lastRegisteredSummary.summary.lembaga;
+      document.getElementById('success-desa').textContent = appState.lastRegisteredSummary.summary.desa;
+      document.getElementById('success-jumlah').textContent = appState.lastRegisteredSummary.summary.jumlah + ' Anak';
+      document.getElementById('success-waktu').textContent = appState.lastRegisteredSummary.summary.waktu_daftar;
+
+      // Bersihkan formulir dan memori lokal seketika agar pendaftaran berikutnya bersih & kosong
+      resetRegistrationForm();
 
       navTo('success');
     }
@@ -1581,28 +1708,7 @@
 
     // Daftarkan Lembaga Lain
     function registerAnotherInstitution() {
-      appState.formData = {
-        jenis: 'TKM',
-        lembaga: '',
-        desa: '',
-        jumlah: 1,
-        nama_anak: [''],
-        koordinator: '',
-        wa: '',
-        request_id: ''
-      };
-      initRequestId();
-      clearDraftStorage();
-
-      document.getElementById('input-lembaga').value = '';
-      document.getElementById('select-desa').value = '';
-      document.getElementById('input-koordinator').value = '';
-      document.getElementById('input-wa').value = '';
-      document.getElementById('input-jumlah-peserta').value = 1;
-
-      setInstitutionType('TKM');
-      updateParticipantRows(1);
-      goToStep(1);
+      resetRegistrationForm();
       navTo('form');
     }
 

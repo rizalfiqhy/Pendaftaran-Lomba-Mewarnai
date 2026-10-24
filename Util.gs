@@ -9,7 +9,14 @@ var TIMEZONE = 'Asia/Jakarta';
  * Format tanggal ke waktu WIB
  */
 function formatDateWIB(date, format) {
-  var d = date ? new Date(date) : new Date();
+  if (!date) return '-';
+  var d;
+  if (date instanceof Date) {
+    d = date;
+  } else {
+    d = new Date(date);
+  }
+  if (isNaN(d.getTime())) return String(date);
   var fmt = format || "dd MMM yyyy, HH.mm 'WIB'";
   return Utilities.formatDate(d, TIMEZONE, fmt);
 }
@@ -19,6 +26,31 @@ function formatDateWIB(date, format) {
  */
 function getNowISOString() {
   return Utilities.formatDate(new Date(), TIMEZONE, "yyyy-MM-dd'T'HH:mm:ssXXX");
+}
+
+/**
+ * Normalisasi objek Date atau string tanggal ke ISO-8601 dengan offset Asia/Jakarta (+07:00)
+ */
+function normalizeDateToISO(val) {
+  if (!val) return '2027-01-16T23:59:59+07:00';
+  if (val instanceof Date) {
+    return Utilities.formatDate(val, TIMEZONE, "yyyy-MM-dd'T'HH:mm:ssXXX");
+  }
+  var str = String(val).trim();
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}$/.test(str)) {
+    return str;
+  }
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(str)) {
+    return str + ':59+07:00';
+  }
+  if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?$/.test(str)) {
+    return str.replace(' ', 'T') + (str.length <= 16 ? ':59' : '') + '+07:00';
+  }
+  var parsed = new Date(str);
+  if (!isNaN(parsed.getTime())) {
+    return Utilities.formatDate(parsed, TIMEZONE, "yyyy-MM-dd'T'HH:mm:ssXXX");
+  }
+  return '2027-01-16T23:59:59+07:00';
 }
 
 /**
@@ -59,28 +91,34 @@ function escapeHtml(text) {
 
 /**
  * Normalisasi dan validasi nomor WhatsApp
- * Menerima format 08..., +62..., 62..., spasi atau tanda hubung diabaikan
+ * Menerima format 08..., +62..., 62..., 8..., spasi atau tanda hubung diabaikan
  * Output format standar: 08xxxxxxxxxx (10-14 digit)
  */
 function normalizeWA(phone) {
-  if (!phone) return { valid: false, number: '', message: 'Nomor WhatsApp belum diisi' };
-  var cleaned = String(phone).replace(/[\s\-\(\)\.]/g, '');
+  if (!phone) return { valid: false, number: '', international: '', message: 'Nomor WhatsApp belum diisi' };
+  var cleaned = String(phone).replace(/\D/g, '');
   
-  if (cleaned.startsWith('+62')) {
-    cleaned = '0' + cleaned.substring(3);
-  } else if (cleaned.startsWith('62')) {
+  if (cleaned.startsWith('62')) {
     cleaned = '0' + cleaned.substring(2);
+  } else if (cleaned.startsWith('8')) {
+    cleaned = '0' + cleaned;
   }
   
   if (!/^08\d{8,12}$/.test(cleaned)) {
     return {
       valid: false,
       number: cleaned,
-      message: 'Nomor WhatsApp tidak valid. Contoh: 0812 3456 7890'
+      international: '',
+      message: 'Nomor WhatsApp tidak valid. Masukkan nomor HP aktif (contoh: 081234567890).'
     };
   }
   
-  return { valid: true, number: cleaned, message: '' };
+  return {
+    valid: true,
+    number: cleaned,
+    international: '62' + cleaned.substring(1),
+    message: ''
+  };
 }
 
 /**
@@ -247,6 +285,12 @@ function getSettingsFromSheet(ss) {
     var key = String(data[i][0]).trim();
     var val = data[i][1];
     if (key) {
+      if (val instanceof Date) {
+        val = Utilities.formatDate(val, TIMEZONE, "yyyy-MM-dd'T'HH:mm:ssXXX");
+      }
+      if (key === 'tutup_pada') {
+        val = normalizeDateToISO(val);
+      }
       settings[key] = val;
     }
   }

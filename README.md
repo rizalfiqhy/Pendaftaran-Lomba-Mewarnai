@@ -11,12 +11,12 @@ Dokumen ini disusun berdasarkan spesifikasi resmi pada `prd.md` dan `design.md`.
 | Nama Berkas | Tipe | Deskripsi & Peran |
 |---|---|---|
 | `Code.gs` | Server-side Script | Router utama `doGet()`, endpoint publik (`getPublicConfig`, `submitRegistration`, `getReceiptPdf`, `getPublicParticipants`), dan inisialisasi sheet `initSpreadsheet()`. |
-| `Admin.gs` | Server-side Script | Logika Panel Admin, verifikasi hak akses `assertAdmin()`, dasbor analitik, edit pendaftaran ("edit apa pun"), hapus pendaftaran, tambah manual, ekspor data absensi, pengaturan buka-tutup, dan catatan riwayat perubahan. |
+| `AdminService.gs` | Server-side Script | Logika Panel Admin, verifikasi hak akses `assertAdmin()`, dasbor analitik, edit pendaftaran ("edit apa pun"), hapus pendaftaran, tambah manual, ekspor data absensi, pengaturan buka-tutup, dan catatan riwayat perubahan. |
 | `Util.gs` | Server-side Script | Keamanan (anti CSV/formula injection, HTML escape), normalisasi teks otomatis huruf kapital, validasi berjenjang (nama kosong, nama kembar, nomor WA), penomoran `MWR-xxx`, dan penguncian konkurensi (`LockService`). |
 | `Pdf.gs` | Server-side Script | Generator berkas PDF Bukti Pendaftaran Resmi A4 dengan kop resmi Haflah (logo transparan, pita emas muda, garis ganda, penataan 1 atau 2 kolom nama peserta). |
 | `LogoData.gs` | Server-side Script | Data gambar logo Haflah resolusi tinggi dalam format base64 bawaan, memastikan generator PDF langsung berfungsi tanpa ketergantungan jaringan eksternal. |
 | `Index.html` | Client-side HTML/JS | Aplikasi Web Mobile Publik (Single Page Application): Beranda, Hitung Mundur Realtime WIB, Formulir 4 Langkah dengan indikator 4 Krayon, Tempel Banyak Nama, Halaman Sukses + Unduh PDF langsung, Direktori Daftar Peserta Publik (pencarian, filter, accordion), Halaman Info Juknis, dan Kondisi Ditutup. |
-| `Admin.html` | Client-side HTML/JS | Panel Admin Lengkap & Responsif (HP & Laptop): Dasbor KPI 4 kartu, diagram sebaran desa, tabel/kartu pendaftaran, modal edit apa pun dengan konfirmasi peringatan, hapus pendaftaran aman, tambah manual, ekspor CSV/Cetak absensi meja, formulir pengaturan sistem, dan log audit. |
+| `AdminPage.html` | Client-side HTML/JS | Panel Admin Lengkap & Responsif (HP & Laptop): Dasbor KPI 4 kartu, diagram sebaran desa, tabel/kartu pendaftaran, modal edit apa pun dengan konfirmasi peringatan, hapus pendaftaran aman, tambah manual, ekspor CSV/Cetak absensi meja, formulir pengaturan sistem, dan log audit. |
 | `appsscript.json` | Manifest | Konfigurasi runtime Google Apps Script V8 dengan zona waktu `Asia/Jakarta`. |
 
 ---
@@ -32,16 +32,16 @@ Dokumen ini disusun berdasarkan spesifikasi resmi pada `prd.md` dan `design.md`.
 2. Editor skrip akan terbuka di tab baru.
 
 ### Langkah 3: Salin Seluruh Berkas dari Folder `/gas`
-Buat berkas pada editor Apps Script sesuai dengan nama dan jenis berkas di folder `/gas`:
+Buat berkas pada editor Apps Script sesuai dengan nama dan jenis berkas di folder `/gas` (Catatan: di Google Apps Script, nama dasar file skrip dan HTML harus berbeda agar tidak bentrok):
 1. **Berkas Skrip (.gs):**
    - Buat `Code.gs` -> Salin seluruh isi dari `gas/Code.gs`.
-   - Buat `Admin.gs` -> Salin seluruh isi dari `gas/Admin.gs`.
+   - Buat `AdminService.gs` -> Salin seluruh isi dari `gas/AdminService.gs`.
    - Buat `Util.gs` -> Salin seluruh isi dari `gas/Util.gs`.
    - Buat `Pdf.gs` -> Salin seluruh isi dari `gas/Pdf.gs`.
    - Buat `LogoData.gs` -> Salin seluruh isi dari `gas/LogoData.gs`.
 2. **Berkas HTML (.html):**
    - Buat `Index.html` -> Salin seluruh isi dari `gas/Index.html`.
-   - Buat `Admin.html` -> Salin seluruh isi dari `gas/Admin.html`.
+   - Buat `AdminPage.html` -> Salin seluruh isi dari `gas/AdminPage.html`.
 3. **Setel Manifest `appsscript.json`:**
    - Pada editor Apps Script, klik ikon roda gigi **Project Settings** (Pengaturan Proyek) di bilah kiri.
    - Centang opsi **Show "appsscript.json" manifest file in editor**.

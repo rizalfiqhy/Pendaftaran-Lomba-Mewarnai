@@ -238,6 +238,11 @@
               <span class="material-symbols-outlined text-[18px]">add</span>
               <span class="hidden sm:inline">Tambah</span>
             </button>
+            <!-- Tombol Reset Data Pendaftaran -->
+            <button type="button" onclick="confirmResetAllData()" class="h-10 px-3 bg-red-50 hover:bg-red-100 text-merah-koreksi border border-red-200 font-bold text-[12.5px] rounded-xl flex items-center gap-1 shadow-xs shrink-0 active:scale-95 transition-all" title="Reset seluruh data pendaftaran dan kembalikan kode ke MWR-001">
+              <span class="material-symbols-outlined text-[18px]">restart_alt</span>
+              <span class="hidden sm:inline">Reset ke 0</span>
+            </button>
           </div>
         </div>
 
@@ -275,17 +280,17 @@
 
       <!-- ================= 3. MENU: EKSPOR & ABSENSI ================= -->
       <section id="admin-sec-export" class="hidden flex flex-col gap-6">
-        <div class="bg-white p-5 rounded-2xl border border-garis shadow-xs flex flex-col gap-4">
-          <div>
+        <div class="bg-white p-5 rounded-2xl border border-garis shadow-xs flex flex-col gap-5">
+          <div class="border-b border-garis/60 pb-3">
             <h3 class="font-display font-bold text-[16px] text-tinta">Ekspor Rekapitulasi &amp; Lembar Absensi</h3>
-            <p class="text-[12px] text-gray-500">Unduh data peserta lomba untuk berkas absensi meja registrasi (kolom tanda tangan / hadir).</p>
+            <p class="text-[12px] text-gray-500">Unduh dokumen resmi A4 Portrait (PDF) untuk daftar hadir meja registrasi lomba atau ekspor ke file CSV/Excel.</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label class="text-[12px] font-bold text-tinta block mb-1">Cakupan Data</label>
+              <label class="text-[12px] font-bold text-tinta block mb-1">Cakupan Wilayah</label>
               <select id="export-scope" onchange="onExportScopeChange()" class="w-full h-11 px-3 rounded-xl border border-garis bg-kertas text-[13px] font-bold">
-                <option value="all">Semua Lembaga &amp; Desa</option>
+                <option value="all">Semua Lembaga &amp; Desa (Se-Kecamatan)</option>
                 <option value="desa">Berdasarkan Desa Tertentu</option>
               </select>
             </div>
@@ -297,14 +302,49 @@
             </div>
           </div>
 
-          <div class="flex flex-wrap items-center gap-3 pt-2">
-            <button type="button" onclick="runExport('csv')" class="px-5 py-3 rounded-xl bg-hijau-pondok text-white font-bold text-[13.5px] flex items-center gap-2 shadow-sm active:scale-95">
-              <span class="material-symbols-outlined text-[20px]">table_view</span>
+          <!-- Pilihan Opsi A & Opsi B Dokumen PDF A4 Portrait -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+            <!-- Opsi A Card -->
+            <div class="p-4 rounded-2xl border border-garis bg-gray-50/60 flex flex-col justify-between gap-3 shadow-2xs">
+              <div class="flex flex-col gap-1.5">
+                <div class="flex items-center gap-2 text-hijau-pondok font-bold text-[14px]">
+                  <span class="material-symbols-outlined text-[22px]">assignment</span>
+                  <span>Opsi A: Presensi Koordinator Lembaga</span>
+                </div>
+                <p class="text-[12px] text-gray-600 leading-relaxed">
+                  Dokumen PDF A4 Portrait resmi. Berisi tabel rekapitulasi kehadiran seluruh koordinator lembaga terdaftar (Kode, Lembaga, Desa, Jml Santri, dan kolom tanda tangan/paraf).
+                </p>
+              </div>
+              <button type="button" id="btn-export-pdf-a" onclick="runAttendancePdfExport('A', this)" class="w-full py-3 px-4 bg-hijau-pondok hover:bg-emerald-700 text-white font-bold text-[13px] rounded-xl flex items-center justify-center gap-2 shadow-xs active:scale-98 transition-all">
+                <span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+                <span>Unduh Daftar Hadir Koordinator (PDF A4)</span>
+              </button>
+            </div>
+
+            <!-- Opsi B Card -->
+            <div class="p-4 rounded-2xl border border-garis bg-gray-50/60 flex flex-col justify-between gap-3 shadow-2xs">
+              <div class="flex flex-col gap-1.5">
+                <div class="flex items-center gap-2 text-hijau-pondok font-bold text-[14px]">
+                  <span class="material-symbols-outlined text-[22px]">groups</span>
+                  <span>Opsi B: Presensi Peserta per Lembaga</span>
+                </div>
+                <p class="text-[12px] text-gray-600 leading-relaxed">
+                  Dokumen PDF A4 Portrait resmi. Berisi daftar seluruh santri anak yang dikelompokkan per lembaga lengkap dengan kolom paraf/kehadiran masing-masing anak.
+                </p>
+              </div>
+              <button type="button" id="btn-export-pdf-b" onclick="runAttendancePdfExport('B', this)" class="w-full py-3 px-4 bg-hijau-pondok hover:bg-emerald-700 text-white font-bold text-[13px] rounded-xl flex items-center justify-center gap-2 shadow-xs active:scale-98 transition-all">
+                <span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+                <span>Unduh Daftar Hadir Peserta (PDF A4)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Opsi Tambahan: CSV / Excel -->
+          <div class="pt-3 border-t border-garis/60 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <span class="text-[12px] text-gray-500 font-medium">Kebutuhan olah data mentah di Microsoft Excel / Google Sheets:</span>
+            <button type="button" onclick="runExport('csv')" class="px-4 py-2.5 rounded-xl border border-garis bg-white hover:bg-gray-50 text-tinta font-bold text-[12.5px] flex items-center justify-center gap-2 shadow-xs active:scale-95 transition-all shrink-0">
+              <span class="material-symbols-outlined text-[18px] text-emerald-700">table_view</span>
               <span>Unduh Format CSV / Excel</span>
-            </button>
-            <button type="button" onclick="runExport('print')" class="px-5 py-3 rounded-xl border border-garis bg-white text-tinta font-bold text-[13.5px] flex items-center gap-2 active:bg-gray-100">
-              <span class="material-symbols-outlined text-[20px]">print</span>
-              <span>Cetak Lembar Absensi (A4)</span>
             </button>
           </div>
         </div>
@@ -346,15 +386,41 @@
             </div>
           </div>
 
-          <!-- Tanggal Penutupan ISO -->
+          <!-- Tanggal Penutupan dan Admin Email -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="text-[12px] font-bold text-tinta block mb-1">Tanggal-Jam Penutupan (ISO / WIB)</label>
-              <input type="text" id="set-tutup-pada" class="w-full h-11 px-3 rounded-xl border border-garis text-[13px] font-medium">
+            <div class="bg-emerald-50/50 p-4 rounded-2xl border border-hijau-pondok/20 flex flex-col gap-2.5">
+              <div class="flex items-center justify-between">
+                <label class="text-[12.5px] font-bold text-tinta flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[18px] text-hijau-pondok">event_available</span>
+                  <span>Batas Waktu Penutupan Pendaftaran</span>
+                </label>
+                <span class="text-[10px] font-bold text-hijau-pondok bg-white px-2 py-0.5 rounded-full border border-garis shadow-xs">WIB (UTC+7)</span>
+              </div>
+              
+              <input type="datetime-local" id="set-tutup-pada-input" oninput="onDatetimeInputChange(this.value)" class="w-full h-11 px-3 rounded-xl border border-garis text-[14px] font-bold bg-white focus:outline-none focus:ring-2 focus:ring-hijau-pondok cursor-pointer shadow-xs">
+              <!-- Hidden input untuk menyimpan format ISO-8601 lengkap -->
+              <input type="hidden" id="set-tutup-pada">
+              
+              <!-- Quick Preset Tombol Cepat -->
+              <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                <span class="text-[10.5px] text-gray-500 font-semibold mr-0.5">Pintasan:</span>
+                <button type="button" onclick="setDeadlinePreset(1)" class="px-2.5 py-1 rounded-lg bg-white border border-garis hover:bg-emerald-50 active:scale-95 font-semibold text-[11px] text-gray-700 shadow-xs transition-transform">+1 Hari</button>
+                <button type="button" onclick="setDeadlinePreset(3)" class="px-2.5 py-1 rounded-lg bg-white border border-garis hover:bg-emerald-50 active:scale-95 font-semibold text-[11px] text-gray-700 shadow-xs transition-transform">+3 Hari</button>
+                <button type="button" onclick="setDeadlinePreset(7)" class="px-2.5 py-1 rounded-lg bg-white border border-garis hover:bg-emerald-50 active:scale-95 font-semibold text-[11px] text-gray-700 shadow-xs transition-transform">+1 Minggu</button>
+                <button type="button" onclick="setDeadlineEndOfDay()" class="px-2.5 py-1 rounded-lg bg-white border border-garis hover:bg-emerald-50 active:scale-95 font-semibold text-[11px] text-gray-700 shadow-xs transition-transform">Pukul 23:59</button>
+              </div>
+
+              <!-- Live Readable Preview -->
+              <div class="p-2.5 rounded-xl bg-white border border-garis/80 text-[11.5px] text-gray-700 flex items-center gap-2">
+                <span class="material-symbols-outlined text-hijau-pondok text-[16px] shrink-0">calendar_month</span>
+                <span>Terbaca: <strong id="preview-tutup-pada" class="text-hijau-pondok font-bold">-</strong></span>
+              </div>
             </div>
-            <div>
+
+            <div class="flex flex-col gap-2">
               <label class="text-[12px] font-bold text-tinta block mb-1">Email Akun Admin (Google)</label>
-              <input type="email" id="set-admin-email" class="w-full h-11 px-3 rounded-xl border border-garis text-[13px] font-medium">
+              <input type="email" id="set-admin-email" class="w-full h-11 px-3 rounded-xl border border-garis text-[13px] font-medium" placeholder="admin@gmail.com">
+              <p class="text-[11px] text-gray-500">Email akun Google panitia yang berhak login ke Panel Admin ini.</p>
             </div>
           </div>
 
@@ -416,6 +482,23 @@
             </button>
           </div>
         </form>
+
+        <!-- Zona Bahaya: Reset Pendaftaran -->
+        <div class="bg-red-50/60 border border-red-200 rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs">
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-merah-koreksi text-[28px] mt-0.5">warning</span>
+            <div>
+              <h4 class="font-bold text-[14px] text-merah-koreksi">Zona Bahaya: Reset Seluruh Pendaftaran</h4>
+              <p class="text-[12px] text-gray-600 mt-0.5">
+                Menghapus semua pendaftaran lembaga &amp; peserta di spreadsheet, serta mengembalikan nomor urut pendaftaran ke awal (MWR-001). Tindakan ini tidak dapat dibatalkan.
+              </p>
+            </div>
+          </div>
+          <button type="button" onclick="confirmResetAllData()" class="px-5 py-2.5 bg-merah-koreksi hover:bg-red-700 text-white font-bold text-[13px] rounded-xl flex items-center justify-center gap-1.5 shrink-0 shadow-sm active:scale-95 transition-all">
+            <span class="material-symbols-outlined text-[18px]">restart_alt</span>
+            <span>Reset Data &amp; Mulai dari 0</span>
+          </button>
+        </div>
       </section>
 
       <!-- ================= 5. MENU: RIWAYAT PERUBAHAN ================= -->
@@ -504,7 +587,13 @@
           </div>
           <div>
             <label class="font-bold text-[12px] block mb-1">Nomor WhatsApp</label>
-            <input type="text" id="edit-wa" class="w-full h-10 px-3 rounded-lg border border-garis font-mono">
+            <div class="flex gap-2">
+              <input type="text" id="edit-wa" oninput="updateModalWaLink()" placeholder="08..." class="flex-1 h-10 px-3 rounded-lg border border-garis font-mono font-bold">
+              <a id="btn-modal-chat-wa" href="#" target="_blank" rel="noopener noreferrer" class="px-3 h-10 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[12px] flex items-center gap-1.5 shrink-0 transition-colors shadow-xs" title="Langsung Chat WhatsApp">
+                <span class="material-symbols-outlined text-[17px]">chat</span>
+                <span>Chat WA</span>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -651,10 +740,16 @@
       historyPage: 1
     };
 
-    document.addEventListener('DOMContentLoaded', function() {
+    function initAdmin() {
       loadDashboard();
       loadSettings();
-    });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAdmin);
+    } else {
+      initAdmin();
+    }
 
     function adminNavTo(tabName) {
       adminState.activeTab = tabName;
@@ -856,15 +951,26 @@
       res.list.forEach(function(r) {
         var tr = document.createElement('tr');
         tr.className = 'hover:bg-gray-50/80 transition-colors';
+
+        var waLinkHtml = r.wa ? 
+          '<a href="' + getWhatsAppLink(r.wa, r.lembaga, r.kode) + '" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 mt-1 px-2.5 py-0.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-mono text-[11.5px] font-bold border border-emerald-200 transition-all shadow-xs active:scale-95" title="Klik untuk chat WhatsApp ke ' + r.koordinator + '">' +
+            '<span class="material-symbols-outlined text-[14px] text-emerald-600">chat</span>' +
+            '<span>' + r.wa + '</span>' +
+          '</a>' : '<span class="text-gray-400 text-[11px]">-</span>';
+
         tr.innerHTML = '<td class="p-3.5 font-mono font-bold text-hijau-pondok">' + r.kode + '</td>' +
           '<td class="p-3.5 font-bold text-tinta">' + r.lembaga + '</td>' +
           '<td class="p-3.5"><span class="px-2 py-0.5 rounded-full text-[10.5px] font-bold ' + (r.jenis === 'TKM' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800') + '">' + r.jenis + '</span></td>' +
           '<td class="p-3.5">' + r.desa + '</td>' +
           '<td class="p-3.5 text-center font-bold">' + r.jumlah + '</td>' +
-          '<td class="p-3.5 font-medium">' + r.koordinator + '<br><span class="text-[11px] text-gray-400 font-mono">' + r.wa + '</span></td>' +
+          '<td class="p-3.5"><div class="font-bold text-tinta">' + r.koordinator + '</div>' + waLinkHtml + '</td>' +
           '<td class="p-3.5 text-gray-500 text-[11.5px]">' + r.waktu_daftar + '</td>' +
-          '<td class="p-3.5 text-right">' +
-          '<button type="button" onclick="openEditModal(\'' + r.kode + '\')" class="px-2.5 py-1.5 bg-hijau-daun text-hijau-pondok font-bold rounded-lg hover:bg-hijau-pondok hover:text-white transition-colors text-[11.5px] mr-1">Edit</button>' +
+          '<td class="p-3.5 text-right whitespace-nowrap">' +
+          '<button type="button" onclick="downloadSinglePdf(\'' + r.kode + '\', this)" class="px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-bold rounded-lg transition-all text-[11.5px] mr-1.5 inline-flex items-center gap-1 active:scale-95" title="Unduh / Cetak Bukti PDF">' +
+            '<span class="material-symbols-outlined text-[15px] text-emerald-700">picture_as_pdf</span>' +
+            '<span>PDF</span>' +
+          '</button>' +
+          '<button type="button" onclick="openEditModal(\'' + r.kode + '\')" class="px-2.5 py-1.5 bg-hijau-daun text-hijau-pondok font-bold rounded-lg hover:bg-hijau-pondok hover:text-white transition-colors text-[11.5px]">Edit</button>' +
           '</td>';
         tbody.appendChild(tr);
       });
@@ -881,6 +987,39 @@
           pb.setAttribute('data-page', p);
           pb.onclick = function() { loadAdminRegistrations(this.getAttribute('data-page')); };
           btnBox.appendChild(pb);
+        }
+      }
+    }
+
+    // Helper link WhatsApp otomatis untuk Admin
+    function getWhatsAppLink(phone, lembaga, kode) {
+      if (!phone) return '#';
+      var digits = String(phone).replace(/\D/g, '');
+      if (digits.startsWith('0')) {
+        digits = '62' + digits.substring(1);
+      } else if (digits.startsWith('8')) {
+        digits = '62' + digits;
+      }
+      var text = "Assalamu'alaikum Wr. Wb. Panitia Lomba Mewarnai Haflah 1448 H mengonfirmasi data pendaftaran " +
+                 (lembaga ? (lembaga + ' ') : '') +
+                 (kode ? ('(' + kode + ')') : '');
+      return 'https://wa.me/' + digits + '?text=' + encodeURIComponent(text);
+    }
+
+    function updateModalWaLink() {
+      var waInput = document.getElementById('edit-wa');
+      var wa = waInput ? waInput.value.trim() : '';
+      var lembaga = document.getElementById('edit-lembaga') ? document.getElementById('edit-lembaga').value : '';
+      var kode = document.getElementById('edit-kode') ? document.getElementById('edit-kode').value : '';
+      var btn = document.getElementById('btn-modal-chat-wa');
+      if (btn) {
+        var digits = wa.replace(/\D/g, '');
+        if (digits.length >= 9) {
+          btn.href = getWhatsAppLink(wa, lembaga, kode);
+          btn.classList.remove('opacity-40', 'pointer-events-none');
+        } else {
+          btn.href = '#';
+          btn.classList.add('opacity-40', 'pointer-events-none');
         }
       }
     }
@@ -921,6 +1060,7 @@
       document.getElementById('edit-desa').value = d.desa;
       document.getElementById('edit-koordinator').value = d.koordinator;
       document.getElementById('edit-wa').value = d.wa;
+      updateModalWaLink();
 
       // Populate desa dropdown jika kosong
       var selDesa = document.getElementById('edit-desa');
@@ -1250,7 +1390,189 @@
       w.print();
     }
 
+    // Helper untuk memicu unduh file PDF dari Base64
+    function triggerPdfDownload(base64Data, filename) {
+      try {
+        var byteCharacters = atob(base64Data);
+        var byteNumbers = new Array(byteCharacters.length);
+        for (var i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        var blob = new Blob([byteArray], { type: 'application/pdf' });
+        
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = filename || 'Dokumen.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (e) {
+        var pdfWindow = window.open("");
+        if (pdfWindow) {
+          pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64," + encodeURI(base64Data) + "'></iframe>");
+        } else {
+          alert('Silakan izinkan popup browser untuk mengunduh dokumen PDF.');
+        }
+      }
+    }
+
+    // Unduh PDF Tunggal per Lembaga (dari tombol PDF di kolom AKSI)
+    function downloadSinglePdf(kode, btn) {
+      var origHtml = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="material-symbols-outlined text-[15px] animate-spin">progress_activity</span><span>Unduh...</span>';
+      }
+
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(function(res) {
+            if (btn) {
+              btn.disabled = false;
+              btn.innerHTML = origHtml;
+            }
+            if (res && res.base64) {
+              triggerPdfDownload(res.base64, res.filename);
+            } else {
+              alert('Gagal membuat PDF: Data berkas kosong.');
+            }
+          })
+          .withFailureHandler(function(err) {
+            if (btn) {
+              btn.disabled = false;
+              btn.innerHTML = origHtml;
+            }
+            alert('Gagal membuat PDF: ' + err.message);
+          })
+          .getReceiptPdf(kode);
+      } else {
+        setTimeout(function() {
+          if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = origHtml;
+          }
+          alert('Mode Mock: PDF Bukti Pendaftaran ' + kode + ' siap diunduh.');
+        }, 800);
+      }
+    }
+
+    // Unduh Daftar Hadir Resmi A4 Portrait (Opsi A & Opsi B)
+    function runAttendancePdfExport(type, btn) {
+      var scope = document.getElementById('export-scope').value;
+      var filterDesa = scope === 'desa' ? document.getElementById('export-select-desa').value : 'SEMUA';
+      
+      var origHtml = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">progress_activity</span><span>Membuat PDF...</span>';
+      }
+
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(function(res) {
+            if (btn) {
+              btn.disabled = false;
+              btn.innerHTML = origHtml;
+            }
+            if (res && res.base64) {
+              triggerPdfDownload(res.base64, res.filename);
+            } else {
+              alert('Gagal membuat dokumen: Data berkas kosong.');
+            }
+          })
+          .withFailureHandler(function(err) {
+            if (btn) {
+              btn.disabled = false;
+              btn.innerHTML = origHtml;
+            }
+            alert('Gagal membuat Daftar Hadir: ' + err.message);
+          })
+          .getAttendancePdf(type, filterDesa);
+      } else {
+        setTimeout(function() {
+          if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = origHtml;
+          }
+          alert('Mode Mock: Daftar Hadir Opsi ' + type + ' (Desa: ' + filterDesa + ') siap diunduh.');
+        }, 1000);
+      }
+    }
+
     // 6. Pengaturan
+    function toDatetimeLocalString(val) {
+      if (!val) return '';
+      if (typeof val === 'string') {
+        var match = val.match(/^(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2})/);
+        if (match) return match[1] + 'T' + match[2];
+      }
+      var d = new Date(val);
+      if (isNaN(d.getTime())) return '';
+      var year = d.getFullYear();
+      var month = ('0' + (d.getMonth() + 1)).slice(-2);
+      var day = ('0' + d.getDate()).slice(-2);
+      var hours = ('0' + d.getHours()).slice(-2);
+      var mins = ('0' + d.getMinutes()).slice(-2);
+      return year + '-' + month + '-' + day + 'T' + hours + ':' + mins;
+    }
+
+    function localToIsoWib(datetimeLocalVal) {
+      if (!datetimeLocalVal) return '2027-01-16T23:59:59+07:00';
+      var val = datetimeLocalVal.trim();
+      if (val.length === 16) return val + ':59+07:00';
+      if (val.length === 19) return val + '+07:00';
+      return val;
+    }
+
+    function formatIndonesianDatePreview(val) {
+      if (!val) return '-';
+      var d = null;
+      if (typeof val === 'string') {
+        var match = val.match(/^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})/);
+        if (match) {
+          d = new Date(parseInt(match[1]), parseInt(match[2]) - 1, parseInt(match[3]), parseInt(match[4]), parseInt(match[5]));
+        }
+      }
+      if (!d || isNaN(d.getTime())) d = new Date(val);
+      if (isNaN(d.getTime())) return 'Format tanggal tidak valid';
+      var days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+      var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+      var hh = ('0' + d.getHours()).slice(-2);
+      var mm = ('0' + d.getMinutes()).slice(-2);
+      return days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear() + ' pukul ' + hh + '.' + mm + ' WIB';
+    }
+
+    function onDatetimeInputChange(val) {
+      var iso = localToIsoWib(val);
+      var hidden = document.getElementById('set-tutup-pada');
+      if (hidden) hidden.value = iso;
+      var prev = document.getElementById('preview-tutup-pada');
+      if (prev) prev.textContent = formatIndonesianDatePreview(val);
+    }
+
+    function setDeadlinePreset(days) {
+      var input = document.getElementById('set-tutup-pada-input');
+      var curVal = input ? input.value : '';
+      var d = curVal ? new Date(curVal) : new Date();
+      if (isNaN(d.getTime())) d = new Date();
+      d.setDate(d.getDate() + days);
+      var formatted = toDatetimeLocalString(d);
+      if (input) input.value = formatted;
+      onDatetimeInputChange(formatted);
+    }
+
+    function setDeadlineEndOfDay() {
+      var input = document.getElementById('set-tutup-pada-input');
+      var curVal = input ? input.value : '';
+      var d = curVal ? new Date(curVal) : new Date();
+      if (isNaN(d.getTime())) d = new Date();
+      d.setHours(23, 59, 59, 0);
+      var formatted = toDatetimeLocalString(d);
+      if (input) input.value = formatted;
+      onDatetimeInputChange(formatted);
+    }
+
     function loadSettings() {
       if (typeof google !== 'undefined' && google.script && google.script.run) {
         google.script.run
@@ -1272,7 +1594,14 @@
         if (modes[i].value === s.mode) modes[i].checked = true;
       }
 
-      document.getElementById('set-tutup-pada').value = s.tutup_pada || '';
+      var isoVal = s.tutup_pada || '2027-01-16T23:59:59+07:00';
+      var hiddenInput = document.getElementById('set-tutup-pada');
+      if (hiddenInput) hiddenInput.value = isoVal;
+      var dateInput = document.getElementById('set-tutup-pada-input');
+      if (dateInput) dateInput.value = toDatetimeLocalString(isoVal);
+      var prevLabel = document.getElementById('preview-tutup-pada');
+      if (prevLabel) prevLabel.textContent = formatIndonesianDatePreview(isoVal);
+
       document.getElementById('set-admin-email').value = s.admin_email || '';
       document.getElementById('set-tgl-lomba').value = s.tanggal_pelaksanaan || '';
       document.getElementById('set-jam-lomba').value = s.jam || '';
@@ -1324,9 +1653,15 @@
         if (modes[i].checked) mode = modes[i].value;
       }
 
+      var tutupPadaVal = document.getElementById('set-tutup-pada').value.trim();
+      if (!tutupPadaVal) {
+        var inputPicker = document.getElementById('set-tutup-pada-input');
+        tutupPadaVal = localToIsoWib(inputPicker ? inputPicker.value.trim() : '');
+      }
+
       var payload = {
         mode: mode,
-        tutup_pada: document.getElementById('set-tutup-pada').value.trim(),
+        tutup_pada: tutupPadaVal,
         admin_email: document.getElementById('set-admin-email').value.trim(),
         tanggal_pelaksanaan: document.getElementById('set-tgl-lomba').value.trim(),
         jam: document.getElementById('set-jam-lomba').value.trim(),
@@ -1406,6 +1741,7 @@
         else if (h.aksi === 'UBAH') badgeColor = 'bg-blue-100 text-blue-800';
         else if (h.aksi === 'HAPUS') badgeColor = 'bg-red-100 text-red-800';
         else if (h.aksi === 'PENGATURAN') badgeColor = 'bg-amber-100 text-amber-800';
+        else if (h.aksi === 'RESET_DATA') badgeColor = 'bg-rose-600 text-white';
 
         card.innerHTML = '<div class="flex items-center justify-between">' +
           '<div class="flex items-center gap-2">' +
@@ -1429,6 +1765,69 @@
 
         container.appendChild(card);
       });
+    }
+
+    // 8. Reset Seluruh Data Pendaftaran ke 0
+    function confirmResetAllData() {
+      var pesan1 = "PERINGATAN TINGKAT TINGGI!\n\n" +
+        "Apakah Anda yakin ingin MERESET SEMUA DATA PENDAFTARAN?\n\n" +
+        "Tindakan ini akan:\n" +
+        "1. Menghapus seluruh data di sheet 'Pendaftaran'.\n" +
+        "2. Menghapus seluruh data di sheet 'Peserta'.\n" +
+        "3. Mengembalikan nomor urut pendaftaran ke 0 (pendaftar berikutnya akan mendapat kode MWR-001 kembali).\n\n" +
+        "Klik OK untuk melanjutkan konfirmasi.";
+
+      if (!confirm(pesan1)) return;
+
+      var konfirmasiKetik = prompt("Untuk keamanan dan mencegah ketidaksengajaan, ketik kata 'RESET' (huruf besar semua) di bawah ini lalu tekan OK:");
+      if (konfirmasiKetik !== "RESET") {
+        alert("Konfirmasi dibatalkan. Kata konfirmasi tidak cocok.");
+        return;
+      }
+
+      executeResetAllData();
+    }
+
+    function executeResetAllData() {
+      var overlay = document.createElement('div');
+      overlay.id = 'reset-loading-overlay';
+      overlay.className = 'fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex flex-col items-center justify-center text-white p-4';
+      overlay.innerHTML = '<div class="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin mb-4"></div>' +
+        '<p class="font-bold text-[16px]">Sedang mereset data pendaftaran dan nomor urut...</p>' +
+        '<p class="text-[12px] text-gray-300 mt-1">Mohon tunggu sebentar, jangan tutup halaman ini.</p>';
+      document.body.appendChild(overlay);
+
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(function(res) {
+            var ol = document.getElementById('reset-loading-overlay');
+            if (ol) ol.remove();
+
+            if (res && res.success) {
+              alert(res.message);
+              // Segarkan dashboard, tabel pendaftaran, dan riwayat
+              loadAdminDashboard();
+              loadAdminRegistrations(1);
+              loadAdminHistory(1);
+            } else {
+              alert('Gagal mereset: ' + (res && res.message ? res.message : 'Terjadi kesalahan.'));
+            }
+          })
+          .withFailureHandler(function(err) {
+            var ol = document.getElementById('reset-loading-overlay');
+            if (ol) ol.remove();
+            alert('Gagal mereset data: ' + err.message);
+          })
+          .resetAllRegistrationsData();
+      } else {
+        setTimeout(function() {
+          var ol = document.getElementById('reset-loading-overlay');
+          if (ol) ol.remove();
+          alert('Mode Mock: Seluruh pendaftaran berhasil direset ke 0 (MWR-001).');
+          loadAdminDashboard();
+          loadAdminRegistrations(1);
+        }, 1000);
+      }
     }
   </script>
 </body>
