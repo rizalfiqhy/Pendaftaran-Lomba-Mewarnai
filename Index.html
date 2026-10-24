@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Lomba Mewarnai Kreatif TKM &amp; RA Se-Kecamatan Wuluhan</title>
+  
+  <!-- Google Fonts & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:ital,wght@0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'hijau-pondok': '#005E39',
+            'hijau-daun': '#E7F2E9',
+            'emas-kop': '#EEB92B',
+            'emas-tua': '#6F5600',
+            'emas-muda': '#F6D26B',
+            'tinta': '#1C2A21',
+            'kertas': '#FAFCFA',
+            'garis': '#CBD8CE',
+            'merah-koreksi': '#B42318',
+            'kuning-peringatan': '#F6E7B4',
+            'krayon-hijau': '#2E8B4F',
+            'krayon-kuning': '#E2B33C',
+            'krayon-toska': '#2A9DA6',
+            'krayon-jingga': '#E8832A'
+          },
+          fontFamily: {
+            sans: ['"Atkinson Hyperlegible"', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  
+  <style>
+    body {
+      background-color: #FAFCFA;
+      color: #1C2A21;
+      font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    input, textarea, select {
+      user-select: auto;
+    }
+    .pb-safe { padding-bottom: env(safe-area-inset-bottom, 16px); }
+    .pt-safe { padding-top: env(safe-area-inset-top, 16px); }
+    
+    /* Pop-in animasi untuk kode MWR */
+    @keyframes popIn {
+      0% { transform: scale(0.85); opacity: 0; }
+      70% { transform: scale(1.06); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop-in {
+      animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .animate-pop-in { animation: none; opacity: 1; }
+    }
+  </style>
+</head>
+
+<body class="flex flex-col items-center min-h-screen">
+  <!-- Container Maksimum 480px untuk Desain Mobile-First Responsif -->
+  <div class="w-full max-w-[480px] min-h-screen bg-kertas flex flex-col relative shadow-md">
+    
+    <!-- Top Header -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-garis/60 px-4 py-2.5 flex items-center justify-between">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-9 h-9 rounded-lg bg-hijau-daun flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-hijau-pondok text-[22px]">palette</span>
+        </div>
+        <div class="flex flex-col min-w-0">
+          <span class="font-display font-extrabold text-[12px] leading-tight text-hijau-pondok truncate uppercase">
+            HAFLAH 1448 H • WULUHAN
+          </span>
+          <span class="text-[11px] text-gray-500 font-medium truncate" id="top-header-sub">
+            Lomba Mewarnai TKM &amp; RA
+          </span>
+        </div>
+      </div>
+      <div id="badge-header-status" class="shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-hijau-daun text-hijau-pondok">
+        <span class="material-symbols-outlined text-[14px]">check_circle</span>
+        <span>Dibuka</span>
+      </div>
+    </header>
+
+    <!-- Main Content Stage -->
+    <main class="flex-1 w-full pb-24" id="main-content">
+      
+      <!-- ======================================================== -->
+      <!-- LAYAR 1: BERANDA                                          -->
+      <!-- ======================================================== -->
+      <section id="screen-home" class="p-4 flex flex-col gap-4">
+        <!-- Kop Ringkas -->
+        <div class="bg-white rounded-2xl p-3.5 border border-garis flex items-center gap-3 shadow-xs">
+          <div class="w-12 h-14 flex items-center justify-center shrink-0 bg-hijau-daun/40 rounded-xl p-1">
+            <span class="material-symbols-outlined text-hijau-pondok text-[32px]">auto_stories</span>
+          </div>
+          <div class="flex flex-col min-w-0">
+            <h2 class="font-display font-bold text-[11.5px] leading-tight text-hijau-pondok uppercase tracking-tight">
+              PANITIA HAFLAH AL MILAD &amp; AKHIR AS SANAH 1448 H
+            </h2>
+            <div class="inline-flex items-center self-start px-2 py-0.5 rounded-full bg-hijau-pondok mt-1">
+              <span class="text-[9.5px] font-bold text-emas-muda tracking-wide uppercase">
+                YAYASAN ISLAM NAHDLATUTH THALABAH
+              </span>
+            </div>
+            <span class="text-[10px] text-gray-500 mt-0.5 font-medium">Kesilir • Wuluhan • Jember</span>
+          </div>
+        </div>
+
+        <!-- Banner Judul & Crayon Motif -->
+        <div class="flex flex-col items-center text-center pt-1">
+          <div id="home-status-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-hijau-daun text-hijau-pondok text-[12px] font-bold shadow-xs">
+            <span class="material-symbols-outlined text-[16px]">check_circle</span>
+            <span id="home-status-text">Pendaftaran Dibuka</span>
+          </div>
+          <h1 class="font-display font-extrabold text-[22px] leading-snug text-tinta mt-2">
+            Lomba Mewarnai Kreatif <br><span class="text-hijau-pondok">TKM &amp; RA</span> Se-Kecamatan Wuluhan
+          </h1>
+          <!-- 4 Crayon Signature Motif -->
+          <div class="flex items-center justify-center gap-1.5 my-2">
+            <span class="w-7 h-2 rounded-full bg-krayon-hijau"></span>
+            <span class="w-7 h-2 rounded-full bg-krayon-kuning"></span>
+            <span class="w-7 h-2 rounded-full bg-krayon-toska"></span>
+            <span class="w-7 h-2 rounded-full bg-krayon-jingga"></span>
+          </div>
+          <p class="text-[13px] text-gray-600 max-w-[340px]">
+            Pendaftaran kolektif satu pintu untuk sekolah TKM dan RA. Pasangan kreatif ibu dan santri cilik.
+          </p>
+        </div>
+
+        <!-- Countdown Timer Card -->
+        <div id="countdown-container" class="bg-white rounded-2xl p-4 border border-garis shadow-xs flex flex-col gap-2.5">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1.5 text-hijau-pondok font-bold text-[13px]">
+              <span class="material-symbols-outlined text-[18px]">timer</span>
+              <span>Sisa Waktu Pendaftaran</span>
+            </div>
+            <span class="text-[10.5px] font-bold px-2 py-0.5 rounded-full bg-kuning-peringatan text-tinta">
+              WIB (Server)
+            </span>
+          </div>
+          <div class="grid grid-cols-4 gap-2 text-center" id="countdown-boxes">
+            <div class="bg-hijau-daun/50 rounded-xl py-2 flex flex-col items-center">
+              <span class="font-display font-extrabold text-[20px] text-tinta" id="timer-days">--</span>
+              <span class="text-[10px] uppercase font-bold text-gray-500">Hari</span>
+            </div>
+            <div class="bg-hijau-daun/50 rounded-xl py-2 flex flex-col items-center">
+              <span class="font-display font-extrabold text-[20px] text-tinta" id="timer-hours">--</span>
+              <span class="text-[10px] uppercase font-bold text-gray-500">Jam</span>
+            </div>
+            <div class="bg-hijau-daun/50 rounded-xl py-2 flex flex-col items-center">
+              <span class="font-display font-extrabold text-[20px] text-tinta" id="timer-mins">--</span>
+              <span class="text-[10px] uppercase font-bold text-gray-500">Menit</span>
+            </div>
+            <div class="bg-hijau-daun/50 rounded-xl py-2 flex flex-col items-center">
+              <span class="font-display font-extrabold text-[20px] text-krayon-jingga" id="timer-secs">--</span>
+              <span class="text-[10px] uppercase font-bold text-gray-500">Detik</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 text-[11px] text-gray-500 pt-0.5">
+            <span class="material-symbols-outlined text-[15px] text-merah-koreksi">event_busy</span>
+            <span>Ditutup: <strong class="text-tinta" id="lbl-tutup-pada">16 Januari 2027 pukul 23.59 WIB</strong></span>
+          </div>
+        </div>
+
+        <!-- Tombol Aksi Utama (CTA) -->
+        <div class="flex flex-col gap-1.5 pt-1">
+          <button id="btn-cta-daftar" onclick="navTo('form')" class="w-full h-13 py-3.5 px-4 rounded-xl bg-hijau-pondok text-white font-display font-bold text-[16px] flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-transform">
+            <span class="material-symbols-outlined text-[22px]">how_to_reg</span>
+            <span>Daftar Sekarang</span>
+          </button>
+          <p class="text-center text-[11.5px] text-gray-500">
+            Biaya Pendaftaran: <strong class="text-hijau-pondok">100% Gratis</strong> • Kuota s/d 100 Anak per Lembaga
+          </p>
+        </div>
+
+        <!-- Ringkasan Pelaksanaan Lomba -->
+        <div class="bg-white rounded-2xl p-4 border border-garis flex flex-col gap-3 shadow-xs">
+          <div class="flex items-center gap-2 text-hijau-pondok font-bold text-[13.5px]">
+            <span class="material-symbols-outlined text-[20px]">calendar_month</span>
+            <span>Jadwal &amp; Lokasi Acara</span>
+          </div>
+          <div class="grid grid-cols-1 gap-2.5 text-[12.5px]">
+            <div class="flex items-start gap-2.5">
+              <span class="material-symbols-outlined text-gray-400 text-[18px] mt-0.5">event</span>
+              <div>
+                <strong class="text-tinta block" id="lbl-tanggal-pelaksanaan">Sabtu, 23 Januari 2027</strong>
+                <span class="text-gray-500 text-[11.5px]" id="lbl-jam-pelaksanaan">07.00 WIB sampai selesai</span>
+              </div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <span class="material-symbols-outlined text-gray-400 text-[18px] mt-0.5">location_on</span>
+              <div>
+                <strong class="text-tinta block">PPTQ BUQ YASINAT</strong>
+                <span class="text-gray-500 text-[11.5px]" id="lbl-lokasi">Kesilir, Wuluhan, Jember</span>
+              </div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <span class="material-symbols-outlined text-gray-400 text-[18px] mt-0.5">diversity_3</span>
+              <div>
+                <strong class="text-tinta block">Peserta Lomba</strong>
+                <span class="text-gray-500 text-[11.5px]">Ibu dan santri cilik perwakilan lembaga TKM &amp; RA</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- LAYAR 2: FORMULIR PENDAFTARAN 4 LANGKAH                   -->
+      <!-- ======================================================== -->
+      <section id="screen-form" class="hidden flex flex-col">
+        <!-- 4 Crayons Step Indicator -->
+        <div class="sticky top-[53px] z-30 bg-white/95 backdrop-blur-md border-b border-garis px-4 py-3">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11.5px] font-bold text-gray-500 flex items-center gap-1">
+              <span class="material-symbols-outlined text-[15px] text-hijau-pondok">palette</span>
+              <span>Proses Pendaftaran</span>
+            </span>
+            <span class="text-[12px] font-extrabold text-hijau-pondok" id="lbl-step-indicator">
+              Langkah 1 dari 4
+            </span>
+          </div>
+          <!-- 4 Crayon Rail -->
+          <div class="grid grid-cols-4 gap-1.5" id="crayons-rail">
+            <!-- Crayon 1 -->
+            <div class="flex flex-col items-center" id="cr-step-1">
+              <div class="w-full h-4 rounded-md bg-krayon-hijau transition-all"></div>
+              <span class="text-[10px] font-bold text-hijau-pondok mt-1 truncate">1. Lembaga</span>
+            </div>
+            <!-- Crayon 2 -->
+            <div class="flex flex-col items-center opacity-40" id="cr-step-2">
+              <div class="w-full h-4 rounded-md bg-krayon-kuning transition-all"></div>
+              <span class="text-[10px] font-bold text-gray-500 mt-1 truncate">2. Peserta</span>
+            </div>
+            <!-- Crayon 3 -->
+            <div class="flex flex-col items-center opacity-40" id="cr-step-3">
+              <div class="w-full h-4 rounded-md bg-krayon-toska transition-all"></div>
+              <span class="text-[10px] font-bold text-gray-500 mt-1 truncate">3. Kontak</span>
+            </div>
+            <!-- Crayon 4 -->
+            <div class="flex flex-col items-center opacity-40" id="cr-step-4">
+              <div class="w-full h-4 rounded-md bg-krayon-jingga transition-all"></div>
+              <span class="text-[10px] font-bold text-gray-500 mt-1 truncate">4. Periksa</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Step Containers -->
+        <div class="p-4 flex flex-col gap-4">
+          
+          <!-- ================= LANGKAH 1: DATA LEMBAGA ================= -->
+          <div id="form-step-1" class="flex flex-col gap-4">
+            <div class="bg-white rounded-2xl p-4 border border-garis flex flex-col gap-4 shadow-xs">
+              <div class="flex items-center justify-between border-b border-garis/50 pb-2.5">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-full bg-hijau-daun flex items-center justify-center text-hijau-pondok font-bold text-[13px]">1</div>
+                  <h3 class="font-display font-bold text-[15px] text-tinta">Identitas Lembaga</h3>
+                </div>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-hijau-daun text-hijau-pondok">Wajib</span>
+              </div>
+
+              <!-- Pilihan Jenis Lembaga: TKM vs RA -->
+              <div class="flex flex-col gap-1.5">
+                <label class="text-[12.5px] font-bold text-tinta flex justify-between">
+                  <span>Jenis Lembaga</span>
+                  <span class="text-gray-400 font-normal text-[11px]">Pilih salah satu</span>
+                </label>
+                <div class="grid grid-cols-2 gap-2 bg-gray-100 p-1 rounded-xl">
+                  <button type="button" id="btn-inst-tkm" onclick="setInstitutionType('TKM')" class="h-13 py-2 rounded-lg flex flex-col items-center justify-center font-display font-extrabold text-[15px] bg-hijau-pondok text-white shadow-xs transition-all">
+                    <span>TKM</span>
+                    <span class="text-[9.5px] opacity-90 font-sans font-normal">Taman Kanak-Kanak</span>
+                  </button>
+                  <button type="button" id="btn-inst-ra" onclick="setInstitutionType('RA')" class="h-13 py-2 rounded-lg flex flex-col items-center justify-center font-display font-extrabold text-[15px] bg-transparent text-gray-600 transition-all">
+                    <span>RA</span>
+                    <span class="text-[9.5px] opacity-90 font-sans font-normal">Raudhatul Athfal</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Nama Lembaga -->
+              <div class="flex flex-col gap-1.5">
+                <label for="input-lembaga" class="text-[12.5px] font-bold text-tinta">
+                  Nama Lembaga / Sekolah
+                </label>
+                <input type="text" id="input-lembaga" autocapitalize="characters" autocomplete="off" placeholder="CONTOH: TKM NURUL HUDA" class="w-full h-12 px-3.5 rounded-xl border border-garis bg-kertas text-[15px] font-bold text-tinta focus:outline-none focus:border-hijau-pondok focus:ring-1 focus:ring-hijau-pondok transition-all uppercase">
+                <span class="text-[11px] text-gray-400">Otomatis huruf kapital saat mengetik.</span>
+                <span class="text-[11.5px] text-merah-koreksi hidden font-bold" id="err-lembaga"></span>
+              </div>
+
+              <!-- Asal Desa -->
+              <div class="flex flex-col gap-1.5">
+                <label for="select-desa" class="text-[12.5px] font-bold text-tinta">
+                  Asal Desa di Kecamatan Wuluhan
+                </label>
+                <div class="relative">
+                  <select id="select-desa" class="w-full h-12 px-3.5 rounded-xl border border-garis bg-kertas text-[14px] font-medium text-tinta appearance-none focus:outline-none focus:border-hijau-pondok focus:ring-1 focus:ring-hijau-pondok">
+                    <option value="">-- Pilih Asal Desa --</option>
+                  </select>
+                  <span class="material-symbols-outlined absolute right-3 top-3 pointer-events-none text-gray-500">expand_more</span>
+                </div>
+                <span class="text-[11.5px] text-merah-koreksi hidden font-bold" id="err-desa"></span>
+              </div>
+            </div>
+
+            <!-- Sticky Bottom Navigation Step 1 -->
+            <div class="pt-2">
+              <button type="button" onclick="goToStep(2)" class="w-full h-13 py-3.5 rounded-xl bg-hijau-pondok text-white font-display font-bold text-[15px] flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-transform">
+                <span>Lanjut ke Daftar Peserta</span>
+                <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ================= LANGKAH 2: PESERTA ================= -->
+          <div id="form-step-2" class="hidden flex flex-col gap-4">
+            <div class="bg-white rounded-2xl p-4 border border-garis flex flex-col gap-4 shadow-xs">
+              <div class="flex items-center justify-between border-b border-garis/50 pb-2.5">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-full bg-krayon-kuning/30 flex items-center justify-center text-emas-tua font-bold text-[13px]">2</div>
+                  <h3 class="font-display font-bold text-[15px] text-tinta">Daftar Anak Peserta</h3>
+                </div>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-hijau-daun text-hijau-pondok">1 - 100 Anak</span>
+              </div>
+
+              <!-- Stepper Jumlah Peserta -->
+              <div class="flex flex-col gap-1.5">
+                <label class="text-[12.5px] font-bold text-tinta flex justify-between">
+                  <span>Jumlah Peserta</span>
+                  <span class="text-gray-400 font-normal text-[11px]">Boleh 1 sampai 100 anak</span>
+                </label>
+                <div class="flex items-center gap-3">
+                  <button type="button" onclick="changeParticipantCount(-1)" class="w-12 h-12 rounded-xl border border-garis bg-gray-50 text-tinta font-bold text-[22px] flex items-center justify-center active:bg-gray-200 transition-colors">
+                    -
+                  </button>
+                  <input type="number" id="input-jumlah-peserta" min="1" max="100" value="1" onchange="onManualCountChange()" class="flex-1 h-12 text-center text-[18px] font-display font-extrabold text-tinta border border-garis rounded-xl bg-kertas focus:outline-none focus:border-hijau-pondok">
+                  <button type="button" onclick="changeParticipantCount(1)" class="w-12 h-12 rounded-xl border border-garis bg-gray-50 text-tinta font-bold text-[22px] flex items-center justify-center active:bg-gray-200 transition-colors">
+                    +
+                  </button>
+                </div>
+                <span class="text-[11.5px] text-merah-koreksi hidden font-bold" id="err-jumlah"></span>
+              </div>
+
+              <!-- Fitur Tempel Banyak Nama Sekaligus (Lipat-Buka) -->
+              <div class="border border-garis/80 rounded-xl overflow-hidden bg-kertas">
+                <button type="button" onclick="toggleBatchPaste()" class="w-full px-3 py-2.5 flex items-center justify-between text-left bg-hijau-daun/40 hover:bg-hijau-daun/70 transition-colors">
+                  <span class="text-[12px] font-bold text-hijau-pondok flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[17px]">content_paste</span>
+                    <span>Tempel Banyak Nama Sekaligus (dari WhatsApp)</span>
+                  </span>
+                  <span class="material-symbols-outlined text-hijau-pondok text-[18px]" id="icon-batch-toggle">expand_more</span>
+                </button>
+                
+                <div id="batch-paste-panel" class="hidden p-3 border-t border-garis flex flex-col gap-2">
+                  <p class="text-[11px] text-gray-500">
+                    Salin daftar nama dari WhatsApp lalu tempel di bawah ini (satu baris satu nama). Nomor awalan seperti "1." atau "2)" akan dibersihkan otomatis.
+                  </p>
+                  <textarea id="textarea-batch-names" rows="5" oninput="previewBatchPaste()" placeholder="1. Aisyah Nur Fadilah&#10;2. Muhammad Rafa&#10;3. Fatimah Az-Zahra" class="w-full p-2.5 rounded-lg border border-garis text-[13px] uppercase font-mono focus:outline-none focus:border-hijau-pondok"></textarea>
+                  <div class="flex items-center justify-between pt-1">
+                    <span class="text-[11.5px] font-bold text-tinta" id="lbl-batch-preview">
+                      Ditemukan: 0 nama
+                    </span>
+                    <button type="button" onclick="applyBatchPaste()" class="px-3 py-1.5 bg-hijau-pondok text-white text-[12px] font-bold rounded-lg shadow-xs active:scale-95 transition-transform">
+                      Pakai Nama Ini
+                    </button>
+                  </div>
+                  <span class="text-[11px] text-merah-koreksi hidden font-bold" id="err-batch"></span>
+                </div>
+              </div>
+
+              <!-- Baris Nama Peserta Bernomor -->
+              <div class="flex flex-col gap-2 pt-1">
+                <label class="text-[12.5px] font-bold text-tinta flex justify-between">
+                  <span>Nama Lengkap Anak Peserta</span>
+                  <span class="text-gray-400 font-normal text-[11px]">Enter untuk baris berikutnya</span>
+                </label>
+                <div id="participant-rows-container" class="flex flex-col gap-2.5 max-h-[380px] overflow-y-auto pr-1">
+                  <!-- Diisi secara dinamis oleh JavaScript -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Sticky Bottom Navigation Step 2 -->
+            <div class="grid grid-cols-2 gap-2 pt-2">
+              <button type="button" onclick="goToStep(1)" class="h-12 py-3 rounded-xl border border-garis bg-white text-tinta font-bold text-[14px] flex items-center justify-center gap-1 active:bg-gray-100">
+                <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                <span>Kembali</span>
+              </button>
+              <button type="button" onclick="goToStep(3)" class="h-12 py-3 rounded-xl bg-hijau-pondok text-white font-display font-bold text-[14px] flex items-center justify-center gap-1 shadow-sm active:scale-[0.98]">
+                <span>Lanjut ke Kontak</span>
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ================= LANGKAH 3: KOORDINATOR ================= -->
+          <div id="form-step-3" class="hidden flex flex-col gap-4">
+            <div class="bg-white rounded-2xl p-4 border border-garis flex flex-col gap-4 shadow-xs">
+              <div class="flex items-center justify-between border-b border-garis/50 pb-2.5">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-full bg-krayon-toska/30 flex items-center justify-center text-krayon-toska font-bold text-[13px]">3</div>
+                  <h3 class="font-display font-bold text-[15px] text-tinta">Kontak Koordinator</h3>
+                </div>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-hijau-daun text-hijau-pondok">Wajib</span>
+              </div>
+
+              <!-- Nama Koordinator -->
+              <div class="flex flex-col gap-1.5">
+                <label for="input-koordinator" class="text-[12.5px] font-bold text-tinta">
+                  Nama Koordinator (Guru / Pengurus)
+                </label>
+                <input type="text" id="input-koordinator" autocapitalize="characters" autocomplete="off" placeholder="CONTOH: SITI AMINAH, S.PD." class="w-full h-12 px-3.5 rounded-xl border border-garis bg-kertas text-[15px] font-bold text-tinta focus:outline-none focus:border-hijau-pondok uppercase">
+                <span class="text-[11.5px] text-merah-koreksi hidden font-bold" id="err-koordinator"></span>
+              </div>
+
+              <!-- Nomor WhatsApp -->
+              <div class="flex flex-col gap-1.5">
+                <label for="input-wa" class="text-[12.5px] font-bold text-tinta">
+                  Nomor WhatsApp Koordinator
+                </label>
+                <input type="tel" id="input-wa" inputmode="tel" placeholder="CONTOH: 0812 3456 7890" class="w-full h-12 px-3.5 rounded-xl border border-garis bg-kertas text-[15px] font-bold text-tinta focus:outline-none focus:border-hijau-pondok">
+                <p class="text-[11px] text-gray-500 leading-tight">
+                  Dipakai panitia bila perlu menghubungi lembaga terkait perlombaan. <strong>Nomor WhatsApp ini tidak akan pernah ditampilkan untuk umum.</strong>
+                </p>
+                <span class="text-[11.5px] text-merah-koreksi hidden font-bold" id="err-wa"></span>
+              </div>
+            </div>
+
+            <!-- Sticky Bottom Navigation Step 3 -->
+            <div class="grid grid-cols-2 gap-2 pt-2">
+              <button type="button" onclick="goToStep(2)" class="h-12 py-3 rounded-xl border border-garis bg-white text-tinta font-bold text-[14px] flex items-center justify-center gap-1 active:bg-gray-100">
+                <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                <span>Kembali</span>
+              </button>
+              <button type="button" onclick="goToStep(4)" class="h-12 py-3 rounded-xl bg-hijau-pondok text-white font-display font-bold text-[14px] flex items-center justify-center gap-1 shadow-sm active:scale-[0.98]">
+                <span>Periksa Isian</span>
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ================= LANGKAH 4: PERIKSA & KIRIM ================= -->
+          <div id="form-step-4" class="hidden flex flex-col gap-4">
+            <div class="bg-white rounded-2xl p-4 border border-garis flex flex-col gap-4 shadow-xs">
+              <div class="flex items-center justify-between border-b border-garis/50 pb-2.5">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-full bg-krayon-jingga/30 flex items-center justify-center text-krayon-jingga font-bold text-[13px]">4</div>
+                  <h3 class="font-display font-bold text-[15px] text-tinta">Periksa Data Pendaftaran</h3>
+                </div>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-kuning-peringatan text-tinta">Langkah Akhir</span>
+              </div>
+
+              <!-- Ringkasan Lembaga -->
+              <div class="bg-kertas rounded-xl p-3 border border-garis flex flex-col gap-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-bold uppercase text-hijau-pondok">1. Data Lembaga</span>
+                  <button type="button" onclick="goToStep(1)" class="text-[11.5px] font-bold text-hijau-pondok underline">Ubah</button>
+                </div>
+                <div class="text-[13px] font-extrabold text-tinta" id="review-lembaga">-</div>
+                <div class="text-[11.5px] text-gray-500" id="review-desa">-</div>
+              </div>
+
+              <!-- Ringkasan Koordinator -->
+              <div class="bg-kertas rounded-xl p-3 border border-garis flex flex-col gap-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-bold uppercase text-hijau-pondok">2. Kontak Koordinator</span>
+                  <button type="button" onclick="goToStep(3)" class="text-[11.5px] font-bold text-hijau-pondok underline">Ubah</button>
+                </div>
+                <div class="text-[13px] font-bold text-tinta" id="review-koordinator">-</div>
+                <div class="text-[11.5px] text-gray-500" id="review-wa">-</div>
+              </div>
+
+              <!-- Ringkasan Peserta -->
+              <div class="bg-kertas rounded-xl p-3 border border-garis flex flex-col gap-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-bold uppercase text-hijau-pondok" id="review-count-header">3. Daftar Peserta</span>
+                  <button type="button" onclick="goToStep(2)" class="text-[11.5px] font-bold text-hijau-pondok underline">Ubah</button>
+                </div>
+                <div class="max-h-[160px] overflow-y-auto pr-1 flex flex-col gap-1 border-t border-garis/50 pt-2" id="review-participant-list">
+                  <!-- Diisi secara dinamis -->
+                </div>
+              </div>
+
+              <!-- Peringatan Akhir -->
+              <div class="p-3 bg-kuning-peringatan/50 border border-emas-kop/40 rounded-xl flex items-start gap-2">
+                <span class="material-symbols-outlined text-emas-tua text-[18px] shrink-0 mt-0.5">warning</span>
+                <p class="text-[11.5px] text-tinta leading-tight">
+                  Pastikan seluruh ejaan nama anak sudah benar. <strong>Setelah terkirim, data pendaftaran hanya bisa diubah atau diperbaiki melalui panitia lomba.</strong>
+                </p>
+              </div>
+            </div>
+
+            <!-- Error Banner Kirim -->
+            <div id="submit-error-banner" class="hidden p-3 bg-red-50 border border-merah-koreksi rounded-xl text-merah-koreksi text-[12px] font-bold">
+            </div>
+
+            <!-- Sticky Bottom Navigation Step 4 -->
+            <div class="grid grid-cols-2 gap-2 pt-2">
+              <button type="button" id="btn-back-from-4" onclick="goToStep(3)" class="h-13 py-3 rounded-xl border border-garis bg-white text-tinta font-bold text-[14px] flex items-center justify-center gap-1 active:bg-gray-100">
+                <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                <span>Kembali</span>
+              </button>
+              <button type="button" id="btn-submit-reg" onclick="submitFinalRegistration()" class="h-13 py-3 rounded-xl bg-hijau-pondok text-white font-display font-bold text-[15px] flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-all">
+                <span class="material-symbols-outlined text-[20px]">send</span>
+                <span id="btn-submit-label">Kirim Pendaftaran</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- LAYAR 3: SUKSES PENDAFTARAN                               -->
+      <!-- ======================================================== -->
+      <section id="screen-success" class="hidden p-4 flex flex-col items-center text-center gap-4">
+        <!-- Sukses Icon -->
+        <div class="w-16 h-16 rounded-full bg-hijau-daun flex items-center justify-center text-hijau-pondok mt-2 shadow-xs">
+          <span class="material-symbols-outlined text-[36px]">check_circle</span>
+        </div>
+
+        <div>
+          <h2 class="font-display font-extrabold text-[22px] text-tinta">
+            Pendaftaran Berhasil!
+          </h2>
+          <p class="text-[12.5px] text-gray-500 mt-0.5">
+            Data delegasi peserta lomba mewarnai telah tercatat di sistem panitia.
+          </p>
+        </div>
+
+        <!-- Nomor Dada Peserta (Animated Pop-In) -->
+        <div class="w-full bg-white rounded-2xl p-5 border-2 border-dashed border-hijau-pondok shadow-md flex flex-col items-center gap-1 animate-pop-in">
+          <span class="text-[11px] font-bold text-gray-500 uppercase tracking-widest">KODE RESMI PENDAFTARAN</span>
+          <div class="font-display font-extrabold text-[38px] text-hijau-pondok tracking-wider" id="success-code-display">
+            MWR-001
+          </div>
+          <span class="text-[11px] text-gray-400">Tunjukkan kode ini saat daftar ulang</span>
+        </div>
+
+        <!-- Ringkasan Singkat -->
+        <div class="w-full bg-white rounded-2xl p-4 border border-garis text-left flex flex-col gap-2 shadow-xs text-[12.5px]">
+          <div class="flex justify-between border-b border-garis/50 pb-1.5">
+            <span class="text-gray-500">Lembaga:</span>
+            <strong class="text-tinta" id="success-lembaga">-</strong>
+          </div>
+          <div class="flex justify-between border-b border-garis/50 pb-1.5">
+            <span class="text-gray-500">Asal Desa:</span>
+            <strong class="text-tinta" id="success-desa">-</strong>
+          </div>
+          <div class="flex justify-between border-b border-garis/50 pb-1.5">
+            <span class="text-gray-500">Jumlah Anak:</span>
+            <strong class="text-tinta" id="success-jumlah">-</strong>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-500">Waktu Daftar:</span>
+            <strong class="text-tinta" id="success-waktu">-</strong>
+          </div>
+        </div>
+
+        <!-- Tombol Unduh Bukti PDF & Daftarkan Lagi -->
+        <div class="w-full flex flex-col gap-2 pt-2">
+          <button type="button" id="btn-download-receipt" onclick="downloadReceiptPdf()" class="w-full h-13 py-3.5 rounded-xl bg-hijau-pondok text-white font-display font-bold text-[15px] flex items-center justify-center gap-2 shadow-md active:scale-[0.98]">
+            <span class="material-symbols-outlined text-[22px]">download</span>
+            <span id="lbl-btn-pdf">Unduh Bukti PDF Resmi</span>
+          </button>
+          
+          <button type="button" onclick="registerAnotherInstitution()" class="w-full h-12 py-3 rounded-xl border border-garis bg-white text-tinta font-bold text-[14px] flex items-center justify-center gap-2 active:bg-gray-100">
+            <span class="material-symbols-outlined text-[18px]">add_circle</span>
+            <span>Daftarkan Lembaga Lain</span>
+          </button>
+        </div>
+
+        <!-- Peringatan Simpan Bukti -->
+        <div class="p-3 bg-kuning-peringatan/50 border border-emas-kop/40 rounded-xl text-[11px] text-gray-700 leading-tight text-center">
+          <strong>Perhatian:</strong> Simpan bukti PDF ini ke HP Anda. Jangan tutup halaman ini sebelum mengunduh. Data yang sudah terkirim hanya dapat diubah melalui panitia.
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- LAYAR 4: DAFTAR PESERTA PUBLIK                            -->
+      <!-- ======================================================== -->
+      <section id="screen-participants" class="hidden p-4 flex flex-col gap-3">
+        <div>
+          <h2 class="font-display font-extrabold text-[18px] text-tinta">
+            Daftar Peserta Terdaftar
+          </h2>
+          <p class="text-[12px] text-gray-500">
+            Periksa delegasi lembaga dan nama santri yang sudah terdaftar resmi.
+          </p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3.5 top-3 text-gray-400 text-[20px]">search</span>
+          <input type="text" id="input-search-public" oninput="onSearchPublicInput()" placeholder="Cari lembaga, nama anak, atau kode..." class="w-full h-11 pl-10 pr-10 rounded-xl border border-garis bg-white text-[13px] font-medium text-tinta focus:outline-none focus:border-hijau-pondok">
+          <button type="button" id="btn-clear-search" onclick="clearPublicSearch()" class="hidden absolute right-3 top-2.5 text-gray-400 hover:text-gray-600">
+            <span class="material-symbols-outlined text-[20px]">cancel</span>
+          </button>
+        </div>
+
+        <!-- Filter Bar: Jenis & Desa -->
+        <div class="flex items-center gap-2">
+          <!-- Filter Jenis -->
+          <div class="grid grid-cols-3 gap-1 bg-gray-100 p-0.5 rounded-xl shrink-0 text-[11.5px] font-bold">
+            <button type="button" id="btn-filter-all" onclick="setPublicFilterJenis('SEMUA')" class="px-2.5 py-1.5 rounded-lg bg-hijau-pondok text-white shadow-xs">Semua</button>
+            <button type="button" id="btn-filter-tkm" onclick="setPublicFilterJenis('TKM')" class="px-2.5 py-1.5 rounded-lg text-gray-600">TKM</button>
+            <button type="button" id="btn-filter-ra" onclick="setPublicFilterJenis('RA')" class="px-2.5 py-1.5 rounded-lg text-gray-600">RA</button>
+          </div>
+          <!-- Filter Desa -->
+          <div class="relative flex-1">
+            <select id="select-filter-desa" onchange="onFilterDesaChange()" class="w-full h-9 px-2.5 rounded-xl border border-garis bg-white text-[11.5px] font-bold text-tinta appearance-none">
+              <option value="SEMUA">Semua Desa</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-2 top-2 pointer-events-none text-gray-500 text-[18px]">expand_more</span>
+          </div>
+        </div>
+
+        <!-- Meta info & Refresh -->
+        <div class="flex items-center justify-between text-[11.5px] text-gray-500 pt-0.5 border-b border-garis/40 pb-2">
+          <span id="lbl-participant-counter">Memuat data peserta...</span>
+          <button type="button" onclick="loadPublicParticipants(true)" class="flex items-center gap-1 text-hijau-pondok font-bold hover:underline">
+            <span class="material-symbols-outlined text-[15px]">refresh</span>
+            <span>Muat Ulang</span>
+          </button>
+        </div>
+
+        <!-- Accordion List Container -->
+        <div id="public-participants-list" class="flex flex-col gap-2">
+          <!-- Skeleton Loading by default -->
+          <div class="h-16 bg-gray-100 rounded-xl animate-pulse"></div>
+          <div class="h-16 bg-gray-100 rounded-xl animate-pulse"></div>
+          <div class="h-16 bg-gray-100 rounded-xl animate-pulse"></div>
+        </div>
+
+        <!-- Button Tampilkan Lebih Banyak -->
+        <div class="pt-2 text-center hidden" id="container-load-more">
+          <button type="button" onclick="showMoreParticipants()" class="px-4 py-2 bg-white border border-garis rounded-xl text-[12.5px] font-bold text-hijau-pondok shadow-xs active:bg-gray-50">
+            Tampilkan 20 Lembaga Lagi
+          </button>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- LAYAR 5: INFO & PETUNJUK TEKNIS                           -->
+      <!-- ======================================================== -->
+      <section id="screen-info" class="hidden p-4 flex flex-col gap-4">
+        <div>
+          <h2 class="font-display font-extrabold text-[18px] text-tinta">
+            Petunjuk Teknis Lomba
+          </h2>
+          <p class="text-[12px] text-gray-500">
+            Informasi ketentuan teknis, jadwal, lokasi, dan kontak resmi panitia.
+          </p>
+        </div>
+
+        <!-- Jadwal & Lokasi Card -->
+        <div class="bg-white rounded-2xl p-4 border border-garis flex flex-col gap-2.5 shadow-xs text-[12.5px]">
+          <h3 class="font-display font-bold text-[14px] text-hijau-pondok flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[18px]">event</span>
+            <span>Waktu &amp; Tempat Pelaksanaan</span>
+          </h3>
+          <p class="text-tinta">
+            <strong>Hari/Tanggal:</strong> <span id="info-tgl">-</span><br>
+            <strong>Waktu:</strong> <span id="info-jam">-</span><br>
+            <strong>Lokasi:</strong> <span id="info-lokasi">-</span>
+          </p>
+        </div>
+
+        <!-- Ketentuan Teknis Lomba Card -->
+        <div class="bg-white rounded-2xl p-4 border border-garis flex flex-col gap-2.5 shadow-xs text-[12.5px]">
+          <h3 class="font-display font-bold text-[14px] text-hijau-pondok flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[18px]">gavel</span>
+            <span>Ketentuan Teknis Perlombaan</span>
+          </h3>
+          <div id="info-juknis-text" class="text-gray-700 whitespace-pre-line leading-relaxed">
+            Ketentuan akan diumumkan oleh panitia.
+          </div>
+        </div>
+
+        <!-- Kontak Panitia WhatsApp Card -->
+        <div class="bg-white rounded-2xl p-4 border border-garis flex flex-col gap-3 shadow-xs">
+          <h3 class="font-display font-bold text-[14px] text-hijau-pondok flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[18px]">support_agent</span>
+            <span>Layanan Kontak Panitia (WhatsApp)</span>
+          </h3>
+          <p class="text-[12px] text-gray-500">
+            Silakan hubungi koordinator panitia sesuai jenjang lembaga Anda jika membutuhkan bantuan:
+          </p>
+          <div class="flex flex-col gap-2">
+            <!-- Kontak TKM -->
+            <a id="btn-wa-tkm" href="#" target="_blank" class="w-full py-3 px-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-center justify-between active:scale-[0.99] transition-transform">
+              <div class="flex items-center gap-2.5">
+                <span class="material-symbols-outlined text-emerald-600 text-[22px]">chat</span>
+                <div class="flex flex-col text-left">
+                  <span class="text-[13px] font-bold" id="lbl-wa-tkm-nama">Panitia TKM: Ibu Dita</span>
+                  <span class="text-[11px] text-emerald-600" id="lbl-wa-tkm-no">0852-5971-9093</span>
+                </div>
+              </div>
+              <span class="text-[11.5px] font-bold px-2 py-0.5 rounded-full bg-emerald-600 text-white">Chat WA</span>
+            </a>
+            <!-- Kontak RA -->
+            <a id="btn-wa-ra" href="#" target="_blank" class="w-full py-3 px-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-center justify-between active:scale-[0.99] transition-transform">
+              <div class="flex items-center gap-2.5">
+                <span class="material-symbols-outlined text-emerald-600 text-[22px]">chat</span>
+                <div class="flex flex-col text-left">
+                  <span class="text-[13px] font-bold" id="lbl-wa-ra-nama">Panitia RA: Ibu Fitriyah</span>
+                  <span class="text-[11px] text-emerald-600" id="lbl-wa-ra-no">0822-3255-1107</span>
+                </div>
+              </div>
+              <span class="text-[11.5px] font-bold px-2 py-0.5 rounded-full bg-emerald-600 text-white">Chat WA</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Identitas Resmi Kop Surat Lengkap di Bagian Bawah -->
+        <div class="bg-white rounded-2xl p-4 border border-garis flex flex-col items-center text-center gap-1.5 shadow-xs">
+          <span class="text-[11px] font-bold text-hijau-pondok uppercase tracking-wider" id="info-kop-1">
+            PANITIA HAFLAH AL MILAD &amp; AKHIR AS SANAH 1448 H
+          </span>
+          <div class="px-2.5 py-0.5 rounded-full bg-hijau-pondok">
+            <span class="text-[9.5px] font-bold text-emas-muda tracking-wide uppercase" id="info-kop-2">
+              YAYASAN ISLAM NAHDLATUTH THALABAH
+            </span>
+          </div>
+          <span class="text-[10px] text-gray-500 pt-1" id="info-kop-3">
+            Sekretariat : PP. Nahdlatuth Thalabah Kesilir - Wuluhan - Jember
+          </span>
+          <span class="text-[9.5px] text-gray-400" id="info-kop-4">
+            WhatsApp : +62 812-1768-7686 Email : panitiahafahyasinat@gmail.com
+          </span>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- LAYAR 6: PENDAFTARAN TELAH DITUTUP                        -->
+      <!-- ======================================================== -->
+      <section id="screen-closed" class="hidden p-4 flex flex-col items-center text-center gap-4">
+        <div class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center text-merah-koreksi mt-4">
+          <span class="material-symbols-outlined text-[36px]">cancel</span>
+        </div>
+        <div>
+          <h2 class="font-display font-extrabold text-[20px] text-merah-koreksi">
+            Pendaftaran Telah Ditutup
+          </h2>
+          <p class="text-[12.5px] text-gray-600 mt-1 max-w-[320px]">
+            Batas waktu pendaftaran lomba mewarnai telah berakhir pada tanggal yang ditetapkan panitia.
+          </p>
+        </div>
+
+        <div class="w-full bg-white rounded-2xl p-4 border border-garis flex flex-col gap-2 text-[12px] text-gray-600 shadow-xs">
+          <p>Jika lembaga Anda memiliki kendala teknis atau pertanyaan, silakan hubungi kontak panitia:</p>
+          <div class="flex flex-col gap-2 pt-1">
+            <a id="btn-closed-wa-tkm" href="#" target="_blank" class="py-2.5 px-3 rounded-xl bg-hijau-pondok text-white font-bold flex items-center justify-center gap-1.5">
+              <span class="material-symbols-outlined text-[18px]">chat</span>
+              <span>Hubungi Panitia TKM (Ibu Dita)</span>
+            </a>
+            <a id="btn-closed-wa-ra" href="#" target="_blank" class="py-2.5 px-3 rounded-xl bg-hijau-pondok text-white font-bold flex items-center justify-center gap-1.5">
+              <span class="material-symbols-outlined text-[18px]">chat</span>
+              <span>Hubungi Panitia RA (Ibu Fitriyah)</span>
+            </a>
+          </div>
+        </div>
+
+        <button type="button" onclick="navTo('participants')" class="w-full h-12 py-3 rounded-xl border border-garis bg-white text-tinta font-bold text-[13.5px] flex items-center justify-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px]">groups</span>
+          <span>Lihat Daftar Peserta Terdaftar</span>
+        </button>
+      </section>
+
+    </main>
+
+    <!-- Fixed Bottom Navigation Bar (56px) -->
+    <nav class="fixed bottom-0 max-w-[480px] w-full z-40 bg-white/95 backdrop-blur-md border-t border-garis pb-safe">
+      <div class="h-14 grid grid-cols-4 items-center text-center">
+        <!-- Tab Beranda -->
+        <button type="button" id="tab-nav-home" onclick="navTo('home')" class="flex flex-col items-center justify-center h-full text-hijau-pondok transition-colors">
+          <span class="material-symbols-outlined text-[22px]">home</span>
+          <span class="text-[10px] font-bold">Beranda</span>
+        </button>
+        <!-- Tab Daftar -->
+        <button type="button" id="tab-nav-form" onclick="navTo('form')" class="flex flex-col items-center justify-center h-full text-gray-400 hover:text-tinta transition-colors">
+          <span class="material-symbols-outlined text-[22px]">how_to_reg</span>
+          <span class="text-[10px] font-bold" id="lbl-tab-form">Daftar</span>
+        </button>
+        <!-- Tab Peserta -->
+        <button type="button" id="tab-nav-participants" onclick="navTo('participants')" class="flex flex-col items-center justify-center h-full text-gray-400 hover:text-tinta transition-colors">
+          <span class="material-symbols-outlined text-[22px]">groups</span>
+          <span class="text-[10px] font-bold">Peserta</span>
+        </button>
+        <!-- Tab Info -->
+        <button type="button" id="tab-nav-info" onclick="navTo('info')" class="flex flex-col items-center justify-center h-full text-gray-400 hover:text-tinta transition-colors">
+          <span class="material-symbols-outlined text-[22px]">info</span>
+          <span class="text-[10px] font-bold">Info</span>
+        </button>
+      </div>
+    </nav>
+
+  </div>
+
+  <!-- SCRIPT LOGIKA APLIKASI WEB PUBLIC -->
+  <script>
+    // State Global
+    var appState = {
+      config: null,
+      serverTimeDeltaMs: 0,
+      currentStep: 1,
+      formData: {
+        jenis: 'TKM',
+        lembaga: '',
+        desa: '',
+        jumlah: 1,
+        nama_anak: [''],
+        koordinator: '',
+        wa: '',
+        request_id: ''
+      },
+      lastRegisteredSummary: null,
+      publicParticipants: [],
+      filteredInstitutions: [],
+      searchQuery: '',
+      filterJenis: 'SEMUA',
+      filterDesa: 'SEMUA',
+      displayedCount: 20,
+      countdownTimerInterval: null
+    };
+
+    // Inisialisasi saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+      initRequestId();
+      loadDraftFromStorage();
+      fetchPublicConfig();
+    });
+
+    // Inisialisasi request_id acak untuk idempotensi pengiriman
+    function initRequestId() {
+      if (!appState.formData.request_id) {
+        appState.formData.request_id = 'REQ-' + Date.now() + '-' + Math.random().toString(36).substring(2, 9).toUpperCase();
+      }
+    }
+
+    // Navigasi Layar (SPA)
+    function navTo(screenName) {
+      var screens = ['home', 'form', 'success', 'participants', 'info', 'closed'];
+      screens.forEach(function(s) {
+        var el = document.getElementById('screen-' + s);
+        if (el) el.classList.add('hidden');
+      });
+
+      // Update Nav Tab Colors
+      ['home', 'form', 'participants', 'info'].forEach(function(t) {
+        var tab = document.getElementById('tab-nav-' + t);
+        if (tab) {
+          tab.classList.remove('text-hijau-pondok');
+          tab.classList.add('text-gray-400');
+        }
+      });
+
+      var activeTab = document.getElementById('tab-nav-' + screenName);
+      if (activeTab) {
+        activeTab.classList.remove('text-gray-400');
+        activeTab.classList.add('text-hijau-pondok');
+      }
+
+      // Jika pendaftaran ditutup dan user klik tab form, arahkan ke layar closed
+      if (screenName === 'form' && appState.config && appState.config.status !== 'open') {
+        screenName = 'closed';
+      }
+
+      var targetScreen = document.getElementById('screen-' + screenName);
+      if (targetScreen) targetScreen.classList.remove('hidden');
+
+      window.scrollTo(0, 0);
+
+      if (screenName === 'participants') {
+        if (!appState.publicParticipants || appState.publicParticipants.length === 0) {
+          loadPublicParticipants(false);
+        }
+      }
+    }
+
+    // Ambil Pengaturan Publik dari Server
+    function fetchPublicConfig() {
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(onPublicConfigLoaded)
+          .withFailureHandler(function(err) {
+            console.error('Gagal memuat config:', err);
+          })
+          .getPublicConfig();
+      } else {
+        // Fallback untuk pengetesan lokal tanpa Apps Script backend
+        onPublicConfigLoaded({
+          status: 'open',
+          mode: 'otomatis',
+          server_time: new Date().toISOString(),
+          tutup_pada: '2027-01-16T23:59:59+07:00',
+          judul: 'Lomba Mewarnai Kreatif TKM & RA Se-Kecamatan Wuluhan',
+          tanggal_pelaksanaan: 'Sabtu, 23 Januari 2027',
+          jam: '07.00 WIB sampai selesai',
+          lokasi: 'PPTQ BUQ YASINAT, Kesilir, Wuluhan, Jember',
+          kontak_tkm_nama: 'Ibu Dita',
+          kontak_tkm_wa: '0852-5971-9093',
+          kontak_ra_nama: 'Ibu Fitriyah',
+          kontak_ra_wa: '0822-3255-1107',
+          ketentuan_teknis: '1. Peserta adalah pasangan ibu dan anak jenjang TKM & RA se-Wuluhan.\n2. Kertas gambar disediakan panitia, krayon dan meja dibawa sendiri.',
+          daftar_desa: ['Ampel', 'Dukuh Dempok', 'Glundengan', 'Kesilir', 'Lojejer', 'Tamansari', 'Tanjungrejo'],
+          tampilkan_peserta: true,
+          kop: {
+            baris1: 'PANITIA HAFLAH AL MILAD & AKHIR AS SANAH 1448 H',
+            baris2: 'YAYASAN ISLAM NAHDLATUTH THALABAH',
+            baris3: 'Sekretariat : PP. Nahdlatuth Thalabah Kesilir - Wuluhan - Jember',
+            baris4: 'WhatsApp : +62 812-1768-7686 Email : panitiahafahyasinat@gmail.com'
+          }
+        });
+      }
+    }
+
+    function onPublicConfigLoaded(cfg) {
+      appState.config = cfg;
+      
+      // Hitung selisih jam server dan jam HP
+      var serverNow = new Date(cfg.server_time).getTime();
+      var clientNow = Date.now();
+      appState.serverTimeDeltaMs = serverNow - clientNow;
+
+      // Update Header & Badge
+      var isOpen = (cfg.status === 'open');
+      var badgeTop = document.getElementById('badge-header-status');
+      var badgeHome = document.getElementById('home-status-badge');
+      var txtHomeStatus = document.getElementById('home-status-text');
+      var btnCtaDaftar = document.getElementById('btn-cta-daftar');
+      var lblTabForm = document.getElementById('lbl-tab-form');
+
+      if (!isOpen) {
+        badgeTop.className = 'shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-red-100 text-merah-koreksi';
+        badgeTop.innerHTML = '<span class="material-symbols-outlined text-[14px]">cancel</span><span>Ditutup</span>';
+        
+        badgeHome.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-merah-koreksi text-[12px] font-bold shadow-xs';
+        badgeHome.innerHTML = '<span class="material-symbols-outlined text-[16px]">cancel</span><span>Pendaftaran Telah Ditutup</span>';
+        
+        btnCtaDaftar.className = 'w-full h-13 py-3.5 px-4 rounded-xl bg-merah-koreksi text-white font-display font-bold text-[16px] flex items-center justify-center gap-2 shadow-sm active:scale-[0.98]';
+        btnCtaDaftar.innerHTML = '<span class="material-symbols-outlined text-[22px]">contact_support</span><span>Hubungi Panitia</span>';
+        btnCtaDaftar.onclick = function() { navTo('info'); };
+        
+        lblTabForm.textContent = 'Ditutup';
+      }
+
+      // Update Teks Info & Jadwal
+      document.getElementById('lbl-tanggal-pelaksanaan').textContent = cfg.tanggal_pelaksanaan;
+      document.getElementById('lbl-jam-pelaksanaan').textContent = cfg.jam;
+      document.getElementById('lbl-lokasi').textContent = cfg.lokasi;
+      
+      document.getElementById('info-tgl').textContent = cfg.tanggal_pelaksanaan;
+      document.getElementById('info-jam').textContent = cfg.jam;
+      document.getElementById('info-lokasi').textContent = cfg.lokasi;
+      document.getElementById('info-juknis-text').textContent = cfg.ketentuan_teknis;
+      
+      // Update WA Links
+      var cleanWaTkm = (cfg.kontak_tkm_wa || '').replace(/\D/g, '');
+      if (cleanWaTkm.startsWith('0')) cleanWaTkm = '62' + cleanWaTkm.substring(1);
+      var linkWaTkm = 'https://wa.me/' + cleanWaTkm + '?text=' + encodeURIComponent("Assalamu'alaikum, saya ingin bertanya tentang Lomba Mewarnai TKM Haflah 1448 H.");
+      
+      var cleanWaRa = (cfg.kontak_ra_wa || '').replace(/\D/g, '');
+      if (cleanWaRa.startsWith('0')) cleanWaRa = '62' + cleanWaRa.substring(1);
+      var linkWaRa = 'https://wa.me/' + cleanWaRa + '?text=' + encodeURIComponent("Assalamu'alaikum, saya ingin bertanya tentang Lomba Mewarnai RA Haflah 1448 H.");
+
+      document.getElementById('btn-wa-tkm').href = linkWaTkm;
+      document.getElementById('btn-wa-ra').href = linkWaRa;
+      document.getElementById('btn-closed-wa-tkm').href = linkWaTkm;
+      document.getElementById('btn-closed-wa-ra').href = linkWaRa;
+      
+      document.getElementById('lbl-wa-tkm-nama').textContent = 'Panitia TKM: ' + (cfg.kontak_tkm_nama || 'Ibu Dita');
+      document.getElementById('lbl-wa-tkm-no').textContent = cfg.kontak_tkm_wa || '0852-5971-9093';
+      document.getElementById('lbl-wa-ra-nama').textContent = 'Panitia RA: ' + (cfg.kontak_ra_nama || 'Ibu Fitriyah');
+      document.getElementById('lbl-wa-ra-no').textContent = cfg.kontak_ra_wa || '0822-3255-1107';
+
+      // Update Kop Info
+      if (cfg.kop) {
+        document.getElementById('info-kop-1').textContent = cfg.kop.baris1;
+        document.getElementById('info-kop-2').textContent = cfg.kop.baris2;
+        document.getElementById('info-kop-3').textContent = cfg.kop.baris3;
+        document.getElementById('info-kop-4').textContent = cfg.kop.baris4;
+      }
+
+      // Populate Pilihan Desa
+      var selectDesa = document.getElementById('select-desa');
+      var filterDesa = document.getElementById('select-filter-desa');
+      selectDesa.innerHTML = '<option value="">-- Pilih Asal Desa --</option>';
+      filterDesa.innerHTML = '<option value="SEMUA">Semua Desa</option>';
+
+      if (Array.isArray(cfg.daftar_desa)) {
+        cfg.daftar_desa.forEach(function(d) {
+          var opt1 = document.createElement('option');
+          opt1.value = d;
+          opt1.textContent = d;
+          selectDesa.appendChild(opt1);
+
+          var opt2 = document.createElement('option');
+          opt2.value = d;
+          opt2.textContent = d;
+          filterDesa.appendChild(opt2);
+        });
+      }
+
+      // Sembunyikan tab Peserta jika dinonaktifkan di pengaturan
+      var tabPeserta = document.getElementById('tab-nav-participants');
+      if (!cfg.tampilkan_peserta && tabPeserta) {
+        tabPeserta.style.display = 'none';
+      }
+
+      // Jalankan Countdown Timer
+      startCountdownTimer(cfg.tutup_pada);
+    }
+
+    // Countdown Timer Realtime
+    function startCountdownTimer(deadlineStr) {
+      if (appState.countdownTimerInterval) clearInterval(appState.countdownTimerInterval);
+      
+      var targetTime = new Date(deadlineStr).getTime();
+
+      function updateClock() {
+        var now = Date.now() + appState.serverTimeDeltaMs;
+        var diff = targetTime - now;
+
+        if (diff <= 0) {
+          document.getElementById('timer-days').textContent = '00';
+          document.getElementById('timer-hours').textContent = '00';
+          document.getElementById('timer-mins').textContent = '00';
+          document.getElementById('timer-secs').textContent = '00';
+          clearInterval(appState.countdownTimerInterval);
+          return;
+        }
+
+        var d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        var h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        var s = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('timer-days').textContent = (d < 10 ? '0' : '') + d;
+        document.getElementById('timer-hours').textContent = (h < 10 ? '0' : '') + h;
+        document.getElementById('timer-mins').textContent = (m < 10 ? '0' : '') + m;
+        document.getElementById('timer-secs').textContent = (s < 10 ? '0' : '') + s;
+      }
+
+      updateClock();
+      appState.countdownTimerInterval = setInterval(updateClock, 1000);
+    }
+
+    // Alur Langkah Formulir (Step 1 s/d 4)
+    function goToStep(stepNum) {
+      // Validasi sebelum lanjut ke langkah berikutnya
+      if (stepNum > appState.currentStep) {
+        if (appState.currentStep === 1 && !validateStep1()) return;
+        if (appState.currentStep === 2 && !validateStep2()) return;
+        if (appState.currentStep === 3 && !validateStep3()) return;
+      }
+
+      appState.currentStep = stepNum;
+      document.getElementById('lbl-step-indicator').textContent = 'Langkah ' + stepNum + ' dari 4';
+
+      // Sembunyikan semua langkah
+      for (var i = 1; i <= 4; i++) {
+        var el = document.getElementById('form-step-' + i);
+        if (el) el.classList.add('hidden');
+
+        var cr = document.getElementById('cr-step-' + i);
+        if (cr) {
+          if (i <= stepNum) {
+            cr.classList.remove('opacity-40');
+          } else {
+            cr.classList.add('opacity-40');
+          }
+        }
+      }
+
+      var activeEl = document.getElementById('form-step-' + stepNum);
+      if (activeEl) activeEl.classList.remove('hidden');
+
+      if (stepNum === 4) {
+        populateReviewStep();
+      }
+
+      window.scrollTo(0, 0);
+      saveDraftToStorage();
+    }
+
+    // Pilihan Jenis Lembaga TKM / RA
+    function setInstitutionType(type) {
+      appState.formData.jenis = type;
+      var btnTkm = document.getElementById('btn-inst-tkm');
+      var btnRa = document.getElementById('btn-inst-ra');
+
+      if (type === 'TKM') {
+        btnTkm.className = 'h-13 py-2 rounded-lg flex flex-col items-center justify-center font-display font-extrabold text-[15px] bg-hijau-pondok text-white shadow-xs transition-all';
+        btnRa.className = 'h-13 py-2 rounded-lg flex flex-col items-center justify-center font-display font-extrabold text-[15px] bg-transparent text-gray-600 transition-all';
+      } else {
+        btnRa.className = 'h-13 py-2 rounded-lg flex flex-col items-center justify-center font-display font-extrabold text-[15px] bg-hijau-pondok text-white shadow-xs transition-all';
+        btnTkm.className = 'h-13 py-2 rounded-lg flex flex-col items-center justify-center font-display font-extrabold text-[15px] bg-transparent text-gray-600 transition-all';
+      }
+      saveDraftToStorage();
+    }
+
+    // Validasi Langkah 1
+    function validateStep1() {
+      var lembagaInput = document.getElementById('input-lembaga');
+      var desaSelect = document.getElementById('select-desa');
+      var errLembaga = document.getElementById('err-lembaga');
+      var errDesa = document.getElementById('err-desa');
+
+      var isValid = true;
+      var lembaga = lembagaInput.value.trim().toUpperCase();
+      var desa = desaSelect.value.trim();
+
+      if (!lembaga) {
+        errLembaga.textContent = 'Nama lembaga wajib diisi.';
+        errLembaga.classList.remove('hidden');
+        lembagaInput.classList.add('border-merah-koreksi');
+        isValid = false;
+      } else {
+        errLembaga.classList.add('hidden');
+        lembagaInput.classList.remove('border-merah-koreksi');
+      }
+
+      if (!desa) {
+        errDesa.textContent = 'Asal desa wajib dipilih.';
+        errDesa.classList.remove('hidden');
+        desaSelect.classList.add('border-merah-koreksi');
+        isValid = false;
+      } else {
+        errDesa.classList.add('hidden');
+        desaSelect.classList.remove('border-merah-koreksi');
+      }
+
+      if (isValid) {
+        appState.formData.lembaga = lembaga;
+        appState.formData.desa = desa;
+      }
+      return isValid;
+    }
+
+    // Stepper Jumlah Peserta
+    function changeParticipantCount(delta) {
+      var current = parseInt(document.getElementById('input-jumlah-peserta').value, 10) || 1;
+      var newCount = current + delta;
+      if (newCount < 1) newCount = 1;
+      if (newCount > 100) newCount = 100;
+
+      // Jika mengurangi dan baris yang akan dihapus ada isinya, konfirmasi
+      if (delta < 0 && newCount < current) {
+        var hasContent = false;
+        for (var i = newCount; i < appState.formData.nama_anak.length; i++) {
+          if (appState.formData.nama_anak[i] && appState.formData.nama_anak[i].trim()) {
+            hasContent = true;
+            break;
+          }
+        }
+        if (hasContent) {
+          var confirmed = confirm('Baris nomor ' + (newCount + 1) + ' sampai ' + current + ' sudah berisi nama dan akan dihapus. Lanjutkan?');
+          if (!confirmed) return;
+        }
+      }
+
+      document.getElementById('input-jumlah-peserta').value = newCount;
+      updateParticipantRows(newCount);
+    }
+
+    function onManualCountChange() {
+      var count = parseInt(document.getElementById('input-jumlah-peserta').value, 10);
+      if (isNaN(count) || count < 1) count = 1;
+      if (count > 100) count = 100;
+      document.getElementById('input-jumlah-peserta').value = count;
+      updateParticipantRows(count);
+    }
+
+    // Render Ulang Baris Input Nama Peserta
+    function updateParticipantRows(count) {
+      appState.formData.jumlah = count;
+      var container = document.getElementById('participant-rows-container');
+      
+      // Ambil nilai yang sedang terketik
+      var currentInputs = container.querySelectorAll('input');
+      for (var k = 0; k < currentInputs.length; k++) {
+        if (k < appState.formData.nama_anak.length) {
+          appState.formData.nama_anak[k] = currentInputs[k].value.toUpperCase();
+        }
+      }
+
+      // Sesuaikan panjang array
+      while (appState.formData.nama_anak.length < count) {
+        appState.formData.nama_anak.push('');
+      }
+      while (appState.formData.nama_anak.length > count) {
+        appState.formData.nama_anak.pop();
+      }
+
+      container.innerHTML = '';
+
+      for (var i = 0; i < count; i++) {
+        var no = i + 1;
+        var val = appState.formData.nama_anak[i] || '';
+
+        var rowDiv = document.createElement('div');
+        rowDiv.className = 'flex flex-col gap-1';
+        rowDiv.id = 'row-peserta-' + no;
+
+        var inputRow = document.createElement('div');
+        inputRow.className = 'flex items-center gap-2';
+
+        var noBadge = document.createElement('span');
+        noBadge.className = 'w-7 text-[12px] font-bold text-gray-500 text-right shrink-0';
+        noBadge.textContent = no + '.';
+
+        var inp = document.createElement('input');
+        inp.type = 'text';
+        inp.id = 'input-nama-' + no;
+        inp.value = val;
+        inp.placeholder = 'NAMA ANAK NOMOR ' + no;
+        inp.setAttribute('autocapitalize', 'characters');
+        inp.setAttribute('autocomplete', 'off');
+        inp.className = 'flex-1 h-11 px-3 rounded-xl border border-garis bg-kertas text-[13.5px] font-bold text-tinta focus:outline-none focus:border-hijau-pondok uppercase';
+        
+        // Enter pindah ke baris berikutnya
+        inp.setAttribute('data-index', i);
+        inp.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            var nextIdx = parseInt(this.getAttribute('data-index'), 10) + 1;
+            var nextInp = document.getElementById('input-nama-' + (nextIdx + 1));
+            if (nextInp) nextInp.focus();
+          }
+        });
+
+        inp.addEventListener('input', function() {
+          var idx = parseInt(this.getAttribute('data-index'), 10);
+          this.value = this.value.toUpperCase();
+          appState.formData.nama_anak[idx] = this.value;
+          saveDraftToStorage();
+        });
+
+        inputRow.appendChild(noBadge);
+        inputRow.appendChild(inp);
+
+        var errSpan = document.createElement('span');
+        errSpan.id = 'err-nama-' + no;
+        errSpan.className = 'text-[11px] text-merah-koreksi pl-9 hidden font-bold';
+
+        rowDiv.appendChild(inputRow);
+        rowDiv.appendChild(errSpan);
+        container.appendChild(rowDiv);
+      }
+      saveDraftToStorage();
+    }
+
+    // Tempel Banyak Nama Sekaligus
+    function toggleBatchPaste() {
+      var panel = document.getElementById('batch-paste-panel');
+      var icon = document.getElementById('icon-batch-toggle');
+      if (panel.classList.contains('hidden')) {
+        panel.classList.remove('hidden');
+        icon.textContent = 'expand_less';
+      } else {
+        panel.classList.add('hidden');
+        icon.textContent = 'expand_more';
+      }
+    }
+
+    function parseBatchText(rawText) {
+      var lines = rawText.split('\n');
+      var names = [];
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i].trim();
+        if (!line) continue;
+        // Bersihkan awalan nomor seperti "1. ", "2) ", "3 - ", dsb
+        var cleaned = line.replace(/^\d+[\.\)\-\s]+/, '').trim().toUpperCase();
+        if (cleaned) {
+          names.push(cleaned);
+        }
+      }
+      return names;
+    }
+
+    function previewBatchPaste() {
+      var text = document.getElementById('textarea-batch-names').value;
+      var names = parseBatchText(text);
+      var err = document.getElementById('err-batch');
+      var lbl = document.getElementById('lbl-batch-preview');
+
+      lbl.textContent = 'Ditemukan: ' + names.length + ' nama';
+
+      if (names.length > 100) {
+        err.textContent = 'Maksimal 100 nama. Ditemukan ' + names.length + ' nama.';
+        err.classList.remove('hidden');
+      } else {
+        err.classList.add('hidden');
+      }
+    }
+
+    function applyBatchPaste() {
+      var text = document.getElementById('textarea-batch-names').value;
+      var names = parseBatchText(text);
+
+      if (names.length === 0) {
+        alert('Tidak ada nama valid yang ditemukan.');
+        return;
+      }
+      if (names.length > 100) {
+        alert('Jumlah nama melebihi batas maksimal 100 anak.');
+        return;
+      }
+
+      appState.formData.nama_anak = names;
+      document.getElementById('input-jumlah-peserta').value = names.length;
+      updateParticipantRows(names.length);
+      toggleBatchPaste();
+    }
+
+    // Validasi Langkah 2 (Nama Kosong & Nama Kembar)
+    function validateStep2() {
+      var count = appState.formData.jumlah;
+      var isValid = true;
+      var firstErrorElement = null;
+
+      // Ambil input terkini
+      for (var k = 0; k < count; k++) {
+        var inpElem = document.getElementById('input-nama-' + (k + 1));
+        if (inpElem) {
+          appState.formData.nama_anak[k] = inpElem.value.trim().toUpperCase();
+        }
+      }
+
+      var seen = {};
+
+      for (var i = 0; i < count; i++) {
+        var no = i + 1;
+        var name = appState.formData.nama_anak[i] || '';
+        var inp = document.getElementById('input-nama-' + no);
+        var err = document.getElementById('err-nama-' + no);
+
+        err.classList.add('hidden');
+        inp.classList.remove('border-merah-koreksi');
+
+        if (!name) {
+          err.textContent = 'Nama anak nomor ' + no + ' belum diisi';
+          err.classList.remove('hidden');
+          inp.classList.add('border-merah-koreksi');
+          isValid = false;
+          if (!firstErrorElement) firstErrorElement = inp;
+        } else {
+          if (seen[name]) {
+            var duplicateWithNo = seen[name];
+            err.textContent = 'Nama anak nomor ' + no + ' sama dengan nomor ' + duplicateWithNo;
+            err.classList.remove('hidden');
+            inp.classList.add('border-merah-koreksi');
+
+            // Tandai juga baris kembarannya
+            var firstInp = document.getElementById('input-nama-' + duplicateWithNo);
+            if (firstInp) firstInp.classList.add('border-merah-koreksi');
+
+            isValid = false;
+            if (!firstErrorElement) firstErrorElement = inp;
+          } else {
+            seen[name] = no;
+          }
+        }
+      }
+
+      if (!isValid && firstErrorElement) {
+        firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        firstErrorElement.focus();
+      }
+      return isValid;
+    }
+
+    // Validasi Langkah 3 (Koordinator & WhatsApp)
+    function validateStep3() {
+      var koorInput = document.getElementById('input-koordinator');
+      var waInput = document.getElementById('input-wa');
+      var errKoor = document.getElementById('err-koordinator');
+      var errWa = document.getElementById('err-wa');
+
+      var isValid = true;
+      var koor = koorInput.value.trim().toUpperCase();
+      var wa = waInput.value.trim().replace(/[\s\-\(\)\.]/g, '');
+
+      if (!koor) {
+        errKoor.textContent = 'Nama koordinator wajib diisi.';
+        errKoor.classList.remove('hidden');
+        koorInput.classList.add('border-merah-koreksi');
+        isValid = false;
+      } else {
+        errKoor.classList.add('hidden');
+        koorInput.classList.remove('border-merah-koreksi');
+      }
+
+      // Validasi nomor WhatsApp
+      if (wa.startsWith('+62')) wa = '0' + wa.substring(3);
+      else if (wa.startsWith('62')) wa = '0' + wa.substring(2);
+
+      if (!/^08\d{8,12}$/.test(wa)) {
+        errWa.textContent = 'Nomor WhatsApp tidak valid. Contoh: 0812 3456 7890';
+        errWa.classList.remove('hidden');
+        waInput.classList.add('border-merah-koreksi');
+        isValid = false;
+      } else {
+        errWa.classList.add('hidden');
+        waInput.classList.remove('border-merah-koreksi');
+      }
+
+      if (isValid) {
+        appState.formData.koordinator = koor;
+        appState.formData.wa = wa;
+      }
+      return isValid;
+    }
+
+    // Isi Ringkasan Langkah 4 (Periksa)
+    function populateReviewStep() {
+      document.getElementById('review-lembaga').textContent = appState.formData.jenis + ' ' + appState.formData.lembaga;
+      document.getElementById('review-desa').textContent = 'Desa ' + appState.formData.desa;
+      document.getElementById('review-koordinator').textContent = appState.formData.koordinator;
+      document.getElementById('review-wa').textContent = appState.formData.wa;
+      document.getElementById('review-count-header').textContent = '3. Daftar Peserta (' + appState.formData.nama_anak.length + ' Anak)';
+
+      var listContainer = document.getElementById('review-participant-list');
+      listContainer.innerHTML = '';
+
+      for (var i = 0; i < appState.formData.nama_anak.length; i++) {
+        var row = document.createElement('div');
+        row.className = 'flex items-center text-[12px] py-0.5';
+        row.innerHTML = '<span class="w-6 font-bold text-gray-400 text-right mr-2">' + (i + 1) + '.</span><span class="font-bold text-tinta">' + escapeHtml(appState.formData.nama_anak[i]) + '</span>';
+        listContainer.appendChild(row);
+      }
+    }
+
+    // Kirim Pendaftaran Final ke Server
+    function submitFinalRegistration() {
+      var btnSubmit = document.getElementById('btn-submit-reg');
+      var lblSubmit = document.getElementById('btn-submit-label');
+      var btnBack = document.getElementById('btn-back-from-4');
+      var errBanner = document.getElementById('submit-error-banner');
+
+      btnSubmit.disabled = true;
+      btnBack.disabled = true;
+      lblSubmit.textContent = 'Mengirim...';
+      errBanner.classList.add('hidden');
+
+      var payload = {
+        request_id: appState.formData.request_id,
+        jenis: appState.formData.jenis,
+        lembaga: appState.formData.lembaga,
+        desa: appState.formData.desa,
+        jumlah: appState.formData.nama_anak.length,
+        nama_anak: appState.formData.nama_anak,
+        koordinator: appState.formData.koordinator,
+        wa: appState.formData.wa
+      };
+
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(function(res) {
+            btnSubmit.disabled = false;
+            btnBack.disabled = false;
+            lblSubmit.textContent = 'Kirim Pendaftaran';
+            onSubmitSuccess(res);
+          })
+          .withFailureHandler(function(err) {
+            btnSubmit.disabled = false;
+            btnBack.disabled = false;
+            lblSubmit.textContent = 'Kirim Pendaftaran';
+            errBanner.textContent = 'Pendaftaran belum terkirim. Data Anda masih tersimpan di halaman ini. Periksa koneksi internet lalu tekan Kirim lagi.';
+            errBanner.classList.remove('hidden');
+          })
+          .submitRegistration(payload);
+      } else {
+        // Mock Sukses untuk Preview
+        setTimeout(function() {
+          btnSubmit.disabled = false;
+          btnBack.disabled = false;
+          lblSubmit.textContent = 'Kirim Pendaftaran';
+          onSubmitSuccess({
+            success: true,
+            kode: 'MWR-001',
+            request_id: payload.request_id,
+            summary: {
+              lembaga: payload.lembaga,
+              desa: payload.desa,
+              jumlah: payload.jumlah,
+              waktu_daftar: '21 Okt 2026, 14.32 WIB'
+            }
+          });
+        }, 1000);
+      }
+    }
+
+    // Penanganan Pengiriman Berhasil
+    function onSubmitSuccess(res) {
+      clearDraftStorage();
+      appState.lastRegisteredSummary = res;
+
+      document.getElementById('success-code-display').textContent = res.kode;
+      document.getElementById('success-lembaga').textContent = appState.formData.jenis + ' ' + (res.summary.lembaga || appState.formData.lembaga);
+      document.getElementById('success-desa').textContent = res.summary.desa || appState.formData.desa;
+      document.getElementById('success-jumlah').textContent = (res.summary.jumlah || appState.formData.nama_anak.length) + ' Anak';
+      document.getElementById('success-waktu').textContent = res.summary.waktu_daftar || 'Hari ini';
+
+      navTo('success');
+    }
+
+    // Unduh PDF Bukti Pendaftaran
+    function downloadReceiptPdf() {
+      var btn = document.getElementById('btn-download-receipt');
+      var lbl = document.getElementById('lbl-btn-pdf');
+      btn.disabled = true;
+      lbl.textContent = 'Menyiapkan PDF...';
+
+      var reqId = (appState.lastRegisteredSummary && appState.lastRegisteredSummary.request_id) || appState.formData.request_id;
+      var kode = (appState.lastRegisteredSummary && appState.lastRegisteredSummary.kode) || 'MWR-001';
+
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(function(res) {
+            btn.disabled = false;
+            lbl.textContent = 'Unduh Bukti PDF Resmi';
+            triggerPdfDownload(res.base64, res.filename);
+          })
+          .withFailureHandler(function(err) {
+            btn.disabled = false;
+            lbl.textContent = 'Unduh Bukti PDF Resmi';
+            alert('Gagal membuat PDF: ' + err.message);
+          })
+          .getReceiptPdf(reqId);
+      } else {
+        setTimeout(function() {
+          btn.disabled = false;
+          lbl.textContent = 'Unduh Bukti PDF Resmi';
+          alert('Mode Mock: PDF Bukti Pendaftaran ' + kode + ' siap diunduh.');
+        }, 1000);
+      }
+    }
+
+    function triggerPdfDownload(base64Data, filename) {
+      try {
+        var byteCharacters = atob(base64Data);
+        var byteNumbers = new Array(byteCharacters.length);
+        for (var i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        var byteArray = new Uint8Array(byteNumbers);
+        var blob = new Blob([byteArray], { type: 'application/pdf' });
+        
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = filename || 'Bukti_Pendaftaran.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (e) {
+        // Fallback buka via data URI di tab baru jika browser blokir
+        var pdfWindow = window.open("");
+        if (pdfWindow) {
+          pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64," + encodeURI(base64Data) + "'></iframe>");
+        } else {
+          alert('Silakan izinkan popup untuk mengunduh berkas PDF bukti pendaftaran.');
+        }
+      }
+    }
+
+    // Daftarkan Lembaga Lain
+    function registerAnotherInstitution() {
+      appState.formData = {
+        jenis: 'TKM',
+        lembaga: '',
+        desa: '',
+        jumlah: 1,
+        nama_anak: [''],
+        koordinator: '',
+        wa: '',
+        request_id: ''
+      };
+      initRequestId();
+      clearDraftStorage();
+
+      document.getElementById('input-lembaga').value = '';
+      document.getElementById('select-desa').value = '';
+      document.getElementById('input-koordinator').value = '';
+      document.getElementById('input-wa').value = '';
+      document.getElementById('input-jumlah-peserta').value = 1;
+
+      setInstitutionType('TKM');
+      updateParticipantRows(1);
+      goToStep(1);
+      navTo('form');
+    }
+
+    // ========================================================
+    // LOGIKA DAFTAR PESERTA PUBLIK
+    // ========================================================
+    function loadPublicParticipants(force) {
+      var container = document.getElementById('public-participants-list');
+      var counter = document.getElementById('lbl-participant-counter');
+      counter.textContent = 'Memuat data peserta...';
+
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(function(res) {
+            onPublicParticipantsLoaded(res);
+          })
+          .withFailureHandler(function(err) {
+            counter.textContent = 'Daftar belum bisa dimuat. Periksa sinyal lalu tekan Muat ulang.';
+            container.innerHTML = '<div class="p-4 bg-red-50 text-merah-koreksi rounded-xl text-center text-[12px] font-bold">Gagal memuat: ' + escapeHtml(err.message) + '</div>';
+          })
+          .getPublicParticipants();
+      } else {
+        // Mock Data
+        onPublicParticipantsLoaded({
+          success: true,
+          institutions: [
+            { kode: 'MWR-001', jenis: 'TKM', lembaga: 'TKM NURUL HUDA', desa: 'Kesilir', jumlah: 3, nama_anak: ['AISYAH NUR FADILAH', 'MUHAMMAD RAFA', 'FATIMAH AZ-ZAHRA'] },
+            { kode: 'MWR-002', jenis: 'RA', lembaga: 'RA AL-IKHLAS', desa: 'Lojejer', jumlah: 2, nama_anak: ['AHMAD BILAL', 'ZAHRA ALYA'] },
+            { kode: 'MWR-003', jenis: 'TKM', lembaga: 'TKM TUNAS BANGSA', desa: 'Ampel', jumlah: 2, nama_anak: ['KENZIE PRADITYA', 'NAURA SHANUM'] }
+          ],
+          totalLembaga: 3,
+          totalAnak: 7,
+          lastUpdated: '14.32 WIB'
+        });
+      }
+    }
+
+    function onPublicParticipantsLoaded(res) {
+      appState.publicParticipants = res.institutions || [];
+      appState.displayedCount = 20;
+      applyPublicFiltersAndSearch();
+    }
+
+    var searchDebounceTimer = null;
+    function onSearchPublicInput() {
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(function() {
+        var q = document.getElementById('input-search-public').value.trim();
+        appState.searchQuery = q;
+        var btnClear = document.getElementById('btn-clear-search');
+        if (q) btnClear.classList.remove('hidden');
+        else btnClear.classList.add('hidden');
+
+        applyPublicFiltersAndSearch();
+      }, 250);
+    }
+
+    function clearPublicSearch() {
+      document.getElementById('input-search-public').value = '';
+      appState.searchQuery = '';
+      document.getElementById('btn-clear-search').classList.add('hidden');
+      applyPublicFiltersAndSearch();
+    }
+
+    function setPublicFilterJenis(jenis) {
+      appState.filterJenis = jenis;
+      ['all', 'tkm', 'ra'].forEach(function(k) {
+        var b = document.getElementById('btn-filter-' + k);
+        if (b) {
+          b.className = 'px-2.5 py-1.5 rounded-lg text-gray-600';
+        }
+      });
+      var activeBtn = document.getElementById('btn-filter-' + (jenis === 'SEMUA' ? 'all' : jenis.toLowerCase()));
+      if (activeBtn) {
+        activeBtn.className = 'px-2.5 py-1.5 rounded-lg bg-hijau-pondok text-white shadow-xs';
+      }
+      applyPublicFiltersAndSearch();
+    }
+
+    function onFilterDesaChange() {
+      appState.filterDesa = document.getElementById('select-filter-desa').value;
+      applyPublicFiltersAndSearch();
+    }
+
+    function applyPublicFiltersAndSearch() {
+      var q = appState.searchQuery.toUpperCase().replace(/\s+/g, ' ');
+      var fJenis = appState.filterJenis;
+      var fDesa = appState.filterDesa;
+
+      var result = [];
+      var matchedChildrenTotal = 0;
+
+      for (var i = 0; i < appState.publicParticipants.length; i++) {
+        var inst = appState.publicParticipants[i];
+        
+        // Filter Jenis
+        if (fJenis !== 'SEMUA' && inst.jenis !== fJenis) continue;
+        // Filter Desa
+        if (fDesa !== 'SEMUA' && inst.desa !== fDesa) continue;
+
+        // Search Match
+        if (q) {
+          var kodeMatch = inst.kode.toUpperCase().indexOf(q) !== -1;
+          var lembagaMatch = inst.lembaga.toUpperCase().indexOf(q) !== -1;
+          
+          var matchedChildrenIndices = [];
+          for (var j = 0; j < inst.nama_anak.length; j++) {
+            if (inst.nama_anak[j].toUpperCase().indexOf(q) !== -1) {
+              matchedChildrenIndices.push(j);
+            }
+          }
+
+          if (kodeMatch || lembagaMatch || matchedChildrenIndices.length > 0) {
+            matchedChildrenTotal += matchedChildrenIndices.length;
+            result.push({
+              inst: inst,
+              autoExpand: matchedChildrenIndices.length > 0,
+              highlightIndices: matchedChildrenIndices
+            });
+          }
+        } else {
+          result.push({
+            inst: inst,
+            autoExpand: false,
+            highlightIndices: []
+          });
+        }
+      }
+
+      appState.filteredInstitutions = result;
+      renderPublicParticipantsList(matchedChildrenTotal);
+    }
+
+    function renderPublicParticipantsList(matchedChildrenCount) {
+      var container = document.getElementById('public-participants-list');
+      var counter = document.getElementById('lbl-participant-counter');
+      var loadMoreBtn = document.getElementById('container-load-more');
+
+      container.innerHTML = '';
+
+      var total = appState.filteredInstitutions.length;
+      var totalChildren = 0;
+      appState.filteredInstitutions.forEach(function(item) { totalChildren += item.inst.jumlah; });
+
+      var countText = total + ' lembaga, ' + totalChildren + ' anak';
+      if (appState.searchQuery && matchedChildrenCount > 0) {
+        countText += ' • ' + matchedChildrenCount + ' nama cocok';
+      }
+      counter.textContent = countText;
+
+      if (total === 0) {
+        container.innerHTML = '<div class="p-6 bg-white border border-garis rounded-2xl text-center text-gray-500 text-[13px]">' +
+          '<span class="material-symbols-outlined text-[32px] text-gray-400 block mb-1">search_off</span>' +
+          '<strong>Tidak ada yang cocok.</strong><br>Ubah kata kunci atau hapus filter.' +
+          '</div>';
+        loadMoreBtn.classList.add('hidden');
+        return;
+      }
+
+      var sliceCount = Math.min(appState.displayedCount, total);
+      if (total > sliceCount) loadMoreBtn.classList.remove('hidden');
+      else loadMoreBtn.classList.add('hidden');
+
+      for (var i = 0; i < sliceCount; i++) {
+        var item = appState.filteredInstitutions[i];
+        var inst = item.inst;
+        var card = createInstitutionAccordion(inst, item.autoExpand, item.highlightIndices);
+        container.appendChild(card);
+      }
+    }
+
+    function createInstitutionAccordion(inst, autoExpand, highlightIndices) {
+      var wrap = document.createElement('div');
+      wrap.className = 'bg-white border border-garis rounded-xl overflow-hidden shadow-xs transition-shadow';
+
+      var header = document.createElement('button');
+      header.type = 'button';
+      header.className = 'w-full px-3.5 py-3 flex items-center justify-between text-left hover:bg-gray-50 active:bg-gray-100 transition-colors';
+      
+      var left = document.createElement('div');
+      left.className = 'flex flex-col min-w-0 pr-2';
+      left.innerHTML = '<div class="flex items-center gap-1.5"><strong class="text-[13.5px] text-tinta font-display uppercase truncate">' + escapeHtml(inst.lembaga) + '</strong></div>' +
+        '<div class="flex items-center gap-2 text-[11.5px] text-gray-500 mt-0.5">' +
+        '<span class="font-bold text-hijau-pondok">' + escapeHtml(inst.jenis) + '</span>' +
+        '<span>•</span><span>Desa ' + escapeHtml(inst.desa) + '</span>' +
+        '<span>•</span><span>' + inst.jumlah + ' Anak</span>' +
+        '</div>';
+
+      var right = document.createElement('div');
+      right.className = 'flex items-center gap-2 shrink-0';
+      right.innerHTML = '<span class="px-2 py-0.5 rounded-md bg-hijau-daun text-hijau-pondok text-[11px] font-bold font-mono">' + escapeHtml(inst.kode) + '</span>' +
+        '<span class="material-symbols-outlined text-gray-400 text-[20px] transition-transform" id="arrow-' + inst.kode + '">' + (autoExpand ? 'expand_less' : 'expand_more') + '</span>';
+
+      header.appendChild(left);
+      header.appendChild(right);
+
+      var body = document.createElement('div');
+      body.id = 'body-' + inst.kode;
+      body.className = autoExpand ? 'border-t border-garis/60 p-3 bg-kertas' : 'hidden border-t border-garis/60 p-3 bg-kertas';
+
+      var childList = document.createElement('div');
+      childList.className = 'flex flex-col gap-1.5';
+
+      for (var j = 0; j < inst.nama_anak.length; j++) {
+        var no = j + 1;
+        var rawName = inst.nama_anak[j];
+        var isHighlighted = highlightIndices.indexOf(j) !== -1;
+
+        var childRow = document.createElement('div');
+        childRow.className = isHighlighted ? 'flex items-center text-[12px] p-1 rounded bg-kuning-peringatan text-tinta font-bold' : 'flex items-center text-[12px] py-0.5 text-gray-700';
+        childRow.innerHTML = '<span class="w-6 text-gray-400 font-mono text-right mr-2">' + no + '.</span><span class="truncate">' + escapeHtml(rawName) + '</span>';
+        childList.appendChild(childRow);
+      }
+
+      body.appendChild(childList);
+
+      header.addEventListener('click', function() {
+        var isClosed = body.classList.contains('hidden');
+        var arrow = document.getElementById('arrow-' + inst.kode);
+        if (isClosed) {
+          body.classList.remove('hidden');
+          if (arrow) arrow.textContent = 'expand_less';
+        } else {
+          body.classList.add('hidden');
+          if (arrow) arrow.textContent = 'expand_more';
+        }
+      });
+
+      wrap.appendChild(header);
+      wrap.appendChild(body);
+      return wrap;
+    }
+
+    function showMoreParticipants() {
+      appState.displayedCount += 20;
+      renderPublicParticipantsList(0);
+    }
+
+    // Penyimpanan Draf Formulir Lokal (Tahan Sinyal & Refresh)
+    function saveDraftToStorage() {
+      try {
+        localStorage.setItem('mewarnai_draft', JSON.stringify({
+          formData: appState.formData,
+          step: appState.currentStep
+        }));
+      } catch (e) {}
+    }
+
+    function loadDraftFromStorage() {
+      try {
+        var saved = localStorage.getItem('mewarnai_draft');
+        if (saved) {
+          var parsed = JSON.parse(saved);
+          if (parsed && parsed.formData) {
+            appState.formData = parsed.formData;
+            // Restore field values
+            document.getElementById('input-lembaga').value = parsed.formData.lembaga || '';
+            document.getElementById('select-desa').value = parsed.formData.desa || '';
+            document.getElementById('input-koordinator').value = parsed.formData.koordinator || '';
+            document.getElementById('input-wa').value = parsed.formData.wa || '';
+            document.getElementById('input-jumlah-peserta').value = parsed.formData.jumlah || 1;
+            
+            setInstitutionType(parsed.formData.jenis || 'TKM');
+            updateParticipantRows(parsed.formData.jumlah || 1);
+          }
+        } else {
+          updateParticipantRows(1);
+        }
+      } catch (e) {
+        updateParticipantRows(1);
+      }
+    }
+
+    function clearDraftStorage() {
+      try {
+        localStorage.removeItem('mewarnai_draft');
+      } catch (e) {}
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+</html>
