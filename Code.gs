@@ -135,7 +135,8 @@ function getPublicConfig() {
       baris2: settings.kop_baris2 || 'YAYASAN ISLAM NAHDLATUTH THALABAH',
       baris3: settings.kop_baris3 || 'Sekretariat : PP. Nahdlatuth Thalabah Kesilir - Wuluhan - Jember',
       baris4: settings.kop_baris4 || 'WhatsApp : +62 812-1768-7686 Email : panitiahafahyasinat@gmail.com'
-    }
+    },
+    logo_base64: getLogoBase64()
   };
 }
 

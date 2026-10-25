@@ -769,11 +769,20 @@ function getAdminExportData(scope, filterDesa, filterLembaga) {
     if (a.lembaga > b.lembaga) return 1;
     return a.no_anak - b.no_anak;
   });
+
+  var lembagaList = [];
+  for (var k in regMap) {
+    lembagaList.push(regMap[k]);
+  }
+  lembagaList.sort(function(a, b) {
+    return a.kode.localeCompare(b.kode, undefined, { numeric: true });
+  });
   
   return {
     success: true,
     totalRows: exportRows.length,
-    rows: exportRows
+    rows: exportRows,
+    lembagaList: lembagaList
   };
 }
 

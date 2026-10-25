@@ -13,6 +13,8 @@
   
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SheetJS via CDN untuk Ekspor Excel .xlsx Asli -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -56,8 +58,8 @@
     <div class="flex flex-col gap-6">
       <!-- Logo & App Header -->
       <div class="flex items-center gap-3 px-1">
-        <div class="w-10 h-10 rounded-xl bg-hijau-pondok flex items-center justify-center text-white shrink-0">
-          <span class="material-symbols-outlined text-[24px]">palette</span>
+        <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 overflow-hidden border border-garis/60 p-1 shadow-2xs">
+          <img src="data:image/png;base64,<?= getLogoBase64() ?>" alt="Logo Haflah" class="w-full h-full object-contain">
         </div>
         <div class="flex flex-col min-w-0">
           <span class="font-display font-extrabold text-[13px] text-hijau-pondok tracking-tight truncate">
@@ -109,8 +111,8 @@
   <!-- ================= MOBILE HEADER (< 768px) ================= -->
   <header class="md:hidden sticky top-0 z-30 bg-white border-b border-garis px-4 py-3 flex items-center justify-between">
     <div class="flex items-center gap-2">
-      <div class="w-8 h-8 rounded-lg bg-hijau-pondok flex items-center justify-center text-white shrink-0">
-        <span class="material-symbols-outlined text-[18px]">palette</span>
+      <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center shrink-0 overflow-hidden border border-garis/60 p-0.5 shadow-2xs">
+        <img src="data:image/png;base64,<?= getLogoBase64() ?>" alt="Logo Haflah" class="w-full h-full object-contain">
       </div>
       <div>
         <h1 class="font-display font-extrabold text-[13px] text-hijau-pondok">PANEL ADMIN</h1>
@@ -296,7 +298,7 @@
             </div>
             <div id="export-desa-wrapper" class="hidden">
               <label class="text-[12px] font-bold text-tinta block mb-1">Pilih Desa</label>
-              <select id="export-select-desa" class="w-full h-11 px-3 rounded-xl border border-garis bg-kertas text-[13px] font-bold">
+              <select id="export-select-desa" onchange="loadExportPreview()" class="w-full h-11 px-3 rounded-xl border border-garis bg-kertas text-[13px] font-bold">
                 <!-- Diisi JavaScript -->
               </select>
             </div>
@@ -339,13 +341,59 @@
             </div>
           </div>
 
-          <!-- Opsi Tambahan: CSV / Excel -->
-          <div class="pt-3 border-t border-garis/60 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-            <span class="text-[12px] text-gray-500 font-medium">Kebutuhan olah data mentah di Microsoft Excel / Google Sheets:</span>
-            <button type="button" onclick="runExport('csv')" class="px-4 py-2.5 rounded-xl border border-garis bg-white hover:bg-gray-50 text-tinta font-bold text-[12.5px] flex items-center justify-center gap-2 shadow-xs active:scale-95 transition-all shrink-0">
-              <span class="material-symbols-outlined text-[18px] text-emerald-700">table_view</span>
-              <span>Unduh Format CSV / Excel</span>
-            </button>
+          <!-- Bagian Ekspor Excel & Pratinjau Tabel Rapi -->
+          <div class="pt-4 border-t border-garis/60 flex flex-col gap-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h4 class="font-display font-bold text-[15px] text-tinta flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[20px] text-emerald-700">table_chart</span>
+                  <span>Pratinjau Data &amp; Ekspor Microsoft Excel (.xlsx)</span>
+                </h4>
+                <p class="text-[12px] text-gray-500">Tabel data langsung rapi di panel admin dan siap diunduh ke format Excel resmi.</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span id="export-badge-total" class="px-3 py-1.5 rounded-full text-[11.5px] font-bold bg-emerald-100 text-emerald-800">
+                  0 Peserta
+                </span>
+                <button type="button" id="btn-export-excel" onclick="runExport('xlsx')" class="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-[13px] rounded-xl flex items-center gap-2 shadow-xs active:scale-95 transition-all shrink-0">
+                  <span class="material-symbols-outlined text-[18px]">download</span>
+                  <span>Unduh File Excel (.xlsx)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Tabel Pratinjau Rapi -->
+            <div class="overflow-x-auto rounded-xl border border-garis bg-white max-h-[460px] shadow-2xs">
+              <table class="w-full text-left border-collapse text-[12px]">
+                <thead class="sticky top-0 bg-gray-50 border-b border-garis shadow-2xs z-10 text-gray-700 font-bold text-[11px] uppercase tracking-wider">
+                  <tr>
+                    <th class="p-3 text-center" style="width: 45px;">No</th>
+                    <th class="p-3" style="width: 85px;">Kode</th>
+                    <th class="p-3" style="width: 65px;">Jenis</th>
+                    <th class="p-3">Nama Lembaga</th>
+                    <th class="p-3">Desa</th>
+                    <th class="p-3 text-center" style="width: 65px;">No. Anak</th>
+                    <th class="p-3">Nama Lengkap Peserta</th>
+                    <th class="p-3">Koordinator</th>
+                    <th class="p-3">WhatsApp</th>
+                    <th class="p-3">Waktu Daftar</th>
+                  </tr>
+                </thead>
+                <tbody id="export-preview-table-body" class="divide-y divide-garis/50">
+                  <tr>
+                    <td colspan="10" class="p-8 text-center text-gray-400 text-[12px]">Memuat pratinjau data...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Footer Pratinjau & Tombol CSV Lama -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 pt-1 text-[11.5px] text-gray-500">
+              <span id="export-summary-text">Menampilkan data peserta.</span>
+              <button type="button" onclick="runExport('csv')" class="text-gray-500 hover:text-emerald-800 underline text-left sm:text-right">
+                Unduh format CSV lama jika diperlukan
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -794,6 +842,7 @@
 
       if (tabName === 'dashboard') loadDashboard();
       if (tabName === 'registrations') loadAdminRegistrations(1);
+      if (tabName === 'export') loadExportPreview();
       if (tabName === 'settings') loadSettings();
       if (tabName === 'history') loadAdminHistory(1);
     }
@@ -1317,31 +1366,302 @@
       }
     }
 
-    // 5. Ekspor Data
+    // 5. Ekspor Data & Pratinjau
+    var exportCachedData = null;
+
     function onExportScopeChange() {
       var scope = document.getElementById('export-scope').value;
       var wrapper = document.getElementById('export-desa-wrapper');
       if (scope === 'desa') wrapper.classList.remove('hidden');
       else wrapper.classList.add('hidden');
+      loadExportPreview();
     }
 
-    function runExport(format) {
-      var scope = document.getElementById('export-scope').value;
-      var filterDesa = scope === 'desa' ? document.getElementById('export-select-desa').value : 'SEMUA';
+    function loadExportPreview() {
+      var scope = document.getElementById('export-scope') ? document.getElementById('export-scope').value : 'all';
+      var filterDesa = (scope === 'desa' && document.getElementById('export-select-desa')) ? document.getElementById('export-select-desa').value : 'SEMUA';
+      
+      var tbody = document.getElementById('export-preview-table-body');
+      var badgeTotal = document.getElementById('export-badge-total');
+      var summaryText = document.getElementById('export-summary-text');
+
+      if (tbody) {
+        tbody.innerHTML = '<tr><td colspan="10" class="p-8 text-center text-gray-400"><div class="inline-block w-6 h-6 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin mb-2"></div><p class="text-[12px]">Memuat pratinjau data...</p></td></tr>';
+      }
 
       if (typeof google !== 'undefined' && google.script && google.script.run) {
         google.script.run
           .withSuccessHandler(function(res) {
-            if (format === 'csv') downloadExportCsv(res.rows);
-            else printAttendanceSheet(res.rows);
+            exportCachedData = res;
+            renderExportPreview(res);
           })
           .withFailureHandler(function(err) {
+            if (tbody) {
+              tbody.innerHTML = '<tr><td colspan="10" class="p-6 text-center text-red-500 text-[12.5px]">Gagal memuat pratinjau: ' + err.message + '</td></tr>';
+            }
+          })
+          .getAdminExportData(scope, filterDesa, 'SEMUA');
+      } else {
+        // Mode Mock untuk pengujian
+        setTimeout(function() {
+          var mockRes = {
+            success: true,
+            totalRows: 6,
+            rows: [
+              { kode: 'MWR-001', lembaga: 'TKM NURUL HUDA', jenis: 'TKM', desa: 'KESILIR', no_anak: 1, nama_anak: 'FATIMAH AZ-ZAHRA', koordinator: 'SITI', wa: '085259719093', waktu_daftar: '24 Okt 2026, 22.14 WIB' },
+              { kode: 'MWR-002', lembaga: 'RA HIDAYAH', jenis: 'RA', desa: 'LOJEJER', no_anak: 1, nama_anak: 'AHMAD FAUZI', koordinator: 'AMINAH', wa: '081232539324', waktu_daftar: '24 Okt 2026, 22.16 WIB' },
+              { kode: 'MWR-002', lembaga: 'RA HIDAYAH', jenis: 'RA', desa: 'LOJEJER', no_anak: 2, nama_anak: 'MUHAMMAD RIZKY', koordinator: 'AMINAH', wa: '081232539324', waktu_daftar: '24 Okt 2026, 22.16 WIB' },
+              { kode: 'MWR-002', lembaga: 'RA HIDAYAH', jenis: 'RA', desa: 'LOJEJER', no_anak: 3, nama_anak: 'NUR AISYAH', koordinator: 'AMINAH', wa: '081232539324', waktu_daftar: '24 Okt 2026, 22.16 WIB' },
+              { kode: 'MWR-002', lembaga: 'RA HIDAYAH', jenis: 'RA', desa: 'LOJEJER', no_anak: 4, nama_anak: 'BILQIS HUMAIRA', koordinator: 'AMINAH', wa: '081232539324', waktu_daftar: '24 Okt 2026, 22.16 WIB' },
+              { kode: 'MWR-002', lembaga: 'RA HIDAYAH', jenis: 'RA', desa: 'LOJEJER', no_anak: 5, nama_anak: 'ZIDAN AL-FARISI', koordinator: 'AMINAH', wa: '081232539324', waktu_daftar: '24 Okt 2026, 22.16 WIB' }
+            ],
+            lembagaList: [
+              { kode: 'MWR-001', lembaga: 'TKM NURUL HUDA', jenis: 'TKM', desa: 'KESILIR', jumlah: 1, koordinator: 'SITI', wa: '085259719093', waktu_daftar: '24 Okt 2026, 22.14 WIB' },
+              { kode: 'MWR-002', lembaga: 'RA HIDAYAH', jenis: 'RA', desa: 'LOJEJER', jumlah: 5, koordinator: 'AMINAH', wa: '081232539324', waktu_daftar: '24 Okt 2026, 22.16 WIB' }
+            ]
+          };
+          exportCachedData = mockRes;
+          renderExportPreview(mockRes);
+        }, 300);
+      }
+    }
+
+    function renderExportPreview(res) {
+      var tbody = document.getElementById('export-preview-table-body');
+      var badgeTotal = document.getElementById('export-badge-total');
+      var summaryText = document.getElementById('export-summary-text');
+      if (!tbody) return;
+
+      var rows = (res && res.rows) ? res.rows : [];
+      if (badgeTotal) {
+        badgeTotal.textContent = rows.length + ' Peserta';
+      }
+      if (summaryText) {
+        var countLembaga = (res && res.lembagaList) ? res.lembagaList.length : new Set(rows.map(function(r) { return r.kode; })).size;
+        summaryText.textContent = 'Menampilkan ' + rows.length + ' data peserta dari ' + countLembaga + ' lembaga terdaftar.';
+      }
+
+      if (rows.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="10" class="p-8 text-center text-gray-400 text-[12.5px]">Tidak ada data peserta yang ditemukan untuk wilayah ini.</td></tr>';
+        return;
+      }
+
+      var html = '';
+      rows.forEach(function(r, idx) {
+        var jenisBadge = (r.jenis === 'TKM') ? 
+          '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">TKM</span>' :
+          '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">RA</span>';
+
+        html += '<tr class="hover:bg-gray-50/80 transition-colors">' +
+          '<td class="p-3 text-center text-gray-400 font-bold">' + (idx + 1) + '</td>' +
+          '<td class="p-3 font-mono font-bold text-hijau-pondok">' + r.kode + '</td>' +
+          '<td class="p-3">' + jenisBadge + '</td>' +
+          '<td class="p-3 font-bold text-tinta">' + r.lembaga + '</td>' +
+          '<td class="p-3 text-gray-600">' + r.desa + '</td>' +
+          '<td class="p-3 text-center font-bold text-gray-600">' + r.no_anak + '</td>' +
+          '<td class="p-3 font-bold text-tinta uppercase">' + r.nama_anak + '</td>' +
+          '<td class="p-3 text-gray-700">' + r.koordinator + '</td>' +
+          '<td class="p-3 font-mono text-[11.5px] text-gray-700">' + r.wa + '</td>' +
+          '<td class="p-3 text-gray-500 text-[11px]">' + r.waktu_daftar + '</td>' +
+          '</tr>';
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    function runExport(format) {
+      var scope = document.getElementById('export-scope') ? document.getElementById('export-scope').value : 'all';
+      var filterDesa = (scope === 'desa' && document.getElementById('export-select-desa')) ? document.getElementById('export-select-desa').value : 'SEMUA';
+
+      var btnExcel = document.getElementById('btn-export-excel');
+      var origExcelHtml = btnExcel ? btnExcel.innerHTML : '';
+
+      if (format === 'xlsx') {
+        if (btnExcel) {
+          btnExcel.disabled = true;
+          btnExcel.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">progress_activity</span><span>Menyiapkan Excel...</span>';
+        }
+      }
+
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(function(res) {
+            if (btnExcel) {
+              btnExcel.disabled = false;
+              btnExcel.innerHTML = origExcelHtml;
+            }
+            if (format === 'xlsx') {
+              downloadExportExcel(res.rows, res.lembagaList, filterDesa);
+            } else if (format === 'csv') {
+              downloadExportCsv(res.rows);
+            } else {
+              printAttendanceSheet(res.rows);
+            }
+          })
+          .withFailureHandler(function(err) {
+            if (btnExcel) {
+              btnExcel.disabled = false;
+              btnExcel.innerHTML = origExcelHtml;
+            }
             alert('Gagal mengekspor: ' + err.message);
           })
           .getAdminExportData(scope, filterDesa, 'SEMUA');
       } else {
-        alert('Mode Mock: Ekspor data siap.');
+        setTimeout(function() {
+          if (btnExcel) {
+            btnExcel.disabled = false;
+            btnExcel.innerHTML = origExcelHtml;
+          }
+          if (format === 'xlsx') {
+            downloadExportExcel(exportCachedData ? exportCachedData.rows : [], exportCachedData ? exportCachedData.lembagaList : [], filterDesa);
+          } else {
+            alert('Mode Mock: Ekspor data siap.');
+          }
+        }, 500);
       }
+    }
+
+    function downloadExportExcel(rows, lembagaList, filterDesa) {
+      if (!rows || rows.length === 0) {
+        alert('Tidak ada data peserta untuk diekspor ke Excel.');
+        return;
+      }
+
+      var desaLabel = (filterDesa && filterDesa !== 'SEMUA') ? 'Desa ' + filterDesa : 'Semua Desa Se-Kecamatan Wuluhan';
+      var tglUnduh = new Date().toISOString().slice(0, 10);
+      var filename = 'Rekap_Peserta_Lomba_Mewarnai_' + (filterDesa && filterDesa !== 'SEMUA' ? filterDesa.replace(/\s+/g, '_') + '_' : '') + tglUnduh + '.xlsx';
+
+      if (typeof XLSX !== 'undefined') {
+        try {
+          var wb = XLSX.utils.book_new();
+
+          // SHEET 1: Data Lengkap Seluruh Peserta
+          var ws1Data = [
+            ['REKAPITULASI PESERTA LOMBA MEWARNAI TKM & RA HAFLAH 1448 H'],
+            ['YAYASAN ISLAM NAHDLATUTH THALABAH (YASINAT) KESILIR - WULUHAN - JEMBER'],
+            ['Wilayah: ' + desaLabel + ' | Total: ' + rows.length + ' Peserta | Tanggal Unduh: ' + tglUnduh],
+            [],
+            ['NO', 'KODE', 'JENIS', 'NAMA LEMBAGA', 'DESA', 'NO. PESERTA', 'NAMA LENGKAP SANTRI', 'NAMA KOORDINATOR', 'NO. WHATSAPP', 'WAKTU DAFTAR']
+          ];
+
+          rows.forEach(function(r, idx) {
+            ws1Data.push([
+              idx + 1,
+              r.kode,
+              r.jenis,
+              r.lembaga,
+              r.desa,
+              r.no_anak,
+              r.nama_anak,
+              r.koordinator,
+              String(r.wa || ''),
+              r.waktu_daftar
+            ]);
+          });
+
+          var ws1 = XLSX.utils.aoa_to_sheet(ws1Data);
+          ws1['!cols'] = [
+            { wch: 6 },
+            { wch: 12 },
+            { wch: 8 },
+            { wch: 30 },
+            { wch: 16 },
+            { wch: 12 },
+            { wch: 32 },
+            { wch: 22 },
+            { wch: 18 },
+            { wch: 22 }
+          ];
+
+          // Format nomor WhatsApp sebagai Text (agar awalan 0 tidak hilang)
+          var range1 = XLSX.utils.decode_range(ws1['!ref']);
+          for (var R = 4; R <= range1.e.r; ++R) {
+            var cellRef = XLSX.utils.encode_cell({ c: 8, r: R });
+            if (ws1[cellRef]) {
+              ws1[cellRef].t = 's';
+              ws1[cellRef].z = '@';
+            }
+          }
+
+          // SHEET 2: Rekapitulasi per Lembaga
+          var ws2Data = [
+            ['REKAPITULASI LEMBAGA PESERTA LOMBA MEWARNAI HAFLAH 1448 H'],
+            ['YAYASAN ISLAM NAHDLATUTH THALABAH (YASINAT)'],
+            ['Wilayah: ' + desaLabel + ' | Total: ' + (lembagaList ? lembagaList.length : 0) + ' Lembaga'],
+            [],
+            ['NO', 'KODE', 'JENIS', 'NAMA LEMBAGA', 'DESA', 'JUMLAH SANTRI', 'NAMA KOORDINATOR', 'NO. WHATSAPP', 'WAKTU DAFTAR']
+          ];
+
+          var lembagas = lembagaList || [];
+          lembagas.forEach(function(l, lIdx) {
+            var childCount = rows.filter(function(r) { return r.kode === l.kode; }).length;
+            ws2Data.push([
+              lIdx + 1,
+              l.kode,
+              l.jenis,
+              l.lembaga,
+              l.desa,
+              l.jumlah || childCount,
+              l.koordinator,
+              String(l.wa || ''),
+              l.waktu_daftar
+            ]);
+          });
+
+          var ws2 = XLSX.utils.aoa_to_sheet(ws2Data);
+          ws2['!cols'] = [
+            { wch: 6 },
+            { wch: 12 },
+            { wch: 8 },
+            { wch: 32 },
+            { wch: 16 },
+            { wch: 16 },
+            { wch: 22 },
+            { wch: 18 },
+            { wch: 22 }
+          ];
+
+          var range2 = XLSX.utils.decode_range(ws2['!ref']);
+          for (var R2 = 4; R2 <= range2.e.r; ++R2) {
+            var cellRef2 = XLSX.utils.encode_cell({ c: 7, r: R2 });
+            if (ws2[cellRef2]) {
+              ws2[cellRef2].t = 's';
+              ws2[cellRef2].z = '@';
+            }
+          }
+
+          XLSX.utils.book_append_sheet(wb, ws1, 'Data Peserta Lengkap');
+          XLSX.utils.book_append_sheet(wb, ws2, 'Rekap Lembaga');
+
+          XLSX.writeFile(wb, filename);
+          return;
+        } catch (e) {
+          console.warn('SheetJS error, menggunakan fallback Excel XML: ' + e.message);
+        }
+      }
+
+      fallbackDownloadExcel(rows, filterDesa);
+    }
+
+    function fallbackDownloadExcel(rows, filterDesa) {
+      var filename = 'Rekap_Peserta_Lomba_Mewarnai_' + (filterDesa && filterDesa !== 'SEMUA' ? filterDesa.replace(/\s+/g, '_') + '_' : '') + new Date().toISOString().slice(0, 10) + '.xls';
+      var tableHtml = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">' +
+        '<head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Peserta</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>' +
+        '<body><table border="1">' +
+        '<tr style="background:#005E39;color:#FFFFFF;font-weight:bold;"><th>NO</th><th>KODE</th><th>JENIS</th><th>NAMA LEMBAGA</th><th>DESA</th><th>NO PESERTA</th><th>NAMA LENGKAP SANTRI</th><th>KOORDINATOR</th><th>WHATSAPP</th><th>WAKTU DAFTAR</th></tr>';
+      
+      rows.forEach(function(r, idx) {
+        tableHtml += '<tr><td>' + (idx + 1) + '</td><td>' + r.kode + '</td><td>' + r.jenis + '</td><td>' + r.lembaga + '</td><td>' + r.desa + '</td><td>' + r.no_anak + '</td><td>' + r.nama_anak + '</td><td>' + r.koordinator + '</td><td style="mso-number-format:\'\\@\';">' + r.wa + '</td><td>' + r.waktu_daftar + '</td></tr>';
+      });
+
+      tableHtml += '</table></body></html>';
+      var blob = new Blob([tableHtml], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+      var link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
 
     function downloadExportCsv(rows) {

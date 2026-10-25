@@ -78,12 +78,12 @@
     <!-- Top Header -->
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-garis/60 px-4 py-2.5 flex items-center justify-between">
       <div class="flex items-center gap-2.5 min-w-0">
-        <div class="w-9 h-9 rounded-lg bg-hijau-daun flex items-center justify-center shrink-0">
-          <span class="material-symbols-outlined text-hijau-pondok text-[22px]">palette</span>
+        <div class="w-9 h-9 rounded-lg bg-white flex items-center justify-center shrink-0 overflow-hidden border border-garis/60 p-0.5 shadow-2xs">
+          <img id="top-header-logo" src="data:image/png;base64,<?= getLogoBase64() ?>" alt="Logo Haflah" class="w-full h-full object-contain">
         </div>
         <div class="flex flex-col min-w-0">
           <span class="font-display font-extrabold text-[12px] leading-tight text-hijau-pondok truncate uppercase">
-            HAFLAH 1448 H • WULUHAN
+            HAFLAH 104 YASINAT
           </span>
           <span class="text-[11px] text-gray-500 font-medium truncate" id="top-header-sub">
             Lomba Mewarnai TKM &amp; RA
@@ -105,12 +105,12 @@
       <section id="screen-home" class="p-4 flex flex-col gap-4">
         <!-- Kop Ringkas -->
         <div class="bg-white rounded-2xl p-3.5 border border-garis flex items-center gap-3 shadow-xs">
-          <div class="w-12 h-14 flex items-center justify-center shrink-0 bg-hijau-daun/40 rounded-xl p-1">
-            <span class="material-symbols-outlined text-hijau-pondok text-[32px]">auto_stories</span>
+          <div class="w-12 h-14 flex items-center justify-center shrink-0 bg-white rounded-xl p-1 border border-garis/60 overflow-hidden shadow-2xs">
+            <img id="kop-banner-logo" src="data:image/png;base64,<?= getLogoBase64() ?>" alt="Logo Haflah" class="w-full h-full object-contain">
           </div>
           <div class="flex flex-col min-w-0">
             <h2 class="font-display font-bold text-[11.5px] leading-tight text-hijau-pondok uppercase tracking-tight">
-              PANITIA HAFLAH AL MILAD &amp; AKHIR AS SANAH 1448 H
+              PANITIA HAFLAH AL MILAD 104 &amp; AKHIR AS SANAH 1448 H
             </h2>
             <div class="inline-flex items-center self-start px-2 py-0.5 rounded-full bg-hijau-pondok mt-1">
               <span class="text-[9.5px] font-bold text-emas-muda tracking-wide uppercase">
@@ -983,6 +983,15 @@
     function onPublicConfigLoaded(cfg) {
       appState.config = cfg;
       
+      // Update Logo Haflah Asli jika dikirim dari server
+      if (cfg && cfg.logo_base64) {
+        var logoSrc = 'data:image/png;base64,' + cfg.logo_base64;
+        var l1 = document.getElementById('top-header-logo');
+        if (l1) l1.src = logoSrc;
+        var l2 = document.getElementById('kop-banner-logo');
+        if (l2) l2.src = logoSrc;
+      }
+
       // Update label tanggal penutupan di kartu countdown
       var lblTutup = document.getElementById('lbl-tutup-pada');
       if (lblTutup && cfg.tutup_pada) {

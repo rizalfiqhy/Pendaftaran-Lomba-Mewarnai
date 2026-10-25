@@ -29,14 +29,21 @@ function getLogoBase64() {
  */
 function formatDisplayDate(dateStr) {
   if (!dateStr) return 'Sabtu, 23 Januari 2027';
+  var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+  var days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
+  if (dateStr instanceof Date) {
+    if (!isNaN(dateStr.getTime())) {
+      return dateStr.getDate() + ' ' + months[dateStr.getMonth()] + ' ' + dateStr.getFullYear();
+    }
+  }
+
   var s = String(dateStr).trim();
   if (/^\d{4}-\d{2}-\d{2}/.test(s)) {
     var parts = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
     if (parts) {
       var d = new Date(parseInt(parts[1], 10), parseInt(parts[2], 10) - 1, parseInt(parts[3], 10));
       if (!isNaN(d.getTime())) {
-        var days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-        var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
         return days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
       }
     }
@@ -542,16 +549,21 @@ function buildAttendanceSheetBHtml(settings, list, filterDesa) {
       }
     }
     
+    var namaLembagaFormatted = r.lembaga;
+    if (r.jenis && r.lembaga.toUpperCase().indexOf(r.jenis.toUpperCase()) !== 0) {
+      namaLembagaFormatted = r.jenis + ' ' + r.lembaga;
+    }
+
     blocksHtml += '' +
       '<div class="lembaga-section">' +
       '  <table class="lembaga-banner">' +
       '    <tr>' +
       '      <td style="width: 65%; font-size: 10px;">' +
       '        <span class="kode-pill">' + escapeHtml(r.kode) + '</span> ' +
-      '        <b>' + escapeHtml(r.jenis) + ' ' + escapeHtml(r.lembaga) + '</b> &mdash; Desa ' + escapeHtml(r.desa) + '' +
+      '        <b>' + escapeHtml(namaLembagaFormatted) + '</b> &mdash; Desa ' + escapeHtml(r.desa) + '' +
       '      </td>' +
       '      <td style="width: 35%; text-align: right; font-size: 9px;">' +
-      '        Koordinator: <b>' + escapeHtml(r.koordinator) + '</b> (' + escapeHtml(r.wa) + ') | <b>' + (r.jumlah || pesList.length) + ' Anak</b>' +
+      '        Koordinator: <b>' + escapeHtml(r.koordinator) + '</b> (' + escapeHtml(r.wa) + ') | <b>' + (r.jumlah || pesList.length) + ' Peserta</b>' +
       '      </td>' +
       '    </tr>' +
       '  </table>' +
