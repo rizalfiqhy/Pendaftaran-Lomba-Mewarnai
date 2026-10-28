@@ -69,7 +69,8 @@ function initSpreadsheet() {
       ['kop_baris1', 'PANITIA HAFLAH AL MILAD & AKHIR AS SANAH 1448 H'],
       ['kop_baris2', 'YAYASAN ISLAM NAHDLATUTH THALABAH'],
       ['kop_baris3', 'Sekretariat : PP. Nahdlatuth Thalabah Kesilir - Wuluhan - Jember'],
-      ['kop_baris4', 'WhatsApp : +62 812-1768-7686 Email : panitiahafahyasinat@gmail.com']
+      ['kop_baris4', 'WhatsApp : +62 812-1768-7686 Email : panitiahafahyasinat@gmail.com'],
+      ['admin_pin', '123456']
     ];
     setSheet.getRange(2, 1, defaultSettings.length, 2).setValues(defaultSettings);
   }
@@ -78,6 +79,9 @@ function initSpreadsheet() {
   var props = PropertiesService.getScriptProperties();
   if (!props.getProperty('COUNTER')) {
     props.setProperty('COUNTER', '0');
+  }
+  if (!props.getProperty('ADMIN_PIN')) {
+    props.setProperty('ADMIN_PIN', '123456');
   }
   if (!props.getProperty('ADMIN_EMAIL')) {
     var currentUser = Session.getActiveUser().getEmail();

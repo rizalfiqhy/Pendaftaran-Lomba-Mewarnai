@@ -6,25 +6,81 @@
 /**
  * Validasi otentikasi admin di sisi server pada setiap fungsi admin
  */
-function assertAdmin() {
+/**
+ * Ambil PIN Admin yang aktif (Default: 123456)
+ */
+function getAdminPin() {
+  var props = PropertiesService.getScriptProperties();
+  var pin = props.getProperty('ADMIN_PIN');
+  if (!pin) {
+    try {
+      var ss = getAppSpreadsheet();
+      var settings = getSettingsFromSheet(ss);
+      pin = settings.admin_pin || '123456';
+    } catch (e) {
+      pin = '123456';
+    }
+  }
+  return String(pin).trim();
+}
+
+/**
+ * Verifikasi PIN Admin dari browser
+ */
+function verifyAdminPin(enteredPin) {
+  var correct = getAdminPin();
+  if (enteredPin && String(enteredPin).trim() === correct) {
+    return { success: true, message: 'Autentikasi admin berhasil' };
+  }
+  return { success: false, message: 'PIN Admin tidak sesuai. Silakan coba lagi.' };
+}
+
+/**
+ * Ganti PIN Admin
+ */
+function updateAdminPin(currentPin, newPin) {
+  assertAdmin(currentPin);
+  var cleanNew = String(newPin || '').trim();
+  if (cleanNew.length < 4) {
+    throw new Error('PIN baru minimal 4 angka/karakter.');
+  }
+  var props = PropertiesService.getScriptProperties();
+  props.setProperty('ADMIN_PIN', cleanNew);
+  try {
+    var ss = getAppSpreadsheet();
+    setSettingInSheet(ss, 'admin_pin', cleanNew);
+    logHistory(ss, 'admin', 'Ganti PIN Admin', '-', null, { pin_updated: true });
+  } catch (e) {}
+  return { success: true, message: 'PIN Admin berhasil diubah.' };
+}
+
+/**
+ * Validasi otentikasi admin di sisi server pada setiap fungsi admin
+ */
+function assertAdmin(authKey) {
+  var correctPin = getAdminPin();
+  if (authKey && String(authKey).trim() === correctPin) {
+    return 'admin';
+  }
+  
   var activeEmail = Session.getActiveUser().getEmail();
   var props = PropertiesService.getScriptProperties();
   var configuredAdmin = props.getProperty('ADMIN_EMAIL');
-  
-  // Jika belum disetel di Script Properties, cek pengaturan atau fallback ke user yang sedang deploy
   if (!configuredAdmin) {
-    var ss = getAppSpreadsheet();
-    var settings = getSettingsFromSheet(ss);
-    configuredAdmin = settings.admin_email || '';
+    try {
+      var ss = getAppSpreadsheet();
+      var settings = getSettingsFromSheet(ss);
+      configuredAdmin = settings.admin_email || '';
+    } catch (e) {}
   }
   
   if (configuredAdmin && activeEmail) {
-    if (activeEmail.toLowerCase().trim() !== configuredAdmin.toLowerCase().trim()) {
-      throw new Error('Akses ditolak: Akun (' + activeEmail + ') tidak terdaftar sebagai admin.');
+    if (activeEmail.toLowerCase().trim() === configuredAdmin.toLowerCase().trim()) {
+      return activeEmail;
     }
   }
   
-  return activeEmail || configuredAdmin || 'admin@haflah.id';
+  throw new Error('AUTH_REQUIRED: Akses ditolak. PIN Admin wajib dimasukkan dengan benar.');
 }
 
 /**
@@ -49,8 +105,8 @@ function logHistory(ss, adminUser, aksi, kode, sebelumObj, sesudahObj) {
 /**
  * Data statistik untuk Dasbor Admin
  */
-function getDashboardData() {
-  assertAdmin();
+function getDashboardData(authKey) {
+  assertAdmin(authKey);
   var ss = getAppSpreadsheet();
   var regSheet = ss.getSheetByName('Pendaftaran');
   var pesSheet = ss.getSheetByName('Peserta');
@@ -139,8 +195,8 @@ function getDashboardData() {
 /**
  * Daftar pendaftaran admin dengan pencarian, filter, dan paginasi
  */
-function listAdminRegistrations(query, filterJenis, filterDesa, page, pageSize) {
-  assertAdmin();
+function listAdminRegistrations(query, filterJenis, filterDesa, page, pageSize, authKey) {
+  assertAdmin(authKey);
   var ss = getAppSpreadsheet();
   var regSheet = ss.getSheetByName('Pendaftaran');
   var pesSheet = ss.getSheetByName('Peserta');
@@ -253,8 +309,8 @@ function listAdminRegistrations(query, filterJenis, filterDesa, page, pageSize) 
 /**
  * Ambil detail lengkap pendaftaran beserta seluruh nama anak untuk diedit
  */
-function getAdminRegistrationDetail(kode) {
-  assertAdmin();
+function getAdminRegistrationDetail(kode, authKey) {
+  assertAdmin(authKey);
   var ss = getAppSpreadsheet();
   var regSheet = ss.getSheetByName('Pendaftaran');
   var pesSheet = ss.getSheetByName('Peserta');
@@ -320,8 +376,8 @@ function getAdminRegistrationDetail(kode) {
  * Simpan perubahan pendaftaran oleh admin (edit apa pun)
  * Mendukung forceSave: jika ada peringatan validasi, admin tetap dapat memilih "Tetap Simpan"
  */
-function saveAdminRegistration(payload, forceSave) {
-  var adminUser = assertAdmin();
+function saveAdminRegistration(payload, forceSave, authKey) {
+  var adminUser = assertAdmin(authKey || (payload && payload.admin_pin));
   var validation = validateRegistrationData(payload, false);
   
   // Jika validasi gagal dan admin tidak memilih forceSave, kembalikan peringatan
@@ -450,8 +506,8 @@ function saveAdminRegistration(payload, forceSave) {
 /**
  * Tambah pendaftaran manual oleh admin
  */
-function createAdminRegistration(payload) {
-  var adminUser = assertAdmin();
+function createAdminRegistration(payload, authKey) {
+  var adminUser = assertAdmin(authKey || (payload && payload.admin_pin));
   
   return withScriptLock(30, function() {
     var ss = getAppSpreadsheet();
@@ -552,8 +608,8 @@ function createAdminRegistration(payload) {
 /**
  * Hapus pendaftaran oleh admin dengan menyimpan arsip lengkap ke Riwayat
  */
-function deleteAdminRegistration(kode) {
-  var adminUser = assertAdmin();
+function deleteAdminRegistration(kode, authKey) {
+  var adminUser = assertAdmin(authKey);
   if (!kode) throw new Error('Kode pendaftaran wajib disertakan');
   
   return withScriptLock(30, function() {
@@ -598,8 +654,8 @@ function deleteAdminRegistration(kode) {
 /**
  * Ambil seluruh pengaturan sistem untuk Panel Admin
  */
-function getAdminSettings() {
-  assertAdmin();
+function getAdminSettings(authKey) {
+  assertAdmin(authKey);
   var ss = getAppSpreadsheet();
   var settings = getSettingsFromSheet(ss);
   var props = PropertiesService.getScriptProperties();
@@ -632,8 +688,8 @@ function getAdminSettings() {
 /**
  * Simpan pengaturan sistem
  */
-function saveAdminSettings(payload) {
-  var adminUser = assertAdmin();
+function saveAdminSettings(payload, authKey) {
+  var adminUser = assertAdmin(authKey || (payload && payload.admin_pin));
   
   return withScriptLock(30, function() {
     var ss = getAppSpreadsheet();
@@ -699,8 +755,8 @@ function saveAdminSettings(payload) {
 /**
  * Data ekspor untuk absensi dan rekapitulasi Excel/CSV
  */
-function getAdminExportData(scope, filterDesa, filterLembaga) {
-  assertAdmin();
+function getAdminExportData(scope, filterDesa, filterLembaga, authKey) {
+  assertAdmin(authKey);
   var ss = getAppSpreadsheet();
   var regSheet = ss.getSheetByName('Pendaftaran');
   var pesSheet = ss.getSheetByName('Peserta');
@@ -789,8 +845,8 @@ function getAdminExportData(scope, filterDesa, filterLembaga) {
 /**
  * Daftar riwayat perubahan sistem (Audit Log)
  */
-function listAdminHistory(page, pageSize) {
-  assertAdmin();
+function listAdminHistory(page, pageSize, authKey) {
+  assertAdmin(authKey);
   var ss = getAppSpreadsheet();
   var sheet = ss.getSheetByName('Riwayat');
   if (!sheet || sheet.getLastRow() <= 1) {
@@ -829,8 +885,8 @@ function listAdminHistory(page, pageSize) {
  * Reset seluruh data pendaftaran ujicoba dan kembalikan penomoran kode ke 0 (MWR-001)
  * Hanya dapat dijalankan oleh Admin terautentikasi
  */
-function resetAllRegistrationsData() {
-  var adminUser = assertAdmin();
+function resetAllRegistrationsData(authKey) {
+  var adminUser = assertAdmin(authKey);
   
   return withScriptLock(30, function() {
     var ss = getAppSpreadsheet();
@@ -878,8 +934,8 @@ function resetAllRegistrationsData() {
 /**
  * Ambil data terstruktur untuk Daftar Hadir (Presensi)
  */
-function getAdminAttendanceData(filterDesa) {
-  assertAdmin();
+function getAdminAttendanceData(filterDesa, authKey) {
+  assertAdmin(authKey);
   var ss = getAppSpreadsheet();
   var regSheet = ss.getSheetByName('Pendaftaran');
   var pesSheet = ss.getSheetByName('Peserta');
@@ -959,8 +1015,8 @@ function getAdminAttendanceData(filterDesa) {
 /**
  * Generate PDF Daftar Hadir (Opsi A atau Opsi B) dan kembalikan Base64
  */
-function getAttendancePdf(type, filterDesa) {
-  assertAdmin();
+function getAttendancePdf(type, filterDesa, authKey) {
+  assertAdmin(authKey);
   var ss = getAppSpreadsheet();
   var settings = getSettingsFromSheet(ss);
   var fDesa = (filterDesa && filterDesa !== 'all') ? String(filterDesa).trim() : 'SEMUA';

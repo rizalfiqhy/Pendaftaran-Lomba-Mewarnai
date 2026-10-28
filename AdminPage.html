@@ -48,13 +48,79 @@
       -webkit-tap-highlight-color: transparent;
     }
     .pb-safe { padding-bottom: env(safe-area-inset-bottom, 16px); }
+
+    /* Styling Menu Navigasi Sidebar Admin agar selalu kontras & terlihat jelas */
+    .sidebar-brand-title {
+      color: #005E39 !important;
+      font-weight: 800 !important;
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+    }
+    .sidebar-brand-sub {
+      color: #4B5563 !important;
+      font-weight: 500 !important;
+    }
+    .nav-btn {
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.75rem !important;
+      padding: 0.65rem 0.85rem !important;
+      border-radius: 0.75rem !important;
+      font-size: 13.5px !important;
+      font-weight: 700 !important;
+      color: #1F2937 !important; /* Warna teks gelap tegas - BUKAN putih */
+      background-color: #F9FAFB !important; /* Background card tombol terlihat */
+      border: 1px solid #E5E7EB !important; /* Border pemisah kotak */
+      cursor: pointer !important;
+      transition: all 0.15s ease-in-out !important;
+      width: 100% !important;
+      text-align: left !important;
+    }
+    .nav-btn:hover {
+      background-color: #E7F2E9 !important;
+      color: #005E39 !important;
+      border-color: #A7F3D0 !important;
+    }
+    .nav-btn.active {
+      background-color: #005E39 !important; /* Hijau Pondok Solid saat aktif */
+      color: #FFFFFF !important; /* Teks Putih Kontras di atas Hijau */
+      border-color: #005E39 !important;
+      box-shadow: 0 2px 4px rgba(0, 94, 57, 0.2) !important;
+    }
+    .nav-btn .material-symbols-outlined {
+      font-size: 20px !important;
+      color: inherit !important;
+    }
   </style>
 </head>
 
 <body class="min-h-screen flex flex-col md:flex-row text-tinta">
+  <!-- ================= LOCK SCREEN PIN ADMIN ================= -->
+  <div id="admin-lock-screen" class="fixed inset-0 z-50 bg-hijau-pondok/95 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl flex flex-col items-center text-center">
+      <div class="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-200 p-2 mb-4 flex items-center justify-center shadow-xs">
+        <img src="data:image/png;base64,<?= getLogoBase64() ?>" alt="Logo Haflah" class="w-full h-full object-contain">
+      </div>
+      <h2 class="font-display font-black text-[20px] text-tinta mb-1">Keamanan Panel Admin</h2>
+      <p class="text-[12px] text-gray-500 mb-5">Masukkan PIN Admin (Default: <b>123456</b>) untuk mengelola data Haflah 1448 H.</p>
+      
+      <form onsubmit="handlePinSubmit(event)" class="w-full flex flex-col gap-3.5">
+        <div class="relative">
+          <input type="password" id="admin-pin-input" maxlength="10" placeholder="••••••" 
+                 class="w-full h-13 text-center text-[26px] font-mono font-black tracking-widest rounded-xl border-2 border-garis focus:border-hijau-pondok focus:outline-none bg-kertas" 
+                 autocomplete="off" autofocus>
+        </div>
+        <div id="admin-pin-error" class="text-[12px] font-bold text-merah-koreksi hidden"></div>
+        <button type="submit" id="btn-submit-pin" class="w-full h-11 bg-hijau-pondok hover:bg-emerald-800 text-white font-display font-bold text-[14px] rounded-xl shadow-md active:scale-95 transition-all flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">lock_open</span>
+          <span>Buka Panel Admin</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
 
   <!-- ================= DESKTOP SIDEBAR NAVIGATION (>= 768px) ================= -->
-  <aside class="hidden md:flex flex-col w-64 bg-white border-r border-garis shrink-0 p-4 justify-between h-screen sticky top-0">
+  <aside class="hidden md:flex flex-col w-64 bg-white border-r border-garis shrink-0 p-4 justify-between h-screen sticky top-0 shadow-xs">
     <div class="flex flex-col gap-6">
       <!-- Logo & App Header -->
       <div class="flex items-center gap-3 px-1">
@@ -62,33 +128,33 @@
           <img src="data:image/png;base64,<?= getLogoBase64() ?>" alt="Logo Haflah" class="w-full h-full object-contain">
         </div>
         <div class="flex flex-col min-w-0">
-          <span class="font-display font-extrabold text-[13px] text-hijau-pondok tracking-tight truncate">
+          <span class="sidebar-brand-title text-[13px] tracking-tight truncate">
             ADMIN HAFLAH 1448 H
           </span>
-          <span class="text-[11px] text-gray-500 truncate">Lomba Mewarnai</span>
+          <span class="sidebar-brand-sub text-[11px] truncate">Lomba Mewarnai</span>
         </div>
       </div>
 
       <!-- Navigation Links -->
-      <nav class="flex flex-col gap-1.5" id="desktop-nav">
-        <button type="button" onclick="adminNavTo('dashboard')" id="d-nav-dashboard" class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-bold text-[13.5px] bg-hijau-daun text-hijau-pondok transition-colors">
-          <span class="material-symbols-outlined text-[20px]">dashboard</span>
+      <nav class="flex flex-col gap-2" id="desktop-nav">
+        <button type="button" onclick="adminNavTo('dashboard')" id="d-nav-dashboard" class="nav-btn active">
+          <span class="material-symbols-outlined">dashboard</span>
           <span>Dasbor Statistik</span>
         </button>
-        <button type="button" onclick="adminNavTo('registrations')" id="d-nav-registrations" class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-bold text-[13.5px] text-gray-600 hover:bg-gray-100 transition-colors">
-          <span class="material-symbols-outlined text-[20px]">how_to_reg</span>
+        <button type="button" onclick="adminNavTo('registrations')" id="d-nav-registrations" class="nav-btn">
+          <span class="material-symbols-outlined">how_to_reg</span>
           <span>Data Pendaftaran</span>
         </button>
-        <button type="button" onclick="adminNavTo('export')" id="d-nav-export" class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-bold text-[13.5px] text-gray-600 hover:bg-gray-100 transition-colors">
-          <span class="material-symbols-outlined text-[20px]">download</span>
+        <button type="button" onclick="adminNavTo('export')" id="d-nav-export" class="nav-btn">
+          <span class="material-symbols-outlined">download</span>
           <span>Ekspor &amp; Absensi</span>
         </button>
-        <button type="button" onclick="adminNavTo('settings')" id="d-nav-settings" class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-bold text-[13.5px] text-gray-600 hover:bg-gray-100 transition-colors">
-          <span class="material-symbols-outlined text-[20px]">settings</span>
+        <button type="button" onclick="adminNavTo('settings')" id="d-nav-settings" class="nav-btn">
+          <span class="material-symbols-outlined">settings</span>
           <span>Pengaturan Sistem</span>
         </button>
-        <button type="button" onclick="adminNavTo('history')" id="d-nav-history" class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-bold text-[13.5px] text-gray-600 hover:bg-gray-100 transition-colors">
-          <span class="material-symbols-outlined text-[20px]">history</span>
+        <button type="button" onclick="adminNavTo('history')" id="d-nav-history" class="nav-btn">
+          <span class="material-symbols-outlined">history</span>
           <span>Riwayat Perubahan</span>
         </button>
       </nav>
@@ -96,15 +162,18 @@
 
     <!-- Admin Account Card -->
     <div class="p-3 bg-gray-50 border border-garis rounded-xl flex items-center justify-between">
-      <div class="flex items-center gap-2 min-w-0">
-        <div class="w-8 h-8 rounded-full bg-hijau-pondok/20 text-hijau-pondok flex items-center justify-center font-bold text-[12px] shrink-0">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-[12px] shrink-0">
           <span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
         </div>
         <div class="flex flex-col min-w-0">
-          <span class="text-[11.5px] font-bold text-tinta truncate" id="d-admin-email">Admin</span>
+          <span class="text-[12px] font-bold text-gray-800 truncate" id="d-admin-email">Admin</span>
           <span class="text-[10px] text-emerald-600 font-bold">Terverifikasi</span>
         </div>
       </div>
+      <button type="button" onclick="lockAdminPanel()" title="Kunci / Keluar Panel Admin" class="p-1.5 text-gray-500 hover:text-merah-koreksi hover:bg-red-50 rounded-lg transition-colors">
+        <span class="material-symbols-outlined text-[18px]">lock</span>
+      </button>
     </div>
   </aside>
 
@@ -788,7 +857,120 @@
       historyPage: 1
     };
 
+    function getAdminAuth() {
+      return sessionStorage.getItem('haflah_admin_pin') || '';
+    }
+
+    function lockAdminPanel() {
+      sessionStorage.removeItem('haflah_admin_pin');
+      var lockEl = document.getElementById('admin-lock-screen');
+      if (lockEl) {
+        lockEl.classList.remove('hidden');
+        var pinInp = document.getElementById('admin-pin-input');
+        if (pinInp) {
+          pinInp.value = '';
+          pinInp.focus();
+        }
+      }
+    }
+
+    function handlePinSubmit(e) {
+      if (e) e.preventDefault();
+      var pinInp = document.getElementById('admin-pin-input');
+      var errEl = document.getElementById('admin-pin-error');
+      var btn = document.getElementById('btn-submit-pin');
+      var pin = pinInp ? pinInp.value.trim() : '';
+
+      if (!pin) {
+        errEl.textContent = 'Silakan masukkan PIN Admin.';
+        errEl.classList.remove('hidden');
+        return;
+      }
+
+      errEl.classList.add('hidden');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span> Memverifikasi...';
+
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(function(res) {
+            btn.disabled = false;
+            btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">lock_open</span> Buka Panel Admin';
+            if (res && res.success) {
+              sessionStorage.setItem('haflah_admin_pin', pin);
+              document.getElementById('admin-lock-screen').classList.add('hidden');
+              loadDashboard();
+              loadSettings();
+            } else {
+              errEl.textContent = res.message || 'PIN Admin tidak sesuai.';
+              errEl.classList.remove('hidden');
+            }
+          })
+          .withFailureHandler(function(err) {
+            btn.disabled = false;
+            btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">lock_open</span> Buka Panel Admin';
+            errEl.textContent = err.message || 'Gagal memverifikasi PIN.';
+            errEl.classList.remove('hidden');
+          })
+          .verifyAdminPin(pin);
+      } else {
+        // Mode Mock Lokal
+        if (pin === '123456') {
+          sessionStorage.setItem('haflah_admin_pin', pin);
+          document.getElementById('admin-lock-screen').classList.add('hidden');
+          loadDashboard();
+          loadSettings();
+        } else {
+          errEl.textContent = 'PIN Admin salah (Default Mock: 123456).';
+          errEl.classList.remove('hidden');
+        }
+        btn.disabled = false;
+        btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">lock_open</span> Buka Panel Admin';
+      }
+    }
+
+    function saveNewAdminPin() {
+      var newP = document.getElementById('set-new-pin').value.trim();
+      var confP = document.getElementById('set-confirm-pin').value.trim();
+      if (!newP || newP.length < 4) {
+        alert('PIN baru minimal 4 angka/karakter.');
+        return;
+      }
+      if (newP !== confP) {
+        alert('Konfirmasi PIN baru tidak cocok.');
+        return;
+      }
+      if (!confirm('Yakin ingin mengganti PIN Admin? Harap catat PIN baru Anda baik-baik.')) return;
+      
+      var currAuth = getAdminAuth();
+      if (typeof google !== 'undefined' && google.script && google.script.run) {
+        google.script.run
+          .withSuccessHandler(function(res) {
+            alert(res.message || 'PIN berhasil diubah.');
+            sessionStorage.setItem('haflah_admin_pin', newP);
+            document.getElementById('set-new-pin').value = '';
+            document.getElementById('set-confirm-pin').value = '';
+          })
+          .withFailureHandler(function(err) {
+            alert('Gagal mengganti PIN: ' + err.message);
+          })
+          .updateAdminPin(currAuth, newP);
+      }
+    }
+
     function initAdmin() {
+      var auth = getAdminAuth();
+      if (!auth) {
+        var lockEl = document.getElementById('admin-lock-screen');
+        if (lockEl) {
+          lockEl.classList.remove('hidden');
+          var pinInp = document.getElementById('admin-pin-input');
+          if (pinInp) pinInp.focus();
+        }
+        return;
+      }
+      var lockEl = document.getElementById('admin-lock-screen');
+      if (lockEl) lockEl.classList.add('hidden');
       loadDashboard();
       loadSettings();
     }
@@ -807,7 +989,7 @@
 
         var dNav = document.getElementById('d-nav-' + t);
         if (dNav) {
-          dNav.className = 'flex items-center gap-3 px-3 py-2.5 rounded-xl font-bold text-[13.5px] text-gray-600 hover:bg-gray-100 transition-colors';
+          dNav.className = 'nav-btn';
         }
 
         var mNav = document.getElementById('m-nav-' + t);
@@ -821,12 +1003,12 @@
 
       var activeDNav = document.getElementById('d-nav-' + tabName);
       if (activeDNav) {
-        activeDNav.className = 'flex items-center gap-3 px-3 py-2.5 rounded-xl font-bold text-[13.5px] bg-hijau-daun text-hijau-pondok transition-colors';
+        activeDNav.className = 'nav-btn active';
       }
 
       var activeMNav = document.getElementById('m-nav-' + tabName);
       if (activeMNav) {
-        activeMNav.className = 'flex flex-col items-center justify-center text-hijau-pondok';
+        activeMNav.className = 'flex flex-col items-center justify-center text-hijau-pondok font-bold';
       }
 
       // Title header update
@@ -855,7 +1037,7 @@
           .withFailureHandler(function(err) {
             alert('Gagal memuat dasbor: ' + err.message);
           })
-          .getDashboardData();
+          .getDashboardData(getAdminAuth());
       } else {
         // Mock dasbor
         renderDashboard({
@@ -968,7 +1150,7 @@
           .withFailureHandler(function(err) {
             alert('Gagal memuat pendaftaran: ' + err.message);
           })
-          .listAdminRegistrations(q, fJenis, fDesa, page, 20);
+          .listAdminRegistrations(q, fJenis, fDesa, page, 20, getAdminAuth());
       } else {
         renderAdminTable({
           success: true,
@@ -1015,7 +1197,7 @@
           '<td class="p-3.5"><div class="font-bold text-tinta">' + r.koordinator + '</div>' + waLinkHtml + '</td>' +
           '<td class="p-3.5 text-gray-500 text-[11.5px]">' + r.waktu_daftar + '</td>' +
           '<td class="p-3.5 text-right whitespace-nowrap">' +
-          '<button type="button" onclick="downloadSinglePdf(\'' + r.kode + '\', this)" class="px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-bold rounded-lg transition-all text-[11.5px] mr-1.5 inline-flex items-center gap-1 active:scale-95" title="Unduh / Cetak Bukti PDF">' +
+          '<button type="button" onclick="downloadSinglePdf(\'' + r.kode + '\', this)" class="px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-bold rounded-lg transition-all text-[11.5px] mr-1.5 inline-flex items-center gap-1 active:scale-95" title="Unduh / Cetak Bukti Pendaftaran">' +
             '<span class="material-symbols-outlined text-[15px] text-emerald-700">picture_as_pdf</span>' +
             '<span>PDF</span>' +
           '</button>' +
@@ -1081,7 +1263,7 @@
           .withFailureHandler(function(err) {
             alert('Gagal mengambil data: ' + err.message);
           })
-          .getAdminRegistrationDetail(kode);
+          .getAdminRegistrationDetail(kode, getAdminAuth());
       } else {
         populateEditModal({
           success: true,
@@ -1222,7 +1404,7 @@
           .withFailureHandler(function(err) {
             alert('Gagal menyimpan: ' + err.message);
           })
-          .saveAdminRegistration(payload, forceSave);
+          .saveAdminRegistration(payload, forceSave, getAdminAuth());
       } else {
         alert('Mode Mock: Perubahan data ' + newKode + ' tersimpan.');
         closeEditModal();
@@ -1245,7 +1427,7 @@
             .withFailureHandler(function(err) {
               alert('Gagal menghapus: ' + err.message);
             })
-            .deleteAdminRegistration(kode);
+            .deleteAdminRegistration(kode, getAdminAuth());
         } else {
           alert(kode + ' dihapus. Nomor ini tidak dipakai lagi.');
           closeEditModal();
@@ -1359,7 +1541,7 @@
           .withFailureHandler(function(err) {
             alert('Gagal menambah pendaftaran: ' + err.message);
           })
-          .createAdminRegistration(payload);
+          .createAdminRegistration(payload, getAdminAuth());
       } else {
         alert('Mode Mock: Pendaftaran manual berhasil ditambahkan.');
         closeCreateModal();
@@ -1900,7 +2082,7 @@
           .withFailureHandler(function(err) {
             console.error('Gagal memuat pengaturan:', err);
           })
-          .getAdminSettings();
+          .getAdminSettings(getAdminAuth());
       }
     }
 
@@ -2032,7 +2214,7 @@
           .withFailureHandler(function(err) {
             container.innerHTML = '<p class="text-red-500 text-[12px]">Gagal memuat riwayat: ' + err.message + '</p>';
           })
-          .listAdminHistory(page, 30);
+          .listAdminHistory(page, 30, getAdminAuth());
       } else {
         renderAdminHistory({
           success: true,
@@ -2138,7 +2320,7 @@
             if (ol) ol.remove();
             alert('Gagal mereset data: ' + err.message);
           })
-          .resetAllRegistrationsData();
+          .resetAllRegistrationsData(getAdminAuth());
       } else {
         setTimeout(function() {
           var ol = document.getElementById('reset-loading-overlay');

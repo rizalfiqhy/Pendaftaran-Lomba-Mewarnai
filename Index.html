@@ -334,14 +334,14 @@
                   <div class="w-7 h-7 rounded-full bg-krayon-kuning/30 flex items-center justify-center text-emas-tua font-bold text-[13px]">2</div>
                   <h3 class="font-display font-bold text-[15px] text-tinta">Daftar Anak Peserta</h3>
                 </div>
-                <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-hijau-daun text-hijau-pondok">1 - 100 Anak</span>
+                
               </div>
 
               <!-- Stepper Jumlah Peserta -->
               <div class="flex flex-col gap-1.5">
                 <label class="text-[12.5px] font-bold text-tinta flex justify-between">
                   <span>Jumlah Peserta</span>
-                  <span class="text-gray-400 font-normal text-[11px]">Boleh 1 sampai 100 anak</span>
+                  
                 </label>
                 <div class="flex items-center gap-3">
                   <button type="button" onclick="changeParticipantCount(-1)" class="w-12 h-12 rounded-xl border border-garis bg-gray-50 text-tinta font-bold text-[22px] flex items-center justify-center active:bg-gray-200 transition-colors">
@@ -385,7 +385,7 @@
               <!-- Baris Nama Peserta Bernomor -->
               <div class="flex flex-col gap-2 pt-1">
                 <label class="text-[12.5px] font-bold text-tinta flex justify-between">
-                  <span>Nama Lengkap Anak Peserta</span>
+                  <span>Nama Lengkap Peserta</span>
                   <span class="text-gray-400 font-normal text-[11px]">Enter untuk baris berikutnya</span>
                 </label>
                 <div id="participant-rows-container" class="flex flex-col gap-2.5 max-h-[380px] overflow-y-auto pr-1">
@@ -421,7 +421,7 @@
               <!-- Nama Koordinator -->
               <div class="flex flex-col gap-1.5">
                 <label for="input-koordinator" class="text-[12.5px] font-bold text-tinta">
-                  Nama Koordinator (Guru / Pengurus)
+                  Nama Koordinator
                 </label>
                 <input type="text" id="input-koordinator" autocapitalize="characters" autocomplete="off" placeholder="CONTOH: SITI AMINAH, S.PD." class="w-full h-12 px-3.5 rounded-xl border border-garis bg-kertas text-[15px] font-bold text-tinta focus:outline-none focus:border-hijau-pondok uppercase">
                 <span class="text-[11.5px] text-merah-koreksi hidden font-bold" id="err-koordinator"></span>
@@ -575,7 +575,7 @@
         <div class="w-full flex flex-col gap-2 pt-2">
           <button type="button" id="btn-download-receipt" onclick="downloadReceiptPdf()" class="w-full h-13 py-3.5 rounded-xl bg-hijau-pondok text-white font-display font-bold text-[15px] flex items-center justify-center gap-2 shadow-md active:scale-[0.98]">
             <span class="material-symbols-outlined text-[22px]">download</span>
-            <span id="lbl-btn-pdf">Unduh Bukti PDF Resmi</span>
+            <span id="lbl-btn-pdf">Unduh Bukti Pendaftaran</span>
           </button>
           
           <button type="button" onclick="registerAnotherInstitution()" class="w-full h-12 py-3 rounded-xl border border-garis bg-white text-tinta font-bold text-[14px] flex items-center justify-center gap-2 active:bg-gray-100">
@@ -1670,19 +1670,19 @@
         google.script.run
           .withSuccessHandler(function(res) {
             btn.disabled = false;
-            lbl.textContent = 'Unduh Bukti PDF Resmi';
+            lbl.textContent = 'Unduh Bukti Pendaftaran';
             triggerPdfDownload(res.base64, res.filename);
           })
           .withFailureHandler(function(err) {
             btn.disabled = false;
-            lbl.textContent = 'Unduh Bukti PDF Resmi';
+            lbl.textContent = 'Unduh Bukti Pendaftaran';
             alert('Gagal membuat PDF: ' + err.message);
           })
           .getReceiptPdf(reqId);
       } else {
         setTimeout(function() {
           btn.disabled = false;
-          lbl.textContent = 'Unduh Bukti PDF Resmi';
+          lbl.textContent = 'Unduh Bukti Pendaftaran';
           alert('Mode Mock: PDF Bukti Pendaftaran ' + kode + ' siap diunduh.');
         }, 1000);
       }
