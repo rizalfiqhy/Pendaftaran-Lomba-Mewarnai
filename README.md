@@ -2,7 +2,7 @@
 
 Aplikasi Web Mobile Pendaftaran Kolektif **Lomba Mewarnai Kreatif TKM & RA Se-Kecamatan Wuluhan** (Semarak Haflah Al Milad 104 & Akhir As Sanah 1448 H / 2027 M) berbasis **Frontend Google Apps Script (HTML Service)** dan **Backend Google Spreadsheet**.
 
-Dokumen ini disusun dan diperbarui berdasarkan spesifikasi pada `prd.md` dan `design.md` (Versi 2.1 — 28 Oktober 2026).
+Dokumen ini disusun dan diperbarui berdasarkan spesifikasi pada `prd.md` dan `design.md` (Versi 2.2 — 28 Oktober 2026).
 
 ---
 
@@ -35,14 +35,27 @@ Semua berkas proyek berada langsung di dalam direktori kerja:
    - Tersedia tombol **Kunci Admin** di sudut bawah sidebar untuk mengunci kembali panel kapan saja.
    - Admin dapat mengganti nomor PIN sewaktu-waktu di menu **Pengaturan Sistem**.
 
-### B. Formulir Pendaftaran Publik
+### B. Antarmuka Modern & Banner Rotator (Versi 2.2)
+1. **Tipografi Modern Bersama (Plus Jakarta Sans):**
+   - Font Google Fonts *Plus Jakarta Sans* diterapkan penuh pada antarmuka publik (`Index.html`) dan panel admin (`AdminPage.html`).
+2. **Efek Visual & Animasi Lembut:**
+   - Shimmer sweep effect pada tombol aksi utama (*Call to Action*).
+   - Animasi transisi halus saat perpindahan halaman/layar.
+   - Efek hujan konfeti digital perayaan pada halaman sukses pendaftaran.
+3. **Banner Rotator 5 Slide & Link Pemesanan Produk:**
+   - Slider karusel otomatis (setiap 4,5 detik) di bagian bawah beranda publik untuk menampilkan produk/merchandise resmi panitia.
+   - Dilengkapi navigasi sentuh (touch swipe mobile), tombol panah, dan indikator titik.
+   - Tombol **"Pesan Sekarang"** dengan link website pemesanan atau kontak pemesanan yang dapat diatur dari Panel Admin.
+   - Memiliki 5 template visual bawaan estetik jika admin belum memasukkan link gambar khusus.
+
+### C. Formulir Pendaftaran Publik
 1. **Langkah 1 (Lembaga):** Pilihan jenis (TKM/RA), nama lembaga, dan dropdown 7 desa di Kecamatan Wuluhan.
 2. **Langkah 2 (Peserta):** Stepper jumlah peserta, fitur tempel banyak nama dari WhatsApp, dan baris isian dengan label bersih **"Nama Lengkap Peserta"**.
 3. **Pembersihan Draf Otomatis:** Kolom nama peserta **selalu kosong bersih** saat membuka pendaftaran baru (mencegah pengisian otomatis nama peserta lama).
 4. **Langkah 3 (Koordinator):** Label bersih **"Nama Koordinator"** dan nomor WhatsApp koordinator.
 5. **Langkah 4 (Periksa & Konfirmasi):** Ringkasan isian, tombol kirim dengan pengaman idempotensi (`request_id`), dan tombol hijau **"Unduh Bukti Pendaftaran"**.
 
-### C. Dokumen Resmi PDF A4 Portrait (Kop 2 Logo)
+### D. Dokumen Resmi PDF A4 Portrait (Kop 2 Logo)
 1. **Kop Surat Lembaga:**
    - **Sebelah Kiri:** Logo Resmi Yayasan Islam Nahdlatuth Thalabah (YASINAT) segilima hijau.
    - **Bagian Tengah:** Teks Kop resmi Panitia Haflah dan Yayasan.

@@ -8,7 +8,7 @@
   <!-- Fonts & Material Symbols -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:ital,wght@0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
   
   <!-- Tailwind CSS via CDN -->
@@ -32,8 +32,8 @@
             'kuning-peringatan': '#F6E7B4'
           },
           fontFamily: {
-            sans: ['"Atkinson Hyperlegible"', 'system-ui', 'sans-serif'],
-            display: ['"Plus Jakarta Sans"', 'sans-serif']
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif']
           }
         }
       }
@@ -44,7 +44,7 @@
     body {
       background-color: #F4F6F4;
       color: #1C2A21;
-      font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
       -webkit-tap-highlight-color: transparent;
     }
     .pb-safe { padding-bottom: env(safe-area-inset-bottom, 16px); }
@@ -89,6 +89,31 @@
     .nav-btn .material-symbols-outlined {
       font-size: 20px !important;
       color: inherit !important;
+    }
+  
+    /* Animasi & Mikro-Interaksi Modern */
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(200%); }
+    }
+    .animate-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .animate-shimmer::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transform: translateX(-100%);
+      animation: shimmer 3.2s infinite ease-in-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-up {
+      animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
   </style>
 </head>
@@ -591,6 +616,56 @@
             <input type="text" id="set-kop-2" placeholder="Baris 2" class="h-10 px-3 rounded-lg border border-garis text-[12px]">
             <input type="text" id="set-kop-3" placeholder="Baris 3" class="h-10 px-3 rounded-lg border border-garis text-[12px]">
             <input type="text" id="set-kop-4" placeholder="Baris 4" class="h-10 px-3 rounded-lg border border-garis text-[12px]">
+          </div>
+
+                    <!-- Pengaturan Banner Produk & Link Pemesanan (5 Slide) -->
+          <div class="border-t border-garis/60 pt-4 flex flex-col gap-3">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[19px]">storefront</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-[13.5px] text-hijau-pondok">Pengaturan Banner Produk &amp; Link Pemesanan</h4>
+                <p class="text-[11.5px] text-gray-500">Kelola tautan website pemesanan untuk tombol "Pesan Sekarang" dan 5 slot gambar banner di Beranda.</p>
+              </div>
+            </div>
+
+            <div>
+              <label class="text-[12px] font-bold text-tinta block mb-1">Link Website Pemesanan (Tombol "Pesan Sekarang")</label>
+              <div class="relative">
+                <input type="url" id="set-banner-order-url" placeholder="https://toko-anda.com/produk atau https://wa.me/62812..." class="w-full h-11 pl-10 pr-3 rounded-xl border border-garis text-[13px] font-medium bg-white focus:outline-none focus:ring-2 focus:ring-hijau-pondok">
+                <span class="material-symbols-outlined absolute left-3 top-3 text-[18px] text-gray-400">link</span>
+              </div>
+              <p class="text-[11px] text-gray-500 mt-1">Jika dikosongkan, tombol otomatis mengarah ke WhatsApp narahubung panitia.</p>
+            </div>
+
+            <div class="bg-gray-50/80 p-3.5 rounded-xl border border-garis/70 flex flex-col gap-2.5">
+              <span class="text-[12px] font-bold text-gray-800">5 Slot URL Gambar Banner (Rasio 16:8 atau Persegi Panjang):</span>
+              <p class="text-[11px] text-gray-500">Tempelkan link langsung gambar (contoh: link Google Drive publik, Imgur, CDN, dll). Jika dikosongkan, sistem otomatis menampilkan template visual estetik bawaan.</p>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-1">
+                <div>
+                  <label class="text-[11px] font-bold text-gray-600 block mb-0.5">Slide 1 (URL Gambar)</label>
+                  <input type="url" id="set-banner-1" placeholder="https://... (opsional)" class="w-full h-9.5 px-3 rounded-lg border border-garis bg-white text-[12px]">
+                </div>
+                <div>
+                  <label class="text-[11px] font-bold text-gray-600 block mb-0.5">Slide 2 (URL Gambar)</label>
+                  <input type="url" id="set-banner-2" placeholder="https://... (opsional)" class="w-full h-9.5 px-3 rounded-lg border border-garis bg-white text-[12px]">
+                </div>
+                <div>
+                  <label class="text-[11px] font-bold text-gray-600 block mb-0.5">Slide 3 (URL Gambar)</label>
+                  <input type="url" id="set-banner-3" placeholder="https://... (opsional)" class="w-full h-9.5 px-3 rounded-lg border border-garis bg-white text-[12px]">
+                </div>
+                <div>
+                  <label class="text-[11px] font-bold text-gray-600 block mb-0.5">Slide 4 (URL Gambar)</label>
+                  <input type="url" id="set-banner-4" placeholder="https://... (opsional)" class="w-full h-9.5 px-3 rounded-lg border border-garis bg-white text-[12px]">
+                </div>
+                <div class="md:col-span-2">
+                  <label class="text-[11px] font-bold text-gray-600 block mb-0.5">Slide 5 (URL Gambar)</label>
+                  <input type="url" id="set-banner-5" placeholder="https://... (opsional)" class="w-full h-9.5 px-3 rounded-lg border border-garis bg-white text-[12px]">
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="pt-2 flex justify-end">
@@ -2121,6 +2196,13 @@
       document.getElementById('set-kop-4').value = s.kop_baris4 || '';
 
       document.getElementById('d-admin-email').textContent = s.admin_email || 'Admin';
+      document.getElementById('set-banner-order-url').value = s.banner_order_url || '';
+      document.getElementById('set-banner-1').value = s.banner_slide_1 || '';
+      document.getElementById('set-banner-2').value = s.banner_slide_2 || '';
+      document.getElementById('set-banner-3').value = s.banner_slide_3 || '';
+      document.getElementById('set-banner-4').value = s.banner_slide_4 || '';
+      document.getElementById('set-banner-5').value = s.banner_slide_5 || '';
+
 
       // Update dropdown desa
       var filterDesa = document.getElementById('admin-filter-desa');
@@ -2177,7 +2259,13 @@
         kop_baris1: document.getElementById('set-kop-1').value.trim(),
         kop_baris2: document.getElementById('set-kop-2').value.trim(),
         kop_baris3: document.getElementById('set-kop-3').value.trim(),
-        kop_baris4: document.getElementById('set-kop-4').value.trim()
+        kop_baris4: document.getElementById('set-kop-4').value.trim(),
+        banner_order_url: document.getElementById('set-banner-order-url').value.trim(),
+        banner_slide_1: document.getElementById('set-banner-1').value.trim(),
+        banner_slide_2: document.getElementById('set-banner-2').value.trim(),
+        banner_slide_3: document.getElementById('set-banner-3').value.trim(),
+        banner_slide_4: document.getElementById('set-banner-4').value.trim(),
+        banner_slide_5: document.getElementById('set-banner-5').value.trim()
       };
 
       if (typeof google !== 'undefined' && google.script && google.script.run) {
@@ -2193,7 +2281,7 @@
             btn.textContent = 'Simpan Pengaturan';
             alert('Gagal menyimpan: ' + err.message);
           })
-          .saveAdminSettings(payload);
+          .saveAdminSettings(payload, getAdminAuth());
       } else {
         setTimeout(function() {
           btn.disabled = false;

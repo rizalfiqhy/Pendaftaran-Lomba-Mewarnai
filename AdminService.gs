@@ -680,7 +680,13 @@ function getAdminSettings(authKey) {
       kop_baris2: settings.kop_baris2 || 'YAYASAN ISLAM NAHDLATUTH THALABAH',
       kop_baris3: settings.kop_baris3 || 'Sekretariat : PP. Nahdlatuth Thalabah Kesilir - Wuluhan - Jember',
       kop_baris4: settings.kop_baris4 || 'WhatsApp : +62 812-1768-7686 Email : panitiahafahyasinat@gmail.com',
-      admin_email: props.getProperty('ADMIN_EMAIL') || settings.admin_email || ''
+      admin_email: props.getProperty('ADMIN_EMAIL') || settings.admin_email || '',
+      banner_order_url: settings.banner_order_url || '',
+      banner_slide_1: settings.banner_slide_1 || '',
+      banner_slide_2: settings.banner_slide_2 || '',
+      banner_slide_3: settings.banner_slide_3 || '',
+      banner_slide_4: settings.banner_slide_4 || '',
+      banner_slide_5: settings.banner_slide_5 || ''
     }
   };
 }
@@ -702,7 +708,8 @@ function saveAdminSettings(payload, authKey) {
       'mode', 'tutup_pada', 'judul', 'tanggal_pelaksanaan', 'jam', 'lokasi',
       'kontak_tkm_nama', 'kontak_tkm_wa', 'kontak_ra_nama', 'kontak_ra_wa',
       'ketentuan_teknis', 'daftar_desa', 'tampilkan_peserta',
-      'kop_baris1', 'kop_baris2', 'kop_baris3', 'kop_baris4'
+      'kop_baris1', 'kop_baris2', 'kop_baris3', 'kop_baris4',
+        'banner_order_url', 'banner_slide_1', 'banner_slide_2', 'banner_slide_3', 'banner_slide_4', 'banner_slide_5'
     ];
     
     // Konversi tampilkan_peserta boolean ke YA/TIDAK

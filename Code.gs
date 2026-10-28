@@ -70,7 +70,13 @@ function initSpreadsheet() {
       ['kop_baris2', 'YAYASAN ISLAM NAHDLATUTH THALABAH'],
       ['kop_baris3', 'Sekretariat : PP. Nahdlatuth Thalabah Kesilir - Wuluhan - Jember'],
       ['kop_baris4', 'WhatsApp : +62 812-1768-7686 Email : panitiahafahyasinat@gmail.com'],
-      ['admin_pin', '123456']
+      ['admin_pin', '123456'],
+      ['banner_order_url', ''],
+      ['banner_slide_1', ''],
+      ['banner_slide_2', ''],
+      ['banner_slide_3', ''],
+      ['banner_slide_4', ''],
+      ['banner_slide_5', '']
     ];
     setSheet.getRange(2, 1, defaultSettings.length, 2).setValues(defaultSettings);
   }
@@ -140,6 +146,14 @@ function getPublicConfig() {
       baris3: settings.kop_baris3 || 'Sekretariat : PP. Nahdlatuth Thalabah Kesilir - Wuluhan - Jember',
       baris4: settings.kop_baris4 || 'WhatsApp : +62 812-1768-7686 Email : panitiahafahyasinat@gmail.com'
     },
+    banner_slides: [
+      settings.banner_slide_1 || '',
+      settings.banner_slide_2 || '',
+      settings.banner_slide_3 || '',
+      settings.banner_slide_4 || '',
+      settings.banner_slide_5 || ''
+    ],
+    banner_order_url: settings.banner_order_url || '',
     logo_base64: getLogoBase64()
   };
 }

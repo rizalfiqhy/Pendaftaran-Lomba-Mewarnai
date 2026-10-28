@@ -8,7 +8,7 @@
   <!-- Google Fonts & Material Symbols -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:ital,wght@0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
   
   <!-- Tailwind CSS via CDN -->
@@ -34,8 +34,8 @@
             'krayon-jingga': '#E8832A'
           },
           fontFamily: {
-            sans: ['"Atkinson Hyperlegible"', 'system-ui', 'sans-serif'],
-            display: ['"Plus Jakarta Sans"', 'sans-serif']
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif']
           }
         }
       }
@@ -46,7 +46,7 @@
     body {
       background-color: #FAFCFA;
       color: #1C2A21;
-      font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
     }
@@ -67,6 +67,31 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .animate-pop-in { animation: none; opacity: 1; }
+    }
+  
+    /* Animasi & Mikro-Interaksi Modern */
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(200%); }
+    }
+    .animate-shimmer {
+      position: relative;
+      overflow: hidden;
+    }
+    .animate-shimmer::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+      transform: translateX(-100%);
+      animation: shimmer 3.2s infinite ease-in-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-up {
+      animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
   </style>
 </head>
@@ -100,75 +125,61 @@
     <main class="flex-1 w-full pb-24" id="main-content">
       
       <!-- ======================================================== -->
-      <!-- LAYAR 1: BERANDA                                          -->
+      <!-- LAYAR 1: BERANDA (REVAMP MODERN & ROTATING BANNER)       -->
       <!-- ======================================================== -->
-      <section id="screen-home" class="p-4 flex flex-col gap-4">
-        <!-- Kop Ringkas -->
-        <div class="bg-white rounded-2xl p-3.5 border border-garis flex items-center gap-3 shadow-xs">
-          <div class="w-12 h-14 flex items-center justify-center shrink-0 bg-white rounded-xl p-1 border border-garis/60 overflow-hidden shadow-2xs">
-            <img id="kop-banner-logo" src="data:image/png;base64,<?= getLogoBase64() ?>" alt="Logo Haflah" class="w-full h-full object-contain">
-          </div>
-          <div class="flex flex-col min-w-0">
-            <h2 class="font-display font-bold text-[11.5px] leading-tight text-hijau-pondok uppercase tracking-tight">
-              PANITIA HAFLAH AL MILAD 104 &amp; AKHIR AS SANAH 1448 H
-            </h2>
-            <div class="inline-flex items-center self-start px-2 py-0.5 rounded-full bg-hijau-pondok mt-1">
-              <span class="text-[9.5px] font-bold text-emas-muda tracking-wide uppercase">
-                YAYASAN ISLAM NAHDLATUTH THALABAH
-              </span>
-            </div>
-            <span class="text-[10px] text-gray-500 mt-0.5 font-medium">Kesilir • Wuluhan • Jember</span>
-          </div>
-        </div>
-
-        <!-- Banner Judul & Crayon Motif -->
-        <div class="flex flex-col items-center text-center pt-1">
-          <div id="home-status-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-hijau-daun text-hijau-pondok text-[12px] font-bold shadow-xs">
-            <span class="material-symbols-outlined text-[16px]">check_circle</span>
+      <section id="screen-home" class="p-4 flex flex-col gap-4 fade-in-up">
+        
+        <!-- Hero Section Bergradasi Lembut & Elegan (Kop Lama Dihapus) -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-emerald-50/90 via-teal-50/30 to-white p-5 border border-emerald-100/70 shadow-xs flex flex-col items-center text-center gap-2.5">
+          <div id="home-status-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-hijau-pondok text-[11.5px] font-bold border border-emerald-200/80 shadow-2xs">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
             <span id="home-status-text">Pendaftaran Dibuka</span>
           </div>
-          <h1 class="font-display font-extrabold text-[22px] leading-snug text-tinta mt-2">
-            Lomba Mewarnai Kreatif <br><span class="text-hijau-pondok">TKM &amp; RA</span> Se-Kecamatan Wuluhan
+
+          <h1 class="font-display font-extrabold text-[22px] leading-snug text-hijau-pondok mt-1">
+            Lomba Mewarnai Kreatif<br><span class="text-tinta">TKM &amp; RA Se-Kecamatan Wuluhan</span>
           </h1>
+
           <!-- 4 Crayon Signature Motif -->
-          <div class="flex items-center justify-center gap-1.5 my-2">
+          <div class="flex items-center justify-center gap-1.5 my-1">
             <span class="w-7 h-2 rounded-full bg-krayon-hijau"></span>
             <span class="w-7 h-2 rounded-full bg-krayon-kuning"></span>
             <span class="w-7 h-2 rounded-full bg-krayon-toska"></span>
             <span class="w-7 h-2 rounded-full bg-krayon-jingga"></span>
           </div>
-          <p class="text-[13px] text-gray-600 max-w-[340px]">
-            Pendaftaran kolektif satu pintu untuk sekolah TKM dan RA. Pasangan kreatif ibu dan santri cilik.
+
+          <p class="text-[13px] text-gray-600 max-w-[340px] font-medium leading-relaxed">
+            Pendaftaran kolektif satu pintu untuk sekolah TKM dan RA. Pasangan kreatif ibu dan anak.
           </p>
         </div>
 
-        <!-- Countdown Timer Card -->
-        <div id="countdown-container" class="bg-white rounded-2xl p-4 border border-garis shadow-xs flex flex-col gap-2.5">
+        <!-- Countdown Timer Card (Soft Glass Card) -->
+        <div id="countdown-container" class="bg-white rounded-2xl p-4 border border-garis/80 shadow-xs flex flex-col gap-2.5">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-1.5 text-hijau-pondok font-bold text-[13px]">
               <span class="material-symbols-outlined text-[18px]">timer</span>
               <span>Sisa Waktu Pendaftaran</span>
             </div>
-            <span class="text-[10.5px] font-bold px-2 py-0.5 rounded-full bg-kuning-peringatan text-tinta">
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-kuning-peringatan text-tinta">
               WIB (Server)
             </span>
           </div>
           <div class="grid grid-cols-4 gap-2 text-center" id="countdown-boxes">
-            <div class="bg-hijau-daun/50 rounded-xl py-2 flex flex-col items-center">
-              <span class="font-display font-extrabold text-[20px] text-tinta" id="timer-days">--</span>
-              <span class="text-[10px] uppercase font-bold text-gray-500">Hari</span>
+            <div class="bg-gradient-to-b from-hijau-daun/60 to-emerald-50/30 rounded-xl py-2 flex flex-col items-center border border-emerald-100/60 shadow-2xs">
+              <span class="font-display font-black text-[22px] text-tinta" id="timer-days">--</span>
+              <span class="text-[9.5px] uppercase font-bold text-gray-500">Hari</span>
             </div>
-            <div class="bg-hijau-daun/50 rounded-xl py-2 flex flex-col items-center">
-              <span class="font-display font-extrabold text-[20px] text-tinta" id="timer-hours">--</span>
-              <span class="text-[10px] uppercase font-bold text-gray-500">Jam</span>
+            <div class="bg-gradient-to-b from-hijau-daun/60 to-emerald-50/30 rounded-xl py-2 flex flex-col items-center border border-emerald-100/60 shadow-2xs">
+              <span class="font-display font-black text-[22px] text-tinta" id="timer-hours">--</span>
+              <span class="text-[9.5px] uppercase font-bold text-gray-500">Jam</span>
             </div>
-            <div class="bg-hijau-daun/50 rounded-xl py-2 flex flex-col items-center">
-              <span class="font-display font-extrabold text-[20px] text-tinta" id="timer-mins">--</span>
-              <span class="text-[10px] uppercase font-bold text-gray-500">Menit</span>
+            <div class="bg-gradient-to-b from-hijau-daun/60 to-emerald-50/30 rounded-xl py-2 flex flex-col items-center border border-emerald-100/60 shadow-2xs">
+              <span class="font-display font-black text-[22px] text-tinta" id="timer-mins">--</span>
+              <span class="text-[9.5px] uppercase font-bold text-gray-500">Menit</span>
             </div>
-            <div class="bg-hijau-daun/50 rounded-xl py-2 flex flex-col items-center">
-              <span class="font-display font-extrabold text-[20px] text-krayon-jingga" id="timer-secs">--</span>
-              <span class="text-[10px] uppercase font-bold text-gray-500">Detik</span>
+            <div class="bg-gradient-to-b from-hijau-daun/60 to-emerald-50/30 rounded-xl py-2 flex flex-col items-center border border-emerald-100/60 shadow-2xs">
+              <span class="font-display font-black text-[22px] text-krayon-jingga" id="timer-secs">--</span>
+              <span class="text-[9.5px] uppercase font-bold text-gray-500">Detik</span>
             </div>
           </div>
           <div class="flex items-center gap-1.5 text-[11px] text-gray-500 pt-0.5">
@@ -177,47 +188,101 @@
           </div>
         </div>
 
-        <!-- Tombol Aksi Utama (CTA) -->
+        <!-- Tombol Aksi Utama (CTA) dengan Shimmer Effect -->
         <div class="flex flex-col gap-1.5 pt-1">
-          <button id="btn-cta-daftar" onclick="navTo('form')" class="w-full h-13 py-3.5 px-4 rounded-xl bg-hijau-pondok text-white font-display font-bold text-[16px] flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-transform">
+          <button id="btn-cta-daftar" onclick="navTo('form')" class="w-full h-13 py-3.5 px-4 rounded-xl bg-gradient-to-r from-hijau-pondok via-emerald-700 to-hijau-pondok text-white font-display font-bold text-[16px] flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform animate-shimmer">
             <span class="material-symbols-outlined text-[22px]">how_to_reg</span>
             <span>Daftar Sekarang</span>
           </button>
-          <p class="text-center text-[11.5px] text-gray-500">
-            Biaya Pendaftaran: <strong class="text-hijau-pondok">100% Gratis</strong> • Kuota s/d 100 Anak per Lembaga
+          <p class="text-center text-[12px] text-gray-500 font-medium">
+            Biaya Pendaftaran: <strong class="text-hijau-pondok font-bold">100% Gratis</strong>
           </p>
         </div>
 
-        <!-- Ringkasan Pelaksanaan Lomba -->
-        <div class="bg-white rounded-2xl p-4 border border-garis flex flex-col gap-3 shadow-xs">
+        <!-- Grid 4 Informasi Lomba (Estetik) -->
+        <div class="bg-white rounded-2xl p-4 border border-garis/80 flex flex-col gap-3 shadow-xs">
           <div class="flex items-center gap-2 text-hijau-pondok font-bold text-[13.5px]">
             <span class="material-symbols-outlined text-[20px]">calendar_month</span>
             <span>Jadwal &amp; Lokasi Acara</span>
           </div>
-          <div class="grid grid-cols-1 gap-2.5 text-[12.5px]">
-            <div class="flex items-start gap-2.5">
-              <span class="material-symbols-outlined text-gray-400 text-[18px] mt-0.5">event</span>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 text-[12.5px]">
+            <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-gray-50/80 border border-garis/40">
+              <span class="material-symbols-outlined text-hijau-pondok text-[19px] mt-0.5">event</span>
               <div>
-                <strong class="text-tinta block" id="lbl-tanggal-pelaksanaan">Sabtu, 23 Januari 2027</strong>
+                <strong class="text-tinta block font-bold" id="lbl-tanggal-pelaksanaan">Sabtu, 23 Januari 2027</strong>
                 <span class="text-gray-500 text-[11.5px]" id="lbl-jam-pelaksanaan">07.00 WIB sampai selesai</span>
               </div>
             </div>
-            <div class="flex items-start gap-2.5">
-              <span class="material-symbols-outlined text-gray-400 text-[18px] mt-0.5">location_on</span>
+            <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-gray-50/80 border border-garis/40">
+              <span class="material-symbols-outlined text-hijau-pondok text-[19px] mt-0.5">location_on</span>
               <div>
-                <strong class="text-tinta block">PPTQ BUQ YASINAT</strong>
+                <strong class="text-tinta block font-bold">PPTQ BUQ YASINAT</strong>
                 <span class="text-gray-500 text-[11.5px]" id="lbl-lokasi">Kesilir, Wuluhan, Jember</span>
               </div>
             </div>
-            <div class="flex items-start gap-2.5">
-              <span class="material-symbols-outlined text-gray-400 text-[18px] mt-0.5">diversity_3</span>
+            <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-gray-50/80 border border-garis/40">
+              <span class="material-symbols-outlined text-hijau-pondok text-[19px] mt-0.5">diversity_3</span>
               <div>
-                <strong class="text-tinta block">Peserta Lomba</strong>
-                <span class="text-gray-500 text-[11.5px]">Ibu dan santri cilik perwakilan lembaga TKM &amp; RA</span>
+                <strong class="text-tinta block font-bold">Peserta Lomba</strong>
+                <span class="text-gray-500 text-[11.5px]">Ibu dan anak perwakilan lembaga TKM &amp; RA</span>
+              </div>
+            </div>
+            <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-gray-50/80 border border-garis/40">
+              <span class="material-symbols-outlined text-hijau-pondok text-[19px] mt-0.5">loyalty</span>
+              <div>
+                <strong class="text-tinta block font-bold">Biaya Pendaftaran</strong>
+                <span class="text-emerald-700 font-bold text-[11.5px]">100% Gratis Tanpa Biaya</span>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- ================= SECTION PRODUK & MERCHANDISE RESMI (BANNER ROTATOR 5 SLIDE) ================= -->
+        <div class="mt-2 pt-4 border-t border-garis/70 flex flex-col gap-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[18px]">storefront</span>
+              </div>
+              <div class="flex flex-col min-w-0">
+                <h3 class="font-display font-extrabold text-[14px] text-tinta leading-tight">Produk &amp; Merchandise Resmi</h3>
+                <span class="text-[11px] text-gray-500 truncate">Semarak Haflah Al Milad 104 YASINAT</span>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+              Official Store
+            </span>
+          </div>
+
+          <!-- Carousel Container (5 Slide) -->
+          <div class="relative w-full overflow-hidden rounded-2xl border border-emerald-200/70 shadow-xs bg-white" id="banner-rotator-wrapper">
+            <div class="flex transition-transform duration-500 ease-in-out w-full" id="banner-rotator-track" style="transform: translateX(0%);">
+              <!-- Diisi 5 slide secara dinamis oleh JavaScript -->
+            </div>
+
+            <!-- Tombol Panah Kiri / Kanan -->
+            <button type="button" onclick="prevBannerSlide()" class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 shadow-md text-gray-700 hover:text-hijau-pondok flex items-center justify-center transition-transform active:scale-90" aria-label="Slide sebelumnya">
+              <span class="material-symbols-outlined text-[16px]">chevron_left</span>
+            </button>
+            <button type="button" onclick="nextBannerSlide()" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 shadow-md text-gray-700 hover:text-hijau-pondok flex items-center justify-center transition-transform active:scale-90" aria-label="Slide berikutnya">
+              <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+            </button>
+
+            <!-- 5 Dots Indikator -->
+            <div class="absolute bottom-2 inset-x-0 flex justify-center gap-1.5" id="banner-rotator-dots">
+              <!-- 5 dots generated by JS -->
+            </div>
+          </div>
+
+          <!-- Tombol Aksi: Pesan Sekarang -->
+          <a id="btn-banner-order" href="#" target="_blank" rel="noopener noreferrer" 
+             class="w-full h-12 py-3 rounded-xl bg-gradient-to-r from-hijau-pondok via-emerald-700 to-hijau-pondok text-white font-display font-bold text-[14px] flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-all animate-shimmer">
+            <span class="material-symbols-outlined text-[19px]">shopping_bag</span>
+            <span>Pesan Sekarang</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        </div>
+
       </section>
 
       <!-- ======================================================== -->
@@ -839,7 +904,237 @@
     };
 
     // Inisialisasi saat halaman dimuat (tahan uji iframe Google Apps Script)
-    function bootPublicApp() {
+    
+      // ========================================================
+      // BANNER ROTATOR CAROUSEL (5 SLIDE) & ORDER BUTTON
+      // ========================================================
+      var bannerState = {
+        slides: [],
+        orderUrl: '',
+        currentIdx: 0,
+        timer: null,
+        touchStartX: 0,
+        touchEndX: 0
+      };
+
+      var defaultBannerTemplates = [
+        {
+          badge: 'Merchandise Resmi',
+          title: 'Kaos Resmi Haflah 104',
+          sub: 'Bahan Katun Nyaman, Sablon Awet & Desain Elegan',
+          bg: 'linear-gradient(135deg, #005E39 0%, #047857 100%)',
+          icon: 'checkroom'
+        },
+        {
+          badge: 'Perlengkapan Lomba',
+          title: 'Paket Krayon & Meja Lipat',
+          sub: 'Standar Resmi Panitia Lomba Mewarnai TKM & RA',
+          bg: 'linear-gradient(135deg, #8A6D10 0%, #B8860B 100%)',
+          icon: 'palette'
+        },
+        {
+          badge: 'Busana Muslim',
+          title: 'Kopiah & Jilbab Santri YASINAT',
+          sub: 'Edisi Khusus Semarak Haflah Al Milad 1448 H',
+          bg: 'linear-gradient(135deg, #065F46 0%, #0D9488 100%)',
+          icon: 'apparel'
+        },
+        {
+          badge: 'Edisi Terbatas',
+          title: 'Kalender Eksklusif 1448 H / 2027 M',
+          sub: 'Lengkap dengan Jadwal Libur & Agenda Pesantren',
+          bg: 'linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%)',
+          icon: 'calendar_today'
+        },
+        {
+          badge: 'Cinderamata',
+          title: 'Pin & Gantungan Kunci Haflah 104',
+          sub: 'Kenang-kenangan Istimewa Santri & Wali Santri',
+          bg: 'linear-gradient(135deg, #7C2D12 0%, #EA580C 100%)',
+          icon: 'card_giftcard'
+        }
+      ];
+
+      function initBannerRotator(bannerSlides, orderUrl) {
+        bannerState.slides = bannerSlides || [];
+        bannerState.orderUrl = orderUrl || '';
+
+        var btnOrder = document.getElementById('btn-banner-order');
+        if (btnOrder) {
+          if (bannerState.orderUrl) {
+            btnOrder.href = bannerState.orderUrl;
+          } else {
+            btnOrder.href = 'https://wa.me/6281217687686?text=' + encodeURIComponent('Assalamu\'alaikum Panitia, saya tertarik memesan produk/merchandise resmi Haflah 104 YASINAT.');
+          }
+        }
+
+        renderBannerTrack();
+        startBannerTimer();
+        setupBannerTouch();
+      }
+
+      function renderBannerTrack() {
+        var track = document.getElementById('banner-rotator-track');
+        var dotsBox = document.getElementById('banner-rotator-dots');
+        if (!track || !dotsBox) return;
+
+        track.innerHTML = '';
+        dotsBox.innerHTML = '';
+
+        for (var i = 0; i < 5; i++) {
+          var customImg = (bannerState.slides && bannerState.slides[i]) ? bannerState.slides[i].trim() : '';
+          var slideDiv = document.createElement('div');
+          slideDiv.className = 'w-full shrink-0 flex items-center justify-center aspect-[16/8] relative overflow-hidden select-none';
+
+          if (customImg) {
+            slideDiv.innerHTML = '<img src="' + customImg + '" alt="Banner Slide ' + (i+1) + '" class="w-full h-full object-cover">';
+          } else {
+            var tpl = defaultBannerTemplates[i] || defaultBannerTemplates[0];
+            slideDiv.style.background = tpl.bg;
+            slideDiv.innerHTML = '' +
+              '<div class="p-3.5 flex flex-col justify-between w-full h-full text-white">' +
+              '  <div class="flex items-center justify-between">' +
+              '    <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-white/20 backdrop-blur-xs text-white border border-white/30">' + tpl.badge + '</span>' +
+              '    <span class="material-symbols-outlined text-white/40 text-[24px]">' + tpl.icon + '</span>' +
+              '  </div>' +
+              '  <div>' +
+              '    <h4 class="font-display font-extrabold text-[14px] leading-tight drop-shadow-xs">' + tpl.title + '</h4>' +
+              '    <p class="text-[10.5px] text-white/90 line-clamp-1 mt-0.5">' + tpl.sub + '</p>' +
+              '  </div>' +
+              '</div>';
+          }
+
+          track.appendChild(slideDiv);
+
+          var dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = (i === bannerState.currentIdx) ? 'w-5 h-1.5 rounded-full bg-white transition-all shadow-xs' : 'w-1.5 h-1.5 rounded-full bg-white/50 transition-all';
+          dot.setAttribute('data-idx', i);
+          dot.onclick = function() {
+            goToBannerSlide(parseInt(this.getAttribute('data-idx'), 10));
+          };
+          dotsBox.appendChild(dot);
+        }
+
+        updateBannerTrackPosition();
+      }
+
+      function updateBannerTrackPosition() {
+        var track = document.getElementById('banner-rotator-track');
+        if (track) {
+          track.style.transform = 'translateX(-' + (bannerState.currentIdx * 100) + '%)';
+        }
+        var dotsBox = document.getElementById('banner-rotator-dots');
+        if (dotsBox) {
+          var dots = dotsBox.children;
+          for (var i = 0; i < dots.length; i++) {
+            dots[i].className = (i === bannerState.currentIdx) ? 'w-5 h-1.5 rounded-full bg-white transition-all shadow-xs' : 'w-1.5 h-1.5 rounded-full bg-white/50 transition-all';
+          }
+        }
+      }
+
+      function nextBannerSlide() {
+        bannerState.currentIdx = (bannerState.currentIdx + 1) % 5;
+        updateBannerTrackPosition();
+        resetBannerTimer();
+      }
+
+      function prevBannerSlide() {
+        bannerState.currentIdx = (bannerState.currentIdx - 1 + 5) % 5;
+        updateBannerTrackPosition();
+        resetBannerTimer();
+      }
+
+      function goToBannerSlide(idx) {
+        bannerState.currentIdx = idx;
+        updateBannerTrackPosition();
+        resetBannerTimer();
+      }
+
+      function startBannerTimer() {
+        if (bannerState.timer) clearInterval(bannerState.timer);
+        bannerState.timer = setInterval(function() {
+          bannerState.currentIdx = (bannerState.currentIdx + 1) % 5;
+          updateBannerTrackPosition();
+        }, 4500);
+      }
+
+      function resetBannerTimer() {
+        startBannerTimer();
+      }
+
+      function setupBannerTouch() {
+        var wrapper = document.getElementById('banner-rotator-wrapper');
+        if (!wrapper) return;
+        wrapper.addEventListener('touchstart', function(e) {
+          bannerState.touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        wrapper.addEventListener('touchend', function(e) {
+          bannerState.touchEndX = e.changedTouches[0].screenX;
+          var diff = bannerState.touchStartX - bannerState.touchEndX;
+          if (Math.abs(diff) > 35) {
+            if (diff > 0) nextBannerSlide();
+            else prevBannerSlide();
+          }
+        }, { passive: true });
+      }
+
+      // ========================================================
+      // EFEK KONFETI PERAYAAN (HALAMAN SUKSES)
+      // ========================================================
+      function triggerConfetti() {
+        var canvas = document.getElementById('confetti-canvas');
+        if (!canvas) return;
+        var ctx = canvas.getContext('2d');
+        canvas.width = canvas.parentElement.clientWidth || 360;
+        canvas.height = canvas.parentElement.clientHeight || 450;
+
+        var particles = [];
+        var colors = ['#005E39', '#2E8B4F', '#EEB92B', '#E8832A', '#2A9DA6', '#B8860B'];
+        for (var i = 0; i < 60; i++) {
+          particles.push({
+            x: canvas.width / 2,
+            y: canvas.height / 3,
+            vx: (Math.random() - 0.5) * 8,
+            vy: (Math.random() - 1.2) * 8,
+            size: Math.random() * 6 + 3,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            rotation: Math.random() * 360,
+            vRot: (Math.random() - 0.5) * 10,
+            opacity: 1
+          });
+        }
+
+        var startTime = Date.now();
+        function frame() {
+          var elapsed = Date.now() - startTime;
+          if (elapsed > 2800) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            return;
+          }
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          particles.forEach(function(p) {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.18;
+            p.rotation += p.vRot;
+            p.opacity = Math.max(0, 1 - (elapsed / 2800));
+
+            ctx.save();
+            ctx.globalAlpha = p.opacity;
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.7);
+            ctx.restore();
+          });
+          requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      }
+
+      function bootPublicApp() {
       initRequestId();
       loadDraftFromStorage();
       // Langsung nyalakan hitung mundur default agar kotak timer tidak pernah menampilkan '--'

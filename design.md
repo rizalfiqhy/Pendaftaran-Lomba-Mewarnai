@@ -1,6 +1,6 @@
 # Design: Web Pendaftaran Lomba Mewarnai Kreatif TKM & RA Se-Kecamatan Wuluhan
 
-Versi 2.1 (Terverifikasi & Diperbarui) | 28 Oktober 2026  
+Versi 2.2 (Terverifikasi & Diperbarui) | 28 Oktober 2026  
 Dokumen pendamping: `prd.md` (aturan dan kebutuhan bisnis).
 
 ---
@@ -34,15 +34,18 @@ Dokumen pendamping: `prd.md` (aturan dan kebutuhan bisnis).
 | **Merah Koreksi** | `#B42318` | Notifikasi error validasi dan status 'Ditutup'. |
 
 ### Tipografi
-* **Judul & Angka Besar:** `Plus Jakarta Sans` / `Baloo 2` (bobot 700 & 800) untuk judul dasbor, kode `MWR-xxx`, dan hitung mundur penutupan.
-* **Isian Formulir & Tabel:** `Atkinson Hyperlegible` / `system-ui` / `Arial` (bobot 400 & 700) untuk kemudahan membaca di layar HP dan cetak kertas fisik.
+* **Font Utama Sistem:** `Plus Jakarta Sans` (bobot 400, 500, 600, 700, 800) diterapkan secara seragam dan konsisten pada seluruh antarmuka publik (`Index.html`) dan panel admin (`AdminPage.html`). Font ini memberikan tampilan modern, profesional, lembut, dan memiliki tingkat keterbacaan (*legibility*) yang sangat tinggi baik di layar HP maupun layar desktop.
 
 ---
 
 ## 3. Alur Layar Publik (`Index.html`)
 
-1. **Beranda & Countdown:**
-   - Menampilkan status pendaftaran dengan teks dan ikon, hitung mundur realtime WIB, jadwal, dan lokasi lomba.
+1. **Beranda & Countdown (Modern Revamp):**
+   - Header hero bergradasi lembut dengan badge status pendaftaran, judul "Lomba Mewarnai Kreatif TKM & RA Se-Kecamatan Wuluhan", 4 aksen krayon, dan deskripsi "Pasangan kreatif ibu dan anak".
+   - Kartu hitung mundur waktu penutupan realtime WIB.
+   - Tombol utama "Daftar Sekarang" beranimasi shimmer sweep dan info "Biaya Pendaftaran: 100% Gratis".
+   - Grid 4 informasi lomba: Tanggal, Lokasi, Peserta ("Ibu dan anak perwakilan lembaga TKM & RA"), dan Biaya.
+   - **Banner Rotator 5 Slide Resmi:** Karusel produk/merchandise panitia di bagian paling bawah beranda dengan auto-play (4,5 detik), navigasi panah & dots, gesture swipe sentuh di HP, dan tombol aksi "Pesan Sekarang" yang mengarah ke link pesanan yang diatur di panel admin.
 2. **Formulir Langkah 1 (Data Lembaga):**
    - Pemilihan jenis lembaga (TKM / RA), input nama lembaga (otomatis kapital), dan pilihan 7 desa di Kecamatan Wuluhan.
 3. **Formulir Langkah 2 (Daftar Peserta):**
