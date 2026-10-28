@@ -641,7 +641,7 @@
 
             <div class="bg-gray-50/80 p-3.5 rounded-xl border border-garis/70 flex flex-col gap-2.5">
               <span class="text-[12px] font-bold text-gray-800">5 Slot URL Gambar Banner (Rasio 16:8 atau Persegi Panjang):</span>
-              <p class="text-[11px] text-gray-500">Tempelkan link langsung gambar (contoh: link Google Drive publik, Imgur, CDN, dll). Jika dikosongkan, sistem otomatis menampilkan template visual estetik bawaan.</p>
+              <p class="text-[11px] text-gray-500">Tempelkan link gambar (Bisa link Google Drive publik, Imgur, Postimages, dll). Sistem otomatis mengonversi link Google Drive menjadi gambar langsung. Pastikan akses file di Google Drive disetel ke "Siapa saja yang memiliki link".</p>
               
               <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-1">
                 <div>
@@ -2265,7 +2265,8 @@
         banner_slide_2: document.getElementById('set-banner-2').value.trim(),
         banner_slide_3: document.getElementById('set-banner-3').value.trim(),
         banner_slide_4: document.getElementById('set-banner-4').value.trim(),
-        banner_slide_5: document.getElementById('set-banner-5').value.trim()
+        banner_slide_5: document.getElementById('set-banner-5').value.trim(),
+        admin_pin: getAdminAuth()
       };
 
       if (typeof google !== 'undefined' && google.script && google.script.run) {

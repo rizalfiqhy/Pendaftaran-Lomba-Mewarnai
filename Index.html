@@ -955,14 +955,26 @@
         }
       ];
 
+      // Konversi otomatis link Google Drive atau link web agar menjadi direct image bytes yang valid
+      function convertToDirectImageUrl(url) {
+        if (!url) return '';
+        url = url.trim();
+        // Deteksi Pola Google Drive: /file/d/ID atau ?id=ID
+        var match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+        if (match && match[1]) {
+          return 'https://lh3.googleusercontent.com/d/' + match[1];
+        }
+        return url;
+      }
+
       function initBannerRotator(bannerSlides, orderUrl) {
         bannerState.slides = bannerSlides || [];
         bannerState.orderUrl = orderUrl || '';
 
         var btnOrder = document.getElementById('btn-banner-order');
         if (btnOrder) {
-          if (bannerState.orderUrl) {
-            btnOrder.href = bannerState.orderUrl;
+          if (bannerState.orderUrl && bannerState.orderUrl.trim()) {
+            btnOrder.href = bannerState.orderUrl.trim();
           } else {
             btnOrder.href = 'https://wa.me/6281217687686?text=' + encodeURIComponent('Assalamu\'alaikum Panitia, saya tertarik memesan produk/merchandise resmi Haflah 104 YASINAT.');
           }
@@ -984,10 +996,23 @@
         for (var i = 0; i < 5; i++) {
           var customImg = (bannerState.slides && bannerState.slides[i]) ? bannerState.slides[i].trim() : '';
           var slideDiv = document.createElement('div');
-          slideDiv.className = 'w-full shrink-0 flex items-center justify-center aspect-[16/8] relative overflow-hidden select-none';
+          slideDiv.className = 'w-full shrink-0 flex items-center justify-center aspect-[16/8] relative overflow-hidden select-none cursor-pointer';
+
+          // Klik slide langsung buka link pemesanan
+          slideDiv.onclick = function() {
+            var url = bannerState.orderUrl;
+            if (url && url.trim()) {
+              window.open(url.trim(), '_blank');
+            }
+          };
 
           if (customImg) {
-            slideDiv.innerHTML = '<img src="' + customImg + '" alt="Banner Slide ' + (i+1) + '" class="w-full h-full object-cover">';
+            var directUrl = convertToDirectImageUrl(customImg);
+            var driveMatch = customImg.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || customImg.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+            var fallbackDriveUrl = driveMatch ? ('https://drive.google.com/thumbnail?id=' + driveMatch[1] + '&sz=w1200') : '';
+            var fallbackAttr = fallbackDriveUrl ? ' onerror="if(this.src!=\'' + fallbackDriveUrl + '\'){this.src=\'' + fallbackDriveUrl + '\';}"' : '';
+            
+            slideDiv.innerHTML = '<img src="' + directUrl + '" alt="Banner Slide ' + (i+1) + '" class="w-full h-full object-cover"' + fallbackAttr + '>';
           } else {
             var tpl = defaultBannerTemplates[i] || defaultBannerTemplates[0];
             slideDiv.style.background = tpl.bg;
@@ -1139,6 +1164,7 @@
       loadDraftFromStorage();
       // Langsung nyalakan hitung mundur default agar kotak timer tidak pernah menampilkan '--'
       startCountdownTimer('2027-01-16T23:59:59+07:00');
+      initBannerRotator([], '');
       fetchPublicConfig();
     }
 
@@ -1385,6 +1411,7 @@
 
       // Jalankan Countdown Timer dengan target waktu dari server
       startCountdownTimer(cfg.tutup_pada);
+      initBannerRotator(cfg.banner_slides, cfg.banner_order_url);
     }
 
     // Countdown Timer Realtime
