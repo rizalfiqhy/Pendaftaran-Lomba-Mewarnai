@@ -76,7 +76,8 @@ function initSpreadsheet() {
       ['banner_slide_2', ''],
       ['banner_slide_3', ''],
       ['banner_slide_4', ''],
-      ['banner_slide_5', '']
+      ['banner_slide_5', ''],
+      ['rundown_acara', "[{\"waktu\":\"06.30 - 07.30 WIB\",\"kegiatan\":\"Registrasi Ulang & Presensi Koordinator Lembaga\"},{\"waktu\":\"07.30 - 08.00 WIB\",\"kegiatan\":\"Pembukaan Acara & Sambutan Panitia Pelaksana\"},{\"waktu\":\"08.00 - 09.30 WIB\",\"kegiatan\":\"Pelaksanaan Lomba Mewarnai Kreatif (Ibu & Anak)\"},{\"waktu\":\"09.30 - 10.30 WIB\",\"kegiatan\":\"Pengumpulan Lembar Karya & Penilaian oleh Dewan Juri\"},{\"waktu\":\"10.30 - 11.30 WIB\",\"kegiatan\":\"Pengumuman Juara & Penyerahan Hadiah Pemenang\"},{\"waktu\":\"11.30 - Selesai\",\"kegiatan\":\"Penutupan Acara & Doa Bersama\"}]"]
     ];
     setSheet.getRange(2, 1, defaultSettings.length, 2).setValues(defaultSettings);
   }
@@ -154,6 +155,7 @@ function getPublicConfig() {
       settings.banner_slide_5 || ''
     ],
     banner_order_url: settings.banner_order_url || '',
+    rundown_acara: settings.rundown_acara || "[{\"waktu\":\"06.30 - 07.30 WIB\",\"kegiatan\":\"Registrasi Ulang & Presensi Koordinator Lembaga\"},{\"waktu\":\"07.30 - 08.00 WIB\",\"kegiatan\":\"Pembukaan Acara & Sambutan Panitia Pelaksana\"},{\"waktu\":\"08.00 - 09.30 WIB\",\"kegiatan\":\"Pelaksanaan Lomba Mewarnai Kreatif (Ibu & Anak)\"},{\"waktu\":\"09.30 - 10.30 WIB\",\"kegiatan\":\"Pengumpulan Lembar Karya & Penilaian oleh Dewan Juri\"},{\"waktu\":\"10.30 - 11.30 WIB\",\"kegiatan\":\"Pengumuman Juara & Penyerahan Hadiah Pemenang\"},{\"waktu\":\"11.30 - Selesai\",\"kegiatan\":\"Penutupan Acara & Doa Bersama\"}]",
     logo_base64: getLogoBase64()
   };
 }

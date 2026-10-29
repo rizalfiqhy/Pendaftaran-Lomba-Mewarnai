@@ -1,6 +1,6 @@
 # Design: Web Pendaftaran Lomba Mewarnai Kreatif TKM & RA Se-Kecamatan Wuluhan
 
-Versi 2.2 (Terverifikasi & Diperbarui) | 28 Oktober 2026  
+Versi 2.3 (Terverifikasi & Diperbarui) | 29 Oktober 2026  
 Dokumen pendamping: `prd.md` (aturan dan kebutuhan bisnis).
 
 ---

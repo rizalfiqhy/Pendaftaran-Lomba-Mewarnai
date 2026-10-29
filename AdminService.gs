@@ -709,7 +709,8 @@ function saveAdminSettings(payload, authKey) {
       'kontak_tkm_nama', 'kontak_tkm_wa', 'kontak_ra_nama', 'kontak_ra_wa',
       'ketentuan_teknis', 'daftar_desa', 'tampilkan_peserta',
       'kop_baris1', 'kop_baris2', 'kop_baris3', 'kop_baris4',
-        'banner_order_url', 'banner_slide_1', 'banner_slide_2', 'banner_slide_3', 'banner_slide_4', 'banner_slide_5'
+        'banner_order_url', 'banner_slide_1', 'banner_slide_2', 'banner_slide_3', 'banner_slide_4', 'banner_slide_5',
+      'rundown_acara'
     ];
     
     // Konversi tampilkan_peserta boolean ke YA/TIDAK

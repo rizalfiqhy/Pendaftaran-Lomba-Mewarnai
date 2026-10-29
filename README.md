@@ -2,7 +2,7 @@
 
 Aplikasi Web Mobile Pendaftaran Kolektif **Lomba Mewarnai Kreatif TKM & RA Se-Kecamatan Wuluhan** (Semarak Haflah Al Milad 104 & Akhir As Sanah 1448 H / 2027 M) berbasis **Frontend Google Apps Script (HTML Service)** dan **Backend Google Spreadsheet**.
 
-Dokumen ini disusun dan diperbarui berdasarkan spesifikasi pada `prd.md` dan `design.md` (Versi 2.2 — 28 Oktober 2026).
+Dokumen ini disusun dan diperbarui berdasarkan spesifikasi pada `prd.md` dan `design.md` (Versi 2.3 — 29 Oktober 2026).
 
 ---
 
@@ -55,7 +55,14 @@ Semua berkas proyek berada langsung di dalam direktori kerja:
 4. **Langkah 3 (Koordinator):** Label bersih **"Nama Koordinator"** dan nomor WhatsApp koordinator.
 5. **Langkah 4 (Periksa & Konfirmasi):** Ringkasan isian, tombol kirim dengan pengaman idempotensi (`request_id`), dan tombol hijau **"Unduh Bukti Pendaftaran"**.
 
-### D. Dokumen Resmi PDF A4 Portrait (Kop 2 Logo)
+### D. Susunan Acara (Rundown Lomba) Dinamis
+1. **Tabel Rundown Publik:**
+   - Tabel responsif berkolom **NO | WAKTU | KEGIATAN** pada halaman Petunjuk Teknis lomba publik.
+   - Terintegrasi langsung dengan database spreadsheet.
+2. **Editor Rundown Interaktif di Panel Admin:**
+   - Fitur tambah baris, hapus baris, dan edit waktu/kegiatan secara fleksibel di tab Pengaturan Sistem.
+
+### E. Dokumen Resmi PDF A4 Portrait (Kop 2 Logo)
 1. **Kop Surat Lembaga:**
    - **Sebelah Kiri:** Logo Resmi Yayasan Islam Nahdlatuth Thalabah (YASINAT) segilima hijau.
    - **Bagian Tengah:** Teks Kop resmi Panitia Haflah dan Yayasan.

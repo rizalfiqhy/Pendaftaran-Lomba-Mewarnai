@@ -618,7 +618,46 @@
             <input type="text" id="set-kop-4" placeholder="Baris 4" class="h-10 px-3 rounded-lg border border-garis text-[12px]">
           </div>
 
-                    <!-- Pengaturan Banner Produk & Link Pemesanan (5 Slide) -->
+                    
+          <!-- Pengaturan Susunan Acara (Rundown Lomba) -->
+          <div class="border-t border-garis/60 pt-4 flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
+                  <span class="material-symbols-outlined text-[19px]">schedule</span>
+                </div>
+                <div>
+                  <h4 class="font-bold text-[13.5px] text-hijau-pondok">Pengaturan Susunan Acara (Rundown Lomba)</h4>
+                  <p class="text-[11.5px] text-gray-500">Susunan tabel NO | WAKTU | KEGIATAN yang tampil di halaman Petunjuk Teknis publik.</p>
+                </div>
+              </div>
+              <button type="button" onclick="addAdminRundownRow('', '')" class="px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-hijau-pondok font-bold text-[11.5px] flex items-center gap-1 hover:bg-emerald-100 active:scale-95 transition-transform">
+                <span class="material-symbols-outlined text-[16px]">add</span>
+                <span>Tambah Baris</span>
+              </button>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-garis bg-gray-50/60 p-2.5">
+              <table class="w-full text-left border-collapse text-[12px]">
+                <thead>
+                  <tr class="text-gray-600 font-bold border-b border-garis/60 text-[11.5px]">
+                    <th class="py-2 px-2 text-center w-10">No</th>
+                    <th class="py-2 px-2 w-44">Waktu (WIB)</th>
+                    <th class="py-2 px-2">Nama / Uraian Kegiatan</th>
+                    <th class="py-2 px-1 text-center w-10">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-rundown-tbody" class="divide-y divide-gray-200/60">
+                  <!-- Baris rundown diisi dinamis oleh JavaScript -->
+                </tbody>
+              </table>
+            </div>
+            <p class="text-[11px] text-gray-500">
+              Tips: Masukkan rentang waktu (contoh: <code>07.00 - 08.00 WIB</code>) dan uraian kegiatan. Anda dapat menambah atau menghapus baris sesuai kebutuhan panitia.
+            </p>
+          </div>
+
+          <!-- Pengaturan Banner Produk & Link Pemesanan (5 Slide) -->
           <div class="border-t border-garis/60 pt-4 flex flex-col gap-3">
             <div class="flex items-center gap-2">
               <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
@@ -2161,6 +2200,108 @@
       }
     }
 
+    
+    // Helper escape attribute
+    function escapeHtmlAttr(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function renderAdminRundownEditor(data) {
+      var tbody = document.getElementById('admin-rundown-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      var rows = [];
+      if (Array.isArray(data)) {
+        rows = data;
+      } else if (typeof data === 'string' && data.trim()) {
+        try {
+          rows = JSON.parse(data);
+        } catch (e) {
+          rows = data.split('\n').map(function(l) {
+            var parts = l.split('|');
+            return { waktu: (parts[0] || '').trim(), kegiatan: (parts[1] || '').trim() };
+          }).filter(function(r) { return r.waktu || r.kegiatan; });
+        }
+      }
+
+      if (!rows || rows.length === 0) {
+        rows = [
+          { waktu: '06.30 - 07.30 WIB', kegiatan: 'Registrasi Ulang & Presensi Koordinator Lembaga' },
+          { waktu: '07.30 - 08.00 WIB', kegiatan: 'Pembukaan Acara & Sambutan Panitia Pelaksana' },
+          { waktu: '08.00 - 09.30 WIB', kegiatan: 'Pelaksanaan Lomba Mewarnai Kreatif (Ibu & Anak)' },
+          { waktu: '09.30 - 10.30 WIB', kegiatan: 'Pengumpulan Lembar Karya & Penilaian oleh Dewan Juri' },
+          { waktu: '10.30 - 11.30 WIB', kegiatan: 'Pengumuman Juara & Penyerahan Hadiah Pemenang' },
+          { waktu: '11.30 - Selesai', kegiatan: 'Penutupan Acara & Doa Bersama' }
+        ];
+      }
+
+      rows.forEach(function(r) {
+        addAdminRundownRow(r.waktu, r.kegiatan);
+      });
+    }
+
+    function addAdminRundownRow(waktu, kegiatan) {
+      var tbody = document.getElementById('admin-rundown-tbody');
+      if (!tbody) return;
+
+      var tr = document.createElement('tr');
+      tr.className = 'rundown-row hover:bg-white transition-colors';
+      tr.innerHTML =
+        '<td class="py-2 px-2 text-center font-bold text-gray-500 rundown-no text-[11.5px]"></td>' +
+        '<td class="py-2 px-2">' +
+          '<input type="text" value="' + escapeHtmlAttr(waktu || '') + '" placeholder="07.00 - 08.00 WIB" class="rundown-waktu w-full h-8 px-2.5 rounded-lg border border-garis bg-white text-[12px] font-semibold text-hijau-pondok focus:border-hijau-pondok focus:outline-none">' +
+        '</td>' +
+        '<td class="py-2 px-2">' +
+          '<input type="text" value="' + escapeHtmlAttr(kegiatan || '') + '" placeholder="Nama Kegiatan" class="rundown-kegiatan w-full h-8 px-2.5 rounded-lg border border-garis bg-white text-[12px] text-gray-800 focus:border-hijau-pondok focus:outline-none">' +
+        '</td>' +
+        '<td class="py-2 px-1 text-center">' +
+          '<button type="button" onclick="removeAdminRundownRow(this)" title="Hapus Baris" class="p-1 text-gray-400 hover:text-merah-koreksi hover:bg-red-50 rounded-md transition-colors">' +
+            '<span class="material-symbols-outlined text-[18px]">delete</span>' +
+          '</button>' +
+        '</td>';
+
+      tbody.appendChild(tr);
+      reindexAdminRundown();
+    }
+
+    function removeAdminRundownRow(btn) {
+      var tr = btn.closest('tr');
+      if (tr) tr.remove();
+      reindexAdminRundown();
+    }
+
+    function reindexAdminRundown() {
+      var tbody = document.getElementById('admin-rundown-tbody');
+      if (!tbody) return;
+      var rows = tbody.querySelectorAll('.rundown-row');
+      rows.forEach(function(row, idx) {
+        var noEl = row.querySelector('.rundown-no');
+        if (noEl) noEl.textContent = idx + 1;
+      });
+    }
+
+    function getAdminRundownJson() {
+      var tbody = document.getElementById('admin-rundown-tbody');
+      if (!tbody) return '[]';
+      var rows = tbody.querySelectorAll('.rundown-row');
+      var list = [];
+      rows.forEach(function(row) {
+        var waktu = (row.querySelector('.rundown-waktu') ? row.querySelector('.rundown-waktu').value : '').trim();
+        var kegiatan = (row.querySelector('.rundown-kegiatan') ? row.querySelector('.rundown-kegiatan').value : '').trim();
+        if (waktu || kegiatan) {
+          list.push({ waktu: waktu, kegiatan: kegiatan });
+        }
+      });
+      return JSON.stringify(list);
+    }
+
     function populateSettings(res) {
       var s = res.settings;
       adminState.settings = s;
@@ -2202,6 +2343,7 @@
       document.getElementById('set-banner-3').value = s.banner_slide_3 || '';
       document.getElementById('set-banner-4').value = s.banner_slide_4 || '';
       document.getElementById('set-banner-5').value = s.banner_slide_5 || '';
+      renderAdminRundownEditor(s.rundown_acara);
 
 
       // Update dropdown desa
@@ -2266,6 +2408,7 @@
         banner_slide_3: document.getElementById('set-banner-3').value.trim(),
         banner_slide_4: document.getElementById('set-banner-4').value.trim(),
         banner_slide_5: document.getElementById('set-banner-5').value.trim(),
+        rundown_acara: getAdminRundownJson(),
         admin_pin: getAdminAuth()
       };
 

@@ -1,6 +1,6 @@
 # PRD: Web Pendaftaran Lomba Mewarnai Kreatif TKM & RA Se-Kecamatan Wuluhan
 
-Versi 2.2 (Terverifikasi & Diperbarui) | 28 Oktober 2026  
+Versi 2.3 (Terverifikasi & Diperbarui) | 29 Oktober 2026  
 Dokumen pendamping: `design.md` (tampilan, alur layar, struktur data, arsitektur)
 
 ---
@@ -25,6 +25,7 @@ Web mobile untuk pendaftaran kolektif **Lomba Mewarnai Kreatif TKM & RA Se-Kecam
 5. Panel admin terlindungi dari akses orang lain/email luar melalui verifikasi PIN 6 digit.
 6. Halaman beranda dilengkapi Banner Rotator 5 slide dan tombol "Pesan Sekarang" untuk merchandise/produk resmi panitia, yang link dan gambarnya dapat diatur langsung melalui panel admin.
 7. Desain visual modern dan elegan berbasis font Plus Jakarta Sans serta mikro-interaksi animasi halus.
+8. Tabel susunan acara (rundown) dengan kolom NO | WAKTU | KEGIATAN pada petunjuk teknis publik yang dapat dikelola sepenuhnya oleh admin.
 
 **Di luar tujuan:** Pembayaran daring, pengumuman pemenang, dan pendaftaran mandiri non-lembaga.
 
